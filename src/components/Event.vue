@@ -24,14 +24,13 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
-                                        label:'圆形',
+                                        label:'起始节点',
                                         labelCfg: {
                                             position: 'center',
-                                            offset:{
-                                                left:1000000
-                                            },
                                             style: {
-                                                fill: '#666'
+                                                fill: '#666',
+                                                opacity:1,
+                                                zIndex:10
                                             }
                                         },
                                         id: this.Util.uniqueId(),
@@ -49,14 +48,12 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
-                                        // label:'矩形',
+                                        label:'常规结点',
                                         labelCfg: {
                                             position: 'center',
-                                            offset:{
-                                                // right:'1000000px'
-                                            },
                                             style: {
-                                                fill: '#666'
+                                                fill: '#666',
+                                                opacity:1,
                                             }
                                         },
                                         id: this.Util.uniqueId(),
@@ -74,11 +71,12 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
-                                        // label:'菱形',
+                                        label:'分叉节点',
                                         labelCfg: {
                                             position: 'center',
                                             style: {
-                                                fill: '#666'
+                                                fill: '#666',
+                                                opacity:1,
                                             }
                                         },
                                         id: this.Util.uniqueId(),
@@ -97,15 +95,16 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
-                                        label:'椭圆',
+                                        label:'模型节点',
                                         labelCfg: {
                                             position: 'center',
                                             style: {
-                                                fill: '#666'
+                                                fill: '#666',
+                                                opacity:1,
                                             }
                                         },
                                         id: this.Util.uniqueId(),
-                                        size: [90, 60],
+                                        size: 9*6,
                                         shape: 'ellipse',
                                         style: {
                                             fill: '#722ED1',
@@ -118,15 +117,16 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
-                                        label:'',
                                         labelCfg: {
                                             position: 'center',
                                             style: {
-                                                fill: '#666'
+                                                fill: '#666',
+                                                opacity:1,
                                             }
                                         },
+                                        label:'',
                                         id: this.Util.uniqueId(),
-                                        size: [60, 60],
+                                        size:this.defaultSize,
                                         shape: 'image',
                                         style: {
                                             fill: '#722ED1',
@@ -225,10 +225,12 @@
                     } else if(keycode == 86 && ev.ctrlKey){
                         //同时按下Ctrl + V
                         this.Parse(ev)
-                    }else if(keycode == 90 && ev.ctrlKey){
-                        //同时按下Ctrl + Z,撤销
-                        this.Undo()
-                    } else if(keycode == 89 && ev.ctrlKey){
+                    }
+                    // else if(keycode == 90 && ev.ctrlKey){
+                    //     //同时按下Ctrl + Z,撤销
+                    //     this.Undo()
+                    // }
+                    else if(keycode == 89 && ev.ctrlKey){
                         //同时按下Ctrl + Y，重做
                         this.Redo()
                     }
@@ -236,22 +238,17 @@
                 //结点点击
                 this.graph.on('node:click', ev => {
                     console.log('node:click', ev)
-                    //进入编辑状态，可拖拽
-                    this.graph.setMode('edit');
-                    ev.target.attr('cursor', 'move');
-                    // 点击时设置为selected状态
-                    const node = ev.item;
-                    console.log(ev.item.getStates())
-                    //获取当前节点id
-
+                    //鼠标手型
+                    ev.target.attr('cursor', 'pointer');
                 });
                 // 鼠标移动到上面，移出结束
                 this.graph.on('node:mouseenter', ev => {
                     const node = ev.item;
                     this.graph.setItemState(node, 'hover', true);
+                    //进入编辑状态，可拖拽
+                    this.graph.setMode('edit');
                     //鼠标手型
-                    ev.target.attr('cursor', 'pointer');
-                    // console.log(ev.item.getStates())
+                    ev.target.attr('cursor', 'move');
                 });
                 this.graph.on('node:mouseleave', ev => {
                     const node = ev.item;

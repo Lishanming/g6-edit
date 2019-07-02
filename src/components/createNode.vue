@@ -18,7 +18,7 @@
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
                         const group = item.getContainer();
-                        const shape = group.get('children').slice(1, 5); // 顺序根据 draw 时确定
+                        const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
                         if (name === 'hover') {
                             if (value) {
                                 for (let i = 0; i < shape.length; i++) {
@@ -40,8 +40,9 @@
                     //绘制后的附加操作
                     afterDraw(cfg, group) {
                         //锚点相对结点位置
+                        // debugger
                         let anchorPosition = [
-                            [0, -30], [0, 30], [30, 0], [-30, 0]
+                            [0, -cfg.size/2], [0, cfg.size/2], [cfg.size/2, 0], [-cfg.size/2, 0]
                         ]
                         // this.graph.setItemState(node, 'selected', true);
                         // group.get('children')[0].on('click',ev=>{
@@ -107,7 +108,7 @@
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
                         const group = item.getContainer();
-                        const shape = group.get('children').slice(1, 5); // 顺序根据 draw 时确定
+                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
                         if (name === 'hover') {
                             if (value) {
                                 for (let i = 0; i < shape.length; i++) {
@@ -228,8 +229,10 @@
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
                         const group = item.getContainer();
-                        const shape = group.get('children').slice(1, 5); // 顺序根据 draw 时确定
+                        // debugger
+                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
                         if (name === 'hover') {
+                            group.get('children')[1].attr('opacity', '1');
                             if (value) {
                                 for (let i = 0; i < shape.length; i++) {
                                     shape[i].attr('opacity', '1');
@@ -240,6 +243,7 @@
                                 }
                             }
                         } else if (name === 'selected') {
+                            group.get('children')[1].attr('opacity', '1');
                             if (value) {
                                 group.get('children')[0].attr('lineWidth', '3');
                             } else {
@@ -262,7 +266,7 @@
                                     opacity: 0,
                                     fill: '#d6fffe',
                                     stroke: '#55aecc',
-                                    curcor: 'default'
+                                    curcor: 'default',
                                 }
                             });
                             //鼠标移入锚点
@@ -294,7 +298,6 @@
                         const rightAnchor = new Anchor(1)
                         const bottomAnchor = new Anchor(2)
                         const leftAnchor = new Anchor(3)
-
                     },
                     getAnchorPoints() {
                         return [
@@ -310,7 +313,7 @@
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
                         const group = item.getContainer();
-                        const shape = group.get('children').slice(1, 5); // 顺序根据 draw 时确定
+                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
                         if (name === 'hover') {
                             if (value) {
                                 for (let i = 0; i < shape.length; i++) {
@@ -405,7 +408,7 @@
                     },
                     setState(name, value, item) {
                         const group = item.getContainer();
-                        const shape = group.get('children').slice(1, 5); // 顺序根据 draw 时确定
+                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
                         if (name === 'hover') {
                             if (value) {
                                 for (let i = 0; i < shape.length; i++) {

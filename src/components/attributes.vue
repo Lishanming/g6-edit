@@ -10,19 +10,33 @@
                 currentType:'graph',
                 currentMenu:'',
                 infoTitle: '画布',//属性标题
+                lineValue:'',
+                Line:[{
+                    value: 'line',
+                    label: '直线'
+                }, {
+                    value: 'cubic',
+                    label: '三阶赛贝尔曲线'
+                },{
+                    value: 'quadratic',
+                    label: '二阶赛贝尔曲线'
+                },{
+                    value: 'flow-line',
+                    label: '箭头折线'
+                }],
                 shapeValue: '',
                 Shape:[{
                     value: 'myCircle',
-                    label: 'circle'
+                    label: '起始节点'
                 }, {
                     value: 'juxing',
-                    label: 'rect'
+                    label: '常规结点'
                 },{
                     value: 'diamond',
-                    label: 'diamond'
+                    label: '分叉结点'
                 },{
                     value: 'ellipse',
-                    label: 'ellipse'
+                    label: '模型节点'
                 }],
                 zoomRatio:100,
                 nodeName:null,
@@ -44,56 +58,60 @@
             },
             edgeName(newValue) {
                 if (newValue === null) return
-                var item = this.graph.findById( this.graph.edge._cfg.id)
+                var item = this.graph.findById( this.edgeId)
                 this.graph.update( item, {
                     label:  newValue
                 })
             },
+            lineValue(newValue){
+                if (newValue === null) return
+                var item = this.graph.findById(this.edgeId)
+                this.graph.update( item, {
+                    shape: newValue
+                })
+                this.graph.refreshItem(item)
+            },
             nodeName(newValue){
                 if (newValue === null) return
                 debugger
-                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                console.log(this)
+                var item = this.graph.findById( this.currentItemId)
                 this.graph.update( item, {
-                    model:{
                         label:  newValue
-                    }
                 })
             },
             nodeWidth(newValue){
                 if (newValue === null) return
-                // debugger
-                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                debugger
+                var item = this.graph.findById( this.currentItemId)
                 this.graph.update( item, {
                     size: `${newValue}*${this.nodeHeight}`
                 })
             },
             nodeHeight(newValue){
                 if (newValue === null) return
-                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                var item = this.graph.findById( this.currentItemId)
                 this.graph.update( item, {
                     size: `${this.nodeWidth}*${newValue}`
                 })
             },
             nodeColor(newValue){
                 if (newValue === null) return
-                debugger
-                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                var item = this.graph.findById( this.currentItemId)
                 this.graph.update( item, {
-                    styles:{
-                        default:{
+                    style:{
                             fill:newValue,
                             stroke:newValue
-                        }
                     }
-                    // color: newValue
                 })
             },
             shapeValue(newValue){
                 if (newValue === null) return
-                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                var item = this.graph.findById( this.currentItemId)
                 this.graph.update( item, {
-                    shape: newValue
+                        shape: newValue
                 })
+                this.graph.refreshItem(item)
             },
             zoomRatio(newValue){
 

@@ -146,6 +146,17 @@
                                 名称：
                                 <el-input size="mini" v-model="edgeName"></el-input>
                             </div>
+                            <div class="p name">
+                                <span style="margin-right: 18px;">线类型：</span>
+                                <el-select v-model="lineValue" placeholder="请选择" size="mini">
+                                    <el-option
+                                            v-for="item in Line"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
                         </div>
                     </div>
                     <!-- 选中画布-->
@@ -203,7 +214,7 @@
         data() {
             return {
                 globaldata:'',//画布的数据
-                defaultSize: [60, 60],
+                defaultSize: 8*8,
                 addbegin: false,
                 nodeClick: {},
                 addingEdge: false,
@@ -391,8 +402,8 @@
                         }
                         //拖出线，其他结点的锚点显示
                         for (let i = 0; i < _this.graph._cfg.nodes.length; i++) {
-                            for (let j = 0; j < _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(1, 5).length; j++) {
-                                _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(1, 5)[j].attr('opacity', '1');
+                            for (let j = 0; j < _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6).length; j++) {
+                                _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6)[j].attr('opacity', '1');
                             }
                         }
                     },
@@ -419,8 +430,8 @@
                         }
                         //连线完成，其他结点的锚点消失
                         for (let i = 0; i < _this.graph._cfg.nodes.length; i++) {
-                            for (let j = 0; j < _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(1, 5).length; j++) {
-                                _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(1, 5)[j].attr('opacity', '0');
+                            for (let j = 0; j < _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6).length; j++) {
+                                _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6)[j].attr('opacity', '0');
                             }
                         }
                     }
