@@ -8,7 +8,7 @@
                 <el-button size="mini" type="primary" @click="saveFlowToJson">导出json</el-button>
             </div>
         </div>
-        <div class="content">
+        <div class="content" id="content">
             <div id="itemPannel" class="itemPannel">
                 <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" @click="addNode"></i>
                 <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" @click="addNode"></i>
@@ -212,7 +212,8 @@
                 copyModel:'',     //复制当前节点model
                 hasClickCopy:false,   //粘贴的使用和禁用
                 step:0,    //用于撤销和重做，保存数据步骤
-                canvasHistory:[]
+                canvasHistory:[],
+                imgUrl:'@/assets/images/111.png'
             }
         },
 
@@ -239,7 +240,7 @@
                 });
                 // debugger
                 const gridPlugin = new Grid();
-                console.log(gridPlugin)
+                // console.log(gridPlugin)
                 this.Util = G6.Util
                 //初始化画布
                 this.graph = new G6.Graph({
@@ -266,8 +267,9 @@
                     nodeStyle: {
                         // 节点在默认状态下的样式
                         default: {
-                            fill: '#9de0ff',
-                            stroke: '#096dd9'
+                            fill: '#096dd9',
+                            stroke: '#096dd9',
+                            fillOpacity:0.3
                         },
                         // 当节点在 selected 状态下的样式
                         selected: {
@@ -575,7 +577,7 @@
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            // background: #f7f9fb; //这一行添加背景色后，会盖住网格线
+            //background: #f7f9fb; //这一行添加背景色后，会盖住网格线
             -ms-flex-pack: distribute;
             justify-content: space-around;
 
@@ -625,7 +627,7 @@
             }
 
             .center-pannel {
-                background: #ffffff;
+                /*background: #ffffff;*/
                 display: inline-block;
                 position: relative;
                 width: 80%;

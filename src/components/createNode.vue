@@ -422,6 +422,17 @@
                 //构造图片结点
                 G6.registerNode('image', {
                     //设置鼠标移入结点时锚点显示
+                    draw(cfg, group) {
+                        const image = group.addShape('image', {
+                            attrs: {
+                                x: 0,
+                                y: 0,
+                                size: [60, 60],
+                                img: this.imgUrl
+                            }
+                        })
+                        return image;
+                    },
                     setState(name, value, item) {
                         const group = item.getContainer();
                         const shape = group.get('children').slice(1, 5); // 顺序根据 draw 时确定

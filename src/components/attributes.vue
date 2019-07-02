@@ -31,35 +31,66 @@
                 nodeColor:null,
                 edgeId: null,
                 edgeName: null,
-                gridCheck: false,
+                gridCheck: true,
             }
         },
         watch: {
             gridCheck(newValue) {
-                console.log(111, this)
-                // newValue ? this.graph.addPlugin(this.graph.grid) : this.graph.removePlugin(this.graph.grid)
+                if (newValue) {
+                    document.getElementById('content').style.background =''
+                } else {
+                    document.getElementById('content').style.background = '#f7f9fb'
+                }
             },
             edgeName(newValue) {
                 if (newValue === null) return
-                // debugger
-                this.graph.edge.update( this.graph.edge, {
+                var item = this.graph.findById( this.graph.edge._cfg.id)
+                this.graph.update( item, {
                     label:  newValue
                 })
             },
             nodeName(newValue){
-
+                if (newValue === null) return
+                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                this.graph.update( item, {
+                    label:  newValue
+                })
             },
             nodeWidth(newValue){
-
+                if (newValue === null) return
+                // debugger
+                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                this.graph.update( item, {
+                    size: `${newValue}*${this.nodeHeight}`
+                })
             },
             nodeHeight(newValue){
-
+                if (newValue === null) return
+                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                this.graph.update( item, {
+                    size: `${this.nodeWidth}*${newValue}`
+                })
             },
             nodeColor(newValue){
-
+                if (newValue === null) return
+                debugger
+                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                this.graph.update( item, {
+                    styles:{
+                        default:{
+                            fill:newValue,
+                            stroke:newValue
+                        }
+                    }
+                    // color: newValue
+                })
             },
             shapeValue(newValue){
-
+                if (newValue === null) return
+                var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
+                this.graph.update( item, {
+                    shape: newValue
+                })
             },
             zoomRatio(newValue){
 
