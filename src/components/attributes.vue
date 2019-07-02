@@ -51,9 +51,12 @@
             },
             nodeName(newValue){
                 if (newValue === null) return
+                debugger
                 var item = this.graph.findById( this.graph._cfg.nodes[0]._cfg.id)
                 this.graph.update( item, {
-                    label:  newValue
+                    model:{
+                        label:  newValue
+                    }
                 })
             },
             nodeWidth(newValue){

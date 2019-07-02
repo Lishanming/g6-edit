@@ -20,53 +20,119 @@
                             // console.log(111, _this.nodeClick.getAttribute('data-shape'))
                             switch (_this.nodeClick.getAttribute('data-shape')) {
                                 case 'yuan':
+                                    // 圆形
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        label:'圆形',
+                                        labelCfg: {
+                                            position: 'center',
+                                            offset:{
+                                                left:1000000
+                                            },
+                                            style: {
+                                                fill: '#666'
+                                            }
+                                        },
                                         id: this.Util.uniqueId(),
                                         size: this.defaultSize,
                                         shape: 'myCircle',
-                                        stroke: '#444',
+                                        style: {
+                                            fill: '#FA8C16',
+                                            stroke: '#FA8C16',
+                                            fillOpacity:0.3
+                                        },
                                     })
                                     break
                                 case 'juxing':
+                                    // 矩形
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        // label:'矩形',
+                                        labelCfg: {
+                                            position: 'center',
+                                            offset:{
+                                                // right:'1000000px'
+                                            },
+                                            style: {
+                                                fill: '#666'
+                                            }
+                                        },
                                         id: this.Util.uniqueId(),
                                         size: this.defaultSize,
                                         shape: 'juxing',
-                                        stroke: '#444',
+                                        style: {
+                                            fill: '#1890FF',
+                                            stroke: '#1890FF',
+                                            fillOpacity:0.3
+                                        },
                                     })
                                     break
                                 case 'diamond':
+                                    // 菱形
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        // label:'菱形',
+                                        labelCfg: {
+                                            position: 'center',
+                                            style: {
+                                                fill: '#666'
+                                            }
+                                        },
                                         id: this.Util.uniqueId(),
                                         size: this.defaultSize,
                                         shape: 'diamond',
                                         color: 'black',
-                                        stroke: '#444',
+                                        style: {
+                                            fill: '#13C2C2',
+                                            stroke: '#13C2C2',
+                                            fillOpacity:0.3
+                                        },
                                     })
                                     break
                                 case 'ellipse':
+                                    // 椭圆
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        label:'椭圆',
+                                        labelCfg: {
+                                            position: 'center',
+                                            style: {
+                                                fill: '#666'
+                                            }
+                                        },
                                         id: this.Util.uniqueId(),
                                         size: [90, 60],
                                         shape: 'ellipse',
-                                        stroke: '#444',
+                                        style: {
+                                            fill: '#722ED1',
+                                            stroke: '#722ED1',
+                                            fillOpacity:0.3
+                                        },
                                     })
                                     break
                                 default:
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        label:'',
+                                        labelCfg: {
+                                            position: 'center',
+                                            style: {
+                                                fill: '#666'
+                                            }
+                                        },
                                         id: this.Util.uniqueId(),
                                         size: [60, 60],
                                         shape: 'image',
+                                        style: {
+                                            fill: '#722ED1',
+                                            stroke: '#722ED1',
+                                            fillOpacity:0.3
+                                        },
                                     })
                                     break
                             }

@@ -213,7 +213,6 @@
                 hasClickCopy:false,   //粘贴的使用和禁用
                 step:0,    //用于撤销和重做，保存数据步骤
                 canvasHistory:[],
-                imgUrl:'@/assets/images/111.png'
             }
         },
 

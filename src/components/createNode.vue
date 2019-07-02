@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    const imgUrl = require('@/assets/images/111.png')
     const G6 = require('@antv/g6')
     export default {
         name: "createNode",
@@ -91,15 +92,6 @@
                         const rightAnchor = new Anchor(1)
                         const bottomAnchor = new Anchor(2)
                         const leftAnchor = new Anchor(3)
-                        const text = group.addShape('text', {
-                            attrs: {
-                                x: 0,
-                                y:5,
-                                textAlign: 'center',
-                                text: '矩形',
-                                fill: 'black',
-                            }
-                        });
                     },
                     getAnchorPoints() {
                         return [
@@ -148,28 +140,29 @@
                                     ['Z'] // 封闭
                                 ],
                                 // stroke: cfg.color, // 颜色应用到边上，如果应用到填充，则使用 fill: cfg.color,
-                                fill: '#9de0ff',
-                                stroke: '#096dd9'
+                                fill: '#13C2C2',
+                                stroke: '#13C2C2',
+                                fillOpacity:0.3,
                             }
                         });
-                        if (cfg.label) { // 如果有文本
-                            // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
-                            // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
-                            // style.text = cfg.label;
-                            group.addShape('text', {
-                                // attrs: style
-                                attrs: {
-                                    id: new Date().getTime(),
-                                    x: 0, // 居中
-                                    y: 5,
-                                    textAlign: 'center',
-                                    textBaseline: 'middle',
-                                    text: cfg.label,
-                                    fill: '#d6fffe',
-                                    stroke: '#55aecc',
-                                }
-                            });
-                        }
+                        // if (cfg.label) { // 如果有文本
+                        //     // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
+                        //     // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
+                        //     // style.text = cfg.label;
+                        //     group.addShape('text', {
+                        //         // attrs: style
+                        //         attrs: {
+                        //             id: new Date().getTime(),
+                        //             x: 0, // 居中
+                        //             y: 5,
+                        //             textAlign: 'center',
+                        //             textBaseline: 'middle',
+                        //             text: cfg.label,
+                        //             fill: '#d6fffe',
+                        //             stroke: '#55aecc',
+                        //         }
+                        //     });
+                        // }
                         return shape;
                     },
                     afterDraw(cfg, group) {
@@ -219,15 +212,7 @@
                         const rightAnchor = new Anchor(1)
                         const bottomAnchor = new Anchor(2)
                         const leftAnchor = new Anchor(3)
-                        const text = group.addShape('text', {
-                            attrs: {
-                                x: 0,
-                                y: 5,
-                                textAlign: 'center',
-                                text: '矩形',
-                                fill: 'black',
-                            }
-                        });
+
                     },
                     getAnchorPoints() {
                         return [
@@ -309,15 +294,7 @@
                         const rightAnchor = new Anchor(1)
                         const bottomAnchor = new Anchor(2)
                         const leftAnchor = new Anchor(3)
-                        const text = group.addShape('text', {
-                            attrs: {
-                                x: 0,
-                                y: 5,
-                                textAlign: 'center',
-                                text: '圆形',
-                                fill: 'black',
-                            }
-                        });
+
                     },
                     getAnchorPoints() {
                         return [
@@ -399,15 +376,7 @@
                         const rightAnchor = new Anchor(1)
                         const bottomAnchor = new Anchor(2)
                         const leftAnchor = new Anchor(3)
-                        const text = group.addShape('text', {
-                            attrs: {
-                                x: 0,
-                                y: 5,
-                                textAlign: 'center',
-                                text: '椭圆',
-                                fill: 'black',
-                            }
-                        });
+
                     },
                     //设置锚点
                     getAnchorPoints() {
@@ -423,12 +392,13 @@
                 G6.registerNode('image', {
                     //设置鼠标移入结点时锚点显示
                     draw(cfg, group) {
+                        // debugger
                         const image = group.addShape('image', {
                             attrs: {
-                                x: 0,
-                                y: 0,
+                                x: -48,
+                                y: -40,
                                 size: [60, 60],
-                                img: this.imgUrl
+                                img: imgUrl
                             }
                         })
                         return image;
@@ -467,8 +437,8 @@
                                     y: anchorPosition[index][1],
                                     r: 4,
                                     opacity: 0,
-                                    fill: '#fff',
-                                    stroke: '#444',
+                                    fill: '#d6fffe',
+                                    stroke: '#55aecc',
                                     curcor: 'default',
                                 }
                             });
@@ -501,15 +471,6 @@
                         const rightAnchor = new Anchor(1)
                         const bottomAnchor = new Anchor(2)
                         const leftAnchor = new Anchor(3)
-                        const text = group.addShape('text', {
-                            attrs: {
-                                x: 0,
-                                y: 5,
-                                textAlign: 'center',
-                                text: 'people',
-                                fill: 'black',
-                            }
-                        });
                     },
                     getAnchorPoints() {
                         return [
