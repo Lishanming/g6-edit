@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./g6.js"></script>
+    <script src="./grid.js"></script>
+</head>
+<body>
+<div id="mountNode"></div>
+</body>
+</html>
+<script>
+    const data = {
+        nodes: [
+            {x: 50, y: 100, shape: 'diamond',color: 'black'}, // 最简单的
+            {x: 150, y: 100, shape: 'diamond', size: [50, 100],color: 'black'}, // 添加宽高
+            {x: 250, y: 100, color: 'red', shape: 'diamond'}, // 添加颜色
+            {x: 350, y: 100, label: '菱形', shape: 'diamond',color: 'black'} // 附加文本
+        ]
+    };
+
+    G6.registerNode('diamond', {
+        draw(cfg, group) {
+            const size = cfg.size || [40, 40]; // 如果没有 size 时的默认大小
+            const width = size[0];
+            const height = size[1];
+            const shape = group.addShape('path', {
+                attrs: {
+                    //  / 1 \
+                    // 4     2
+                    //  \ 3 /
+                    path: [
+                        ['M', 0, 0 - height / 2], // 上部顶点
+                        ['L', width / 2, 0], // 右侧点
+                        ['L', 0, height / 2], // 下部
+                        ['L', - width / 2, 0], // 左侧
+                        ['Z'] // 封闭
+                    ],
+                    stroke: cfg.color // 颜色应用到边上，如果应用到填充，则使用 fill: cfg.color
+                }
+            });
+            if(cfg.label) { // 如果有文本
+                // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
+                // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
+                // style.text = cfg.label;
+                group.addShape('text', {
+                    // attrs: style
+                    attrs: {
+                        x: 0, // 居中
+                        y: 0,
+                        textAlign: 'center',
+                        textBaseline: 'middle',
+                        text: cfg.label,
+                        fill: '#666'
+                    }
+                });
+            }
+            return shape;
+        }
+    });
+    const grid = new Grid();
+    console.log(grid)
+    const graph = new G6.Graph({
+        container: 'mountNode',
+        width: 500,
+        height: 500,
+        plugins: [ grid ],
+    });
+    graph.data(data);
+    graph.render();
+</script>
