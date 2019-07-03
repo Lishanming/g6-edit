@@ -19,6 +19,9 @@
                     setState(name, value, item) {
                         _this.setNodeState(name, value, item)
                     },
+                    afterUpdate(cfg, node) {
+                        _this.changeAnthorPosition(cfg, node)
+                    },
                     //绘制后的附加操作
                     afterDraw(cfg, group) {
                       _this.createAnthor(cfg,group)
@@ -37,6 +40,9 @@
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
                         _this.setNodeState(name, value, item)
+                    },
+                    afterUpdate(cfg, node) {
+                        _this.changeAnthorPosition(cfg, node)
                     },
                     draw(cfg, group) {
                         const size = cfg.size || [40, 40]; // 如果没有 size 时的默认大小
@@ -92,6 +98,9 @@
                 //构造圆形结点
                 G6.registerNode('myCircle', {
                     //设置鼠标移入结点时锚点显示
+                    afterUpdate(cfg, node) {
+                        _this.changeAnthorPosition(cfg, node)
+                    },
                     setState(name, value, item) {
                         _this.setNodeState(name, value, item)
                     },
@@ -116,6 +125,9 @@
                     //创建锚点
                     afterDraw(cfg, group) {
                         _this.createAnthor(cfg,group)
+                    },
+                    afterUpdate(cfg, node) {
+                        _this.changeAnthorPosition(cfg, node)
                     },
                     //设置锚点
                     getAnchorPoints() {
@@ -189,6 +201,7 @@
                 const Anchor = (index) => {
                     const anchor = group.addShape('circle', {
                         attrs: {
+                            id: this.Util.uniqueId(),
                             x: anchorPosition[index][0],
                             y: anchorPosition[index][1],
                             r: 4,
@@ -250,6 +263,12 @@
                         group.get('children')[0].attr('lineWidth', '1');
                     }
                 }
+            },
+            changeAnthorPosition(cfg, node){
+                node._cfg.group._cfg.children[2]._attrs.y = -cfg.size[1]/2
+                node._cfg.group._cfg.children[3]._attrs.y = cfg.size[1]/2
+                node._cfg.group._cfg.children[4]._attrs.x = cfg.size[0]/2
+                node._cfg.group._cfg.children[5]._attrs.x = -cfg.size[0]/2
             }
         }
     }

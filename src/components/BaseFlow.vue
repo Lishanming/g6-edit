@@ -225,7 +225,7 @@
                 step:0,    //用于撤销和重做，保存数据步骤
                 canvasHistory:[],
                 nodeWidth: null,
-                nodeHeight: null,
+                nodeHeight: 60,
                 currentAnthorCfg:'',     //用于改变nodeheight时调用createAnthor()
                 currentAnthorGroup:''
                 //锚点相对结点位置

@@ -82,30 +82,25 @@
                 if (newValue === null) return
                 // debugger
                 var item = this.graph.findById( this.currentItemId)
+                //当shape是myCircle时，高等于宽
+                if(item._cfg.currentShape == "myCircle"){
+                    this.nodeHeight = newValue
+                }
                 this.graph.update( item, {
                     size: [newValue,this.nodeHeight]
                 })
-                // for( let i ;i< item._cfg.group._cfg.children.length ;i++){
-                //     item._cfg.group._cfg.children.slice(4, 6)[i].attr('x', newValue/2);
-                // }
-                // this.createAnthor(this.currentAnthorCfg,this.currentAnthorGroup);
-                //重绘画布,还是不行
                 this.graph.refreshItem(item);
             },
             nodeHeight(newValue){
                 if (newValue === null) return
-                // debugger
                 var item = this.graph.findById( this.currentItemId)
+                //当shape是myCircle时，高等于宽
+                if(item._cfg.currentShape == "myCircle"){
+                    this.nodeWidth = newValue
+                }
                 this.graph.update( item, {
                     size: [this.nodeWidth,newValue]
                 })
-                // for( var i ;i< item._cfg.group._cfg.children.length ;i++){
-                //     console.log(1111111111,item._cfg.group._cfg.children[2])
-                //     item._cfg.group._cfg.children.slice(2, 4)[i].attr('y', Number(newValue/2));
-                // }
-                //重绘画布
-                // this.createAnthor(this.currentAnthorCfg,this.currentAnthorGroup);
-                // debugger
                 this.graph.refreshItem(item);
             },
             nodeColor(newValue){
