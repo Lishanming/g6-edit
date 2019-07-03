@@ -3,13 +3,18 @@
 </template>
 
 <script>
-    const imgUrl = require('@/assets/images/111.png')
     const G6 = require('@antv/g6')
     export default {
         name: "createNode",
         methods:{
             //构造多种结点
             createNode() {
+                const anchor = [
+                    [0.5, 0],
+                    [1, 0.5],
+                    [0.5, 1],
+                    [0, 0.5]
+                ]
                 let _this = this
                 let graph = this.graph
                 graph.addingEdge = false
@@ -24,15 +29,10 @@
                     },
                     //绘制后的附加操作
                     afterDraw(cfg, group) {
-                      _this.createAnthor(cfg,group)
+                      _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
-                        return [
-                            [0.5, 0],
-                            [0.5, 1],
-                            [1, 0.5],
-                            [0, 0.5]
-                        ]
+                        return anchor
                     }
                 }, 'rect');
                 //构造菱形结点
@@ -84,15 +84,10 @@
                         return shape;
                     },
                     afterDraw(cfg, group) {
-                        _this.createAnthor(cfg,group)
+                        _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
-                        return [
-                            [0.5, 0],
-                            [0.5, 1],
-                            [1, 0.5],
-                            [0, 0.5]
-                        ]
+                        return anchor
                     }
                 });
                 //构造圆形结点
@@ -105,15 +100,10 @@
                         _this.setNodeState(name, value, item)
                     },
                     afterDraw(cfg, group) {
-                        _this.createAnthor(cfg,group)
+                        _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
-                        return [
-                            [0.5, 0],
-                            [0.5, 1],
-                            [1, 0.5],
-                            [0, 0.5]
-                        ]
+                        return anchor
                     }
                 }, 'circle');
                 //构造椭圆形
@@ -124,84 +114,48 @@
                     },
                     //创建锚点
                     afterDraw(cfg, group) {
-                        _this.createAnthor(cfg,group)
+                        _this.createAnchor(cfg,group)
                     },
                     afterUpdate(cfg, node) {
                         _this.changeAnthorPosition(cfg, node)
                     },
                     //设置锚点
                     getAnchorPoints() {
-                        return [
-                            [0.5, 0],
-                            [0.5, 1],
-                            [1, 0.5],
-                            [0, 0.5]
-                        ]
+                        return anchor
                     }
                 }, 'ellipse');
                 //构造图片结点
                 G6.registerNode('image', {
-                    //设置鼠标移入结点时锚点显示
-                    draw(cfg, group) {
-                        // debugger
-                        const image = group.addShape('image', {
-                            attrs: {
-                                x: -48,
-                                y: -40,
-                                size: [60, 60],
-                                img: imgUrl
-                            }
-                        });
-                        if (cfg.label) { // 如果有文本
-                            // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
-                            // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
-                            // style.text = cfg.label;
-                            group.addShape('text', {
-                                // attrs: style
-                                attrs: {
-                                    id: new Date().getTime(),
-                                    x: 0, // 居中
-                                    y: 0,
-                                    textAlign: 'center',
-                                    textBaseline: 'middle',
-                                    text: cfg.label,
-                                    fill: '#666',
-                                }
-                            });
-                        }
-                        return image;
+                    afterUpdate(cfg, node) {
+                        _this.changeAnthorPosition(cfg, node)
                     },
                     setState(name, value, item) {
                         _this.setNodeState(name, value, item)
                     },
                     afterDraw(cfg, group) {
-                        _this.createAnthor(cfg,group)
+                        _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
-                        return [
-                            [0.5, 0],
-                            [0.5, 1],
-                            [1, 0.5],
-                            [0, 0.5]
-                        ]
+                        return anchor
                     }
                 }, 'image');
             },
+
             //创建锚点
-            createAnthor(cfg,group){
+            createAnchor(cfg,group){
                 //锚点相对结点位置
                 // debugger
                 // this.currentAnthorCfg = cfg
                 // this.currentAnthorGroup = group
                 let anchorPosition = [
-                    [0, -cfg.size[1]/2], [0, cfg.size[1]/2], [cfg.size[0]/2, 0], [-cfg.size[0]/2, 0]
+                    [0, -cfg.size[1]/2], [cfg.size[0]/2, 0],[0, cfg.size[1]/2], [-cfg.size[0]/2, 0]
                 ]
                 // debugger
                 //创建锚点构造函数
                 const Anchor = (index) => {
                     const anchor = group.addShape('circle', {
                         attrs: {
-                            id: this.Util.uniqueId(),
+                            // id: this.Util.uniqueId(),
                             x: anchorPosition[index][0],
                             y: anchorPosition[index][1],
                             r: 4,
@@ -225,11 +179,22 @@
                             this.graph.currTargetAnchorIndex = index
                         }
                     });
-                    //鼠标松开
+                    // anchor.on('mouseleave', ev => {
+                    //     // debugger
+                    //     //记录鼠标移入时的锚点索引
+                    //     if (this.graph.addingEdge == false ) {
+                    //         this.graph.setMode('default');
+                    //     }
+                    // });
+                    //鼠标松开，
                     anchor.on('mouseup', ev => {
+                        //      需要判断目标锚点是否属于当前节点
+                        //....伪代码
+
                         let model = ev.target.getParent()._cfg.item.getModel()
                         // console.log('0333333', graph, ev)
                         // debugger
+                        this.graph.setMode('default');
                         this.graph.updateItem(this.graph.edge, {
                             target: model.id,
                             targetAnchor: this.graph.currTargetAnchorIndex
@@ -258,18 +223,19 @@
                     }
                 } else if (name === 'selected') {
                     if (value) {
-                        group.get('children')[0].attr('lineWidth', '2');
+                        group.get('children')[0].attr('fillOpacity', '0.5');
                     } else {
-                        group.get('children')[0].attr('lineWidth', '1');
+                        group.get('children')[0].attr('fillOpacity', '0.3');
                     }
                 }
             },
+            //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){
                 node._cfg.group._cfg.children[2]._attrs.y = -cfg.size[1]/2
-                node._cfg.group._cfg.children[3]._attrs.y = cfg.size[1]/2
-                node._cfg.group._cfg.children[4]._attrs.x = cfg.size[0]/2
+                node._cfg.group._cfg.children[3]._attrs.x = cfg.size[1]/2
+                node._cfg.group._cfg.children[4]._attrs.y = cfg.size[0]/2
                 node._cfg.group._cfg.children[5]._attrs.x = -cfg.size[0]/2
-            }
+            },
         }
     }
 </script>

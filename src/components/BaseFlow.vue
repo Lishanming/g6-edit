@@ -109,7 +109,7 @@
                             <!-- </div>-->
                             <div class="p name">
                                 <span style="margin-right: 18px;">类型：</span>
-                                <el-select v-model="shapeValue" placeholder="请选择" size="mini">
+                                <el-select v-model="shapeValue" placeholder="请选择" size="mini" :disabled="showShapeValue">
                                     <el-option
                                             v-for="item in Shape"
                                             :key="item.value"
@@ -194,15 +194,17 @@
     import attributes from '@/components/attributes'
     import createNode from '@/components/createNode'
     import Event from '@/components/Event'
+    import addLine from '@/components/addLine'
+    import addNodeByDrag from '@/components/addNodeByDrag'
     import ToolPannel from '@/components/component/tool-pannel'
-    import * as Tool from  '@/util/point'
+
     const G6 = require('@antv/g6')
     const Grid = require('@antv/g6/build/grid')
     const Minimap = require('@antv/g6/build/minimap')
 
     export default {
         name: 'BaseFlow',
-        mixins: [attributes,createNode,Event],
+        mixins: [attributes,createNode,Event,addLine,addNodeByDrag],
         components: {
             ToolPannel,
             // ContextMenu
@@ -226,8 +228,7 @@
                 canvasHistory:[],
                 nodeWidth: null,
                 nodeHeight: 60,
-                currentAnthorCfg:'',     //用于改变nodeheight时调用createAnthor()
-                currentAnthorGroup:''
+                showShapeValue:false
                 //锚点相对结点位置
                 // anchorPosition: [
                 //     [0, -30], [0, 30], [30, 0], [-30, 0]
@@ -299,7 +300,7 @@
                         // 默认边的样式
                         default: {
                             stroke: '#7c7f82',
-                            lineWidth: 1,
+                            lineWidth: 2,
                         },
                         selected: {
                             lineWidth: 2,
@@ -309,7 +310,7 @@
                         hover:{
                             stroke: '#409eff',
                             fillOpacity: 0.8,
-                            lineWidth: 2,
+                            lineWidth: 3,
                         }
                     },
                     shortcut: {
@@ -319,12 +320,14 @@
                     },
 
                 });
+                //定义交互模式：拖拽节点
+                this.dragBehavior(G6)
                 //调用创建节点函数
                 this.createNode();
                 //调用画线行为函数
-                this.addEdgeBehavior();
+                this.addEdgeBehavior(G6);
                 //调用创建线
-                this.registerEdge();
+                this.registerEdge(G6);
                 //调用事件
                 this.Event()
                 //去掉画布区域鼠标默认右键事件
@@ -335,115 +338,6 @@
                 this.data && this.graph.read(this.data)
                 this.graph.data(this.data);
                 this.graph.render();
-            },
-            registerEdge(){
-                G6.registerEdge('flow-line', {
-                        getControlPoints(cfg) {
-                        // console.log(cfg.sourceAnchor)
-                        // console.log(cfg.targetAnchor)
-                        // console.log(cfg)
-
-                        if (cfg.shape == 'flow-line' && cfg.sourceAnchor!=undefined&& cfg.targetAnchor!=undefined) {
-                            // console.log('pppppppppppppppppppppppppppppp');
-
-                            let {startPoint,endPoint,sourceAnchor,targetAnchor} = cfg
-                            // console.log(startPoint);
-                            // console.log(endPoint);
-                            //先得到两个辅助点
-                            let sourceAssistPoint = Tool.getAssistPoint(startPoint,sourceAnchor)
-                            let targetAssistPoint = Tool.getAssistPoint(endPoint,targetAnchor)
-                            //再得到两个折点
-                            // debugger;
-                            let brokenPoint = Tool.getBrokenPoint(sourceAssistPoint,targetAssistPoint)
-                            // console.log([sourceAssistPoint,...brokenPoint,targetAssistPoint]);
-
-                            return [sourceAssistPoint,...brokenPoint,targetAssistPoint]
-                        }else {
-                            return []
-                        }
-                    },
-                 // draw(cfg, group) {
-                 //    const shape = group.addShape('path', {
-                 //        attrs: {
-                 //            stroke: '#c2c6cb',
-                 //        }
-                 //    });
-                //     return shape;
-                // }
-                }, 'polyline');
-            },
-            //注册一个画线行为
-            addEdgeBehavior() {
-                let _this = this;
-                G6.registerBehavior('click-add-edge', {
-                    getEvents() {
-                        return {
-                            'node:mousedown': 'onMousedown',
-                            'mousemove': 'onMousemove',
-                            'mouseup': 'onMouseup' // 点击空白处，取消边
-                        };
-                    },
-                    //鼠标按住开始画线
-                    onMousedown(ev) {
-                        // debugger
-                        const node = ev.item;
-                        const graph = this.graph;
-                        const point = {x: ev.x, y: ev.y};
-                        const model = node.getModel();
-                        if (graph.addingEdge && graph.edge) {
-                            graph.updateItem(this.edge, {
-                                target: model.id
-                            });
-                            // graph.setItemState(this.edge, 'selected', true);
-                            graph.edge = null;
-                            graph.addingEdge = false;
-                        } else {
-                            graph.edge = graph.addItem('edge', {
-                                id: new Date().getTime(),
-                                shape: 'line',
-                                label:'',
-                                source: model.id,
-                                sourceAnchor: graph.currSourceAnchorIndex,
-                                target: point
-                            });
-                            graph.addingEdge = true;
-                        }
-                        //拖出线，其他结点的锚点显示
-                        for (let i = 0; i < _this.graph._cfg.nodes.length; i++) {
-                            for (let j = 0; j < _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6).length; j++) {
-                                _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6)[j].attr('opacity', '1');
-                            }
-                        }
-                    },
-                    //鼠标移动，画线跟随
-                    onMousemove(ev) {
-                        const point = {x: ev.x, y: ev.y};
-                        // debugger;
-                        let graph = this.graph
-                        if (graph.addingEdge && graph.edge) {
-                            graph.updateItem(graph.edge, {
-                                target: point
-                            });
-                        }
-
-                    },
-                    //在画布上松开鼠标，则不画线
-                    onMouseup(ev) {
-                        // debugger;
-                        let graph = this.graph
-                        if (graph.addingEdge) {
-                            graph.removeItem(graph.edge);
-                            graph.edge = null;
-                            graph.addingEdge = false;
-                        }
-                        //连线完成，其他结点的锚点消失
-                        for (let i = 0; i < _this.graph._cfg.nodes.length; i++) {
-                            for (let j = 0; j < _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6).length; j++) {
-                                _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6)[j].attr('opacity', '0');
-                            }
-                        }
-                    }
-                });
             },
             /**
              * x,y为坐标

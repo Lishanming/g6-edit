@@ -5,44 +5,47 @@
 <script>
     export default {
         name: "attributes",
-        data(){
-            return{
-                currentType:'graph',
-                currentMenu:'',
+        data() {
+            return {
+                currentType: 'graph',
+                currentMenu: '',
                 infoTitle: '画布',//属性标题
-                lineValue:'',
-                Line:[{
+                lineValue: '',
+                Line: [{
                     value: 'line',
                     label: '直线'
                 }, {
                     value: 'cubic',
                     label: '三阶赛贝尔曲线'
-                },{
+                }, {
                     value: 'quadratic',
                     label: '二阶赛贝尔曲线'
-                },{
+                }, {
                     value: 'flow-line',
                     label: '箭头折线'
                 }],
                 shapeValue: '',
-                Shape:[{
+                Shape: [{
                     value: 'myCircle',
                     label: '起始节点'
                 }, {
+                    value: 'image',
+                    label: '图形结点'
+                }, {
                     value: 'juxing',
                     label: '常规结点'
-                },{
+                }, {
                     value: 'diamond',
                     label: '分叉结点'
-                },{
+                }, {
                     value: 'ellipse',
                     label: '模型节点'
                 }],
-                zoomRatio:100,
-                nodeName:null,
+                zoomRatio: 100,
+                nodeName: null,
                 nodeWidth: null,
                 nodeHeight: null,
-                nodeColor:null,
+                nodeColor: null,
                 edgeId: null,
                 edgeName: null,
                 gridCheck: true,
@@ -51,96 +54,101 @@
         watch: {
             gridCheck(newValue) {
                 if (newValue) {
-                    document.getElementById('content').style.background =''
+                    document.getElementById('content').style.background = ''
                 } else {
                     document.getElementById('content').style.background = '#f7f9fb'
                 }
             },
             edgeName(newValue) {
                 if (newValue === null) return
-                var item = this.graph.findById( this.edgeId)
-                this.graph.update( item, {
-                    label:  newValue
+                var item = this.graph.findById(this.edgeId)
+                this.graph.update(item, {
+                    label: newValue
                 })
             },
-            lineValue(newValue){
+            lineValue(newValue) {
                 if (newValue === null) return
                 var item = this.graph.findById(this.edgeId)
-                this.graph.update( item, {
+                this.graph.update(item, {
                     shape: newValue
                 })
                 this.graph.refreshItem(item)
             },
-            nodeName(newValue){
+            nodeName(newValue) {
                 if (newValue === null) return
-                var item = this.graph.findById( this.currentItemId)
-                this.graph.update( item, {
-                        label:  newValue
+                var item = this.graph.findById(this.currentItemId)
+                this.graph.update(item, {
+                    label: newValue
                 })
             },
-            nodeWidth(newValue){
+            nodeWidth(newValue) {
+                //设置最小高宽
                 if (newValue === null) return
                 // debugger
-                var item = this.graph.findById( this.currentItemId)
+                var item = this.graph.findById(this.currentItemId)
                 //当shape是myCircle时，高等于宽
-                if(item._cfg.currentShape == "myCircle"){
+                if (item._cfg.currentShape == "myCircle") {
                     this.nodeHeight = newValue
                 }
-                this.graph.update( item, {
-                    size: [newValue,this.nodeHeight]
+                this.graph.update(item, {
+                    size: [newValue, this.nodeHeight]
                 })
                 this.graph.refreshItem(item);
             },
-            nodeHeight(newValue){
+            nodeHeight(newValue) {
                 if (newValue === null) return
-                var item = this.graph.findById( this.currentItemId)
+                var item = this.graph.findById(this.currentItemId)
                 //当shape是myCircle时，高等于宽
-                if(item._cfg.currentShape == "myCircle"){
+                if (item._cfg.currentShape == "myCircle") {
                     this.nodeWidth = newValue
                 }
-                this.graph.update( item, {
-                    size: [this.nodeWidth,newValue]
+                this.graph.update(item, {
+                    size: [this.nodeWidth, newValue]
                 })
                 this.graph.refreshItem(item);
             },
-            nodeColor(newValue){
+            nodeColor(newValue) {
                 if (newValue === null) return
-                var item = this.graph.findById( this.currentItemId)
-                this.graph.update( item, {
-                    style:{
-                            fill:newValue,
-                            stroke:newValue
+                var item = this.graph.findById(this.currentItemId)
+                this.graph.update(item, {
+                    style: {
+                        fill: newValue,
+                        stroke: newValue
                     }
                 })
             },
-            shapeValue(newValue){
+            shapeValue(newValue) {
                 if (newValue === null) return
-                var item = this.graph.findById( this.currentItemId)
-                this.graph.update( item, {
-                        shape: newValue
+                //当shape是image时，不可用
+                var item = this.graph.findById(this.currentItemId)
+                if (item._cfg.currentShape == "image") {
+                    this.showShapeValue = true
+                }
+                this.graph.update(item, {
+                    shape: newValue
                 })
                 this.graph.refreshItem(item)
             },
-            zoomRatio(newValue){
+            zoomRatio(newValue) {
 
             },
         },
-        methods:{
+        methods: {
             /**
              * @description: 读取文件
              */
             readFile() {
                 var tmp1;//数据文件存这里
-                var input=document.getElementById("readFile");
+                var input = document.getElementById("readFile");
                 var that = this
-                input.onchange=function () {
+                input.onchange = function () {
                     var file = this.files[0];
-                    if(!!file){
-                        var reader=new FileReader();
-                        reader.readAsText(file,"UTF-8");//UTF-8编码
-                        reader.onload=function () {
-                            tmp1=this.result;
-                            that.$emit("sendJson",this.result)
+                    if (!!file) {
+                        var reader = new FileReader();
+                        reader.readAsText(file, "UTF-8");//UTF-8编码
+                        reader.onload = function () {
+                            tmp1 = this.result;
+                            that.$emit("sendJson", this.result)
                             // console.log(this.result);//打印检查
                         };
                     }
@@ -162,7 +170,7 @@
              * @description: 保存流图数据
              */
             saveFlow() {
-              this.globaldata = this.graph.save()
+                this.globaldata = this.graph.save()
                 console.log(this.graph.save())
                 this.getData(this.globaldata)
                 this.$message({

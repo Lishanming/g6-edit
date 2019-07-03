@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    const imgUrl = require('@/assets/images/222.png')
     export default {
         name: "Event",
         methods:{
@@ -24,6 +25,7 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        // keyShape:'rect',
                                         label:'起始节点',
                                         labelCfg: {
                                             position: 'center',
@@ -48,6 +50,7 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        keyShape:'rect',
                                         label:'常规结点',
                                         labelCfg: {
                                             position: 'center',
@@ -72,6 +75,7 @@
                                         x: ev.x,
                                         y: ev.y,
                                         label:'分叉节点',
+                                        keyShape:'rect',
                                         labelCfg: {
                                             position: 'center',
                                             style: {
@@ -96,6 +100,7 @@
                                         x: ev.x,
                                         y: ev.y,
                                         label:'模型节点',
+                                        keyShape:'rect',
                                         labelCfg: {
                                             position: 'center',
                                             style: {
@@ -117,6 +122,8 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        img:imgUrl,
+                                        keyShape:'rect',
                                         labelCfg: {
                                             position: 'top',
                                             style: {
@@ -124,7 +131,7 @@
                                                 opacity:1,
                                             }
                                         },
-                                        label:'',
+                                        label:' ',
                                         id: this.Util.uniqueId(),
                                         size:[60,60],
                                         shape: 'image',
@@ -139,6 +146,7 @@
                                     this.graph.addItem('node', {
                                         x: ev.x,
                                         y: ev.y,
+                                        keyShape:'rect',
                                         labelCfg: {
                                             position: 'center',
                                             style: {
@@ -199,6 +207,7 @@
                         }
                     }
                 });
+
                 //鼠标右键目标监听，显示右键菜单
                 this.graph.on('contextmenu', (ev) => {
                     let _this = this
@@ -265,16 +274,31 @@
                         this.Redo()
                     }
                 });
+
+
                 //结点点击
                 this.graph.on('node:click', ev => {
                     console.log('node:click', ev)
                     //鼠标手型
                     ev.target.attr('cursor', 'pointer');
                 });
+              //鼠标可以在节点内拖线动
+                this.graph.on('node:mousemove', ev => {
+                    const point = {x: ev.x, y: ev.y};
+                    if(this.graph.addingEdge == true){
+                        this.graph.updateItem(this.graph.edge, {
+                            target: point
+                        });
+                    }
+                });
                 // 鼠标移动到上面，移出结束
                 this.graph.on('node:mouseenter', ev => {
                     const node = ev.item;
-                    this.graph.setItemState(node, 'hover', true);
+                    if(this.graph.addingEdge == true){
+                        this.graph.setItemState(node, 'hover', false);
+                    }else{
+                        this.graph.setItemState(node, 'hover', true);
+                    }
                     //进入编辑状态，可拖拽
                     this.graph.setMode('edit');
                     //鼠标手型
@@ -284,6 +308,11 @@
                     const node = ev.item;
                     this.graph.setItemState(node, 'hover', false);
                 });
+
+
+
+
+
                 //线点击
                 this.graph.on('edge:click', ev => {
                     console.log('edge:click', ev);
