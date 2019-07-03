@@ -34,7 +34,7 @@
                                             }
                                         },
                                         id: this.Util.uniqueId(),
-                                        size: this.defaultSize,
+                                        size: [60,60],
                                         shape: 'myCircle',
                                         style: {
                                             fill: '#FA8C16',
@@ -57,7 +57,7 @@
                                             }
                                         },
                                         id: this.Util.uniqueId(),
-                                        size: this.defaultSize,
+                                        size: [60,60],
                                         shape: 'juxing',
                                         style: {
                                             fill: '#1890FF',
@@ -80,7 +80,7 @@
                                             }
                                         },
                                         id: this.Util.uniqueId(),
-                                        size: this.defaultSize,
+                                        size: [60,60],
                                         shape: 'diamond',
                                         color: 'black',
                                         style: {
@@ -104,8 +104,30 @@
                                             }
                                         },
                                         id: this.Util.uniqueId(),
-                                        size: 9*6,
+                                        size: [90,60],
                                         shape: 'ellipse',
+                                        style: {
+                                            fill: '#722ED1',
+                                            stroke: '#722ED1',
+                                            fillOpacity:0.3
+                                        },
+                                    })
+                                    break
+                                case 'image':
+                                    this.graph.addItem('node', {
+                                        x: ev.x,
+                                        y: ev.y,
+                                        labelCfg: {
+                                            position: 'top',
+                                            style: {
+                                                fill: '#666',
+                                                opacity:1,
+                                            }
+                                        },
+                                        label:'',
+                                        id: this.Util.uniqueId(),
+                                        size:[60,60],
+                                        shape: 'image',
                                         style: {
                                             fill: '#722ED1',
                                             stroke: '#722ED1',
@@ -126,7 +148,7 @@
                                         },
                                         label:'',
                                         id: this.Util.uniqueId(),
-                                        size:this.defaultSize,
+                                        size:[60,60],
                                         shape: 'image',
                                         style: {
                                             fill: '#722ED1',
@@ -146,16 +168,24 @@
                                 _this.currentType = 'node'
                                 // 鼠标点击时获取当前节点id
                                 _this.currentItemId = ev.item._cfg.id
+                                //将当前值关联到右侧属性区域
+                                this.nodeName = ev.item._cfg.model.label;
+                                [this.nodeWidth, this.nodeHeight] = ev.item._cfg.model.size
+                                this.nodeColor = ev.item._cfg.model.style.fill
+                                // this.fontSize = ev.item.model.fontSize
+                                this.shapeValue = ev.item._cfg.model.shape
                                 break
                             case 'edge':
                                 // 鼠标点击时设置当前item类型为edge
                                 _this.currentType = 'edge'
                                 // 鼠标点击时获取当前节点id
                                 _this.currentItemId = ev.item._cfg.id
+                                //将当前值关联到右侧属性区域
                                 this.edgeId = ev.item._cfg.model.id
                                 this.edgeName = ev.item._cfg.model.label
                                     ? ev.item._cfg.model.label.text
                                     : null
+                                this.lineValue = ev.item._cfg.model.shape
                                 break
                             case 'group':
                                 // 鼠标点击时设置当前item类型为group

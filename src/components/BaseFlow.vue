@@ -214,7 +214,7 @@
         data() {
             return {
                 globaldata:'',//画布的数据
-                defaultSize: 8*8,
+                // defaultSize:[60,60],
                 addbegin: false,
                 nodeClick: {},
                 addingEdge: false,
@@ -224,6 +224,14 @@
                 hasClickCopy:false,   //粘贴的使用和禁用
                 step:0,    //用于撤销和重做，保存数据步骤
                 canvasHistory:[],
+                nodeWidth: null,
+                nodeHeight: null,
+                currentAnthorCfg:'',     //用于改变nodeheight时调用createAnthor()
+                currentAnthorGroup:''
+                //锚点相对结点位置
+                // anchorPosition: [
+                //     [0, -30], [0, 30], [30, 0], [-30, 0]
+                // ]
             }
         },
 
@@ -248,7 +256,7 @@
                 const minimap = new Minimap({
                     container: 'minimap',
                 });
-                // debugger
+                // 创建网格
                 const gridPlugin = new Grid();
                 // console.log(gridPlugin)
                 this.Util = G6.Util
@@ -392,7 +400,7 @@
                         } else {
                             graph.edge = graph.addItem('edge', {
                                 id: new Date().getTime(),
-                                shape: 'flow-line',
+                                shape: 'line',
                                 label:'',
                                 source: model.id,
                                 sourceAnchor: graph.currSourceAnchorIndex,
@@ -437,7 +445,6 @@
                     }
                 });
             },
-
             /**
              * x,y为坐标
              * shape为类型，String
@@ -696,7 +703,7 @@
 
                 .detailPannel {
                     width: 100%;
-                    height: 70%;
+                    height: 78%;
                     background: #f7f9fb;
                     border-left: 1px solid #e6e9ed;
                     font-size: 13px;
@@ -767,7 +774,7 @@
 
                 .navigator {
                     width: 100%;
-                    height: 25%;
+                    height: 15%;
                     -webkit-box-flex: 1;
                     -ms-flex-positive: 1;
                     flex-grow: 1;

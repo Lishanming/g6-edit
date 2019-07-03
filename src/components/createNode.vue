@@ -17,82 +17,11 @@
                 G6.registerNode('juxing', {
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
-                        const group = item.getContainer();
-                        const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
-                        if (name === 'hover') {
-                            if (value) {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '1');
-                                }
-                            } else {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '0');
-                                }
-                            }
-                        } else if (name === 'selected') {
-                            if (value) {
-                                group.get('children')[0].attr('lineWidth', '2');
-                            } else {
-                                group.get('children')[0].attr('lineWidth', '1');
-                            }
-                        }
+                        _this.setNodeState(name, value, item)
                     },
                     //绘制后的附加操作
                     afterDraw(cfg, group) {
-                        //锚点相对结点位置
-                        // debugger
-                        let anchorPosition = [
-                            [0, -cfg.size/2], [0, cfg.size/2], [cfg.size/2, 0], [-cfg.size/2, 0]
-                        ]
-                        // this.graph.setItemState(node, 'selected', true);
-                        // group.get('children')[0].on('click',ev=>{
-                        //     // .setState('selected', true)
-                        //     // console.log(ev)
-                        // })
-
-                        //创建锚点构造函数
-                        const Anchor = (index) => {
-                            const anchor = group.addShape('circle', {
-                                attrs: {
-                                    x: anchorPosition[index][0],
-                                    y: anchorPosition[index][1],
-                                    r: 4,
-                                    opacity: 0,
-                                    fill: '#d6fffe',
-                                    stroke: '#55aecc',
-                                    curcor: 'default'
-                                }
-                            });
-                            //鼠标移入锚点
-                            anchor.on('mouseenter', ev => {
-                                //鼠标变为十字形
-                                ev.target.attr('cursor', 'crosshair');
-                                //设置模式为连线
-                                graph.setMode('addEdge');
-                                // debugger
-                                //记录鼠标移入时的锚点索引
-                                if (graph.addingEdge == false || graph == false) {
-                                    graph.currSourceAnchorIndex = index
-                                } else {
-                                    graph.currTargetAnchorIndex = index
-                                }
-                            });
-                            //鼠标松开
-                            anchor.on('mouseup', ev => {
-                                let model = ev.target.getParent()._cfg.item.getModel()
-                                // console.log('0333333', graph, ev)
-                                // debugger
-                                graph.updateItem(graph.edge, {
-                                    target: model.id,
-                                    targetAnchor: graph.currTargetAnchorIndex
-                                });
-                                graph.addingEdge = false
-                            })
-                        }
-                        const topAnchor = new Anchor(0)
-                        const rightAnchor = new Anchor(1)
-                        const bottomAnchor = new Anchor(2)
-                        const leftAnchor = new Anchor(3)
+                      _this.createAnthor(cfg,group)
                     },
                     getAnchorPoints() {
                         return [
@@ -107,25 +36,7 @@
                 G6.registerNode('diamond', {
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
-                        const group = item.getContainer();
-                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
-                        if (name === 'hover') {
-                            if (value) {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '1');
-                                }
-                            } else {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '0');
-                                }
-                            }
-                        } else if (name === 'selected') {
-                            if (value) {
-                                group.get('children')[0].attr('lineWidth', '2');
-                            } else {
-                                group.get('children')[0].attr('lineWidth', '1');
-                            }
-                        }
+                        _this.setNodeState(name, value, item)
                     },
                     draw(cfg, group) {
                         const size = cfg.size || [40, 40]; // 如果没有 size 时的默认大小
@@ -146,74 +57,28 @@
                                 fillOpacity:0.3,
                             }
                         });
-                        // if (cfg.label) { // 如果有文本
-                        //     // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
-                        //     // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
-                        //     // style.text = cfg.label;
-                        //     group.addShape('text', {
-                        //         // attrs: style
-                        //         attrs: {
-                        //             id: new Date().getTime(),
-                        //             x: 0, // 居中
-                        //             y: 5,
-                        //             textAlign: 'center',
-                        //             textBaseline: 'middle',
-                        //             text: cfg.label,
-                        //             fill: '#d6fffe',
-                        //             stroke: '#55aecc',
-                        //         }
-                        //     });
-                        // }
+                        if (cfg.label) { // 如果有文本
+                            // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
+                            // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
+                            // style.text = cfg.label;
+                            group.addShape('text', {
+                                // attrs: style
+                                attrs: {
+                                    id: new Date().getTime(),
+                                    x: 0, // 居中
+                                    y: 0,
+                                    textAlign: 'center',
+                                    textBaseline: 'middle',
+                                    text: cfg.label,
+                                    fill: '#666',
+                                    // stroke: '#55aecc',
+                                }
+                            });
+                        }
                         return shape;
                     },
                     afterDraw(cfg, group) {
-                        //锚点相对结点位置
-                        let anchorPosition = [
-                            [0, -30], [0, 30], [30, 0], [-30, 0]
-                        ]
-                        //创建锚点构造函数
-                        const Anchor = (index) => {
-                            const anchor = group.addShape('circle', {
-                                attrs: {
-                                    x: anchorPosition[index][0],
-                                    y: anchorPosition[index][1],
-                                    r: 4,
-                                    opacity: 0,
-                                    fill: '#d6fffe',
-                                    stroke: '#55aecc',
-                                    curcor: 'default'
-                                }
-                            });
-                            //鼠标移入锚点
-                            anchor.on('mouseenter', ev => {
-                                //鼠标变为十字形
-                                ev.target.attr('cursor', 'crosshair');
-                                //设置模式为连线
-                                graph.setMode('addEdge');
-                                //记录鼠标移入时的锚点索引
-                                if (graph.addingEdge == false || graph == false) {
-                                    graph.currSourceAnchorIndex = index
-                                } else {
-                                    graph.currTargetAnchorIndex = index
-                                }
-                            });
-                            //鼠标松开
-                            anchor.on('mouseup', ev => {
-                                let model = ev.target.getParent()._cfg.item.getModel()
-                                // console.log('0333333', graph, ev)
-                                // debugger
-                                graph.updateItem(graph.edge, {
-                                    target: model.id,
-                                    targetAnchor: graph.currTargetAnchorIndex
-                                });
-                                graph.addingEdge = false
-                            })
-                        }
-                        const topAnchor = new Anchor(0)
-                        const rightAnchor = new Anchor(1)
-                        const bottomAnchor = new Anchor(2)
-                        const leftAnchor = new Anchor(3)
-
+                        _this.createAnthor(cfg,group)
                     },
                     getAnchorPoints() {
                         return [
@@ -228,76 +93,10 @@
                 G6.registerNode('myCircle', {
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
-                        const group = item.getContainer();
-                        // debugger
-                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
-                        if (name === 'hover') {
-                            group.get('children')[1].attr('opacity', '1');
-                            if (value) {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '1');
-                                }
-                            } else {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '0');
-                                }
-                            }
-                        } else if (name === 'selected') {
-                            group.get('children')[1].attr('opacity', '1');
-                            if (value) {
-                                group.get('children')[0].attr('lineWidth', '3');
-                            } else {
-                                group.get('children')[0].attr('lineWidth', '1');
-                            }
-                        }
+                        _this.setNodeState(name, value, item)
                     },
                     afterDraw(cfg, group) {
-                        //锚点相对结点位置
-                        let anchorPosition = [
-                            [0, -30], [0, 30], [30, 0], [-30, 0]
-                        ]
-                        //创建锚点构造函数
-                        const Anchor = (index) => {
-                            const anchor = group.addShape('circle', {
-                                attrs: {
-                                    x: anchorPosition[index][0],
-                                    y: anchorPosition[index][1],
-                                    r: 4,
-                                    opacity: 0,
-                                    fill: '#d6fffe',
-                                    stroke: '#55aecc',
-                                    curcor: 'default',
-                                }
-                            });
-                            //鼠标移入锚点
-                            anchor.on('mouseenter', ev => {
-                                //鼠标变为十字形
-                                ev.target.attr('cursor', 'crosshair');
-                                //设置模式为连线
-                                graph.setMode('addEdge');
-                                //记录鼠标移入时的锚点索引
-                                if (graph.addingEdge == false || graph == false) {
-                                    graph.currSourceAnchorIndex = index
-                                } else {
-                                    graph.currTargetAnchorIndex = index
-                                }
-                            });
-                            //鼠标松开
-                            anchor.on('mouseup', ev => {
-                                let model = ev.target.getParent()._cfg.item.getModel()
-                                // console.log('0333333', graph, ev)
-                                // debugger
-                                graph.updateItem(graph.edge, {
-                                    target: model.id,
-                                    targetAnchor: graph.currTargetAnchorIndex
-                                });
-                                graph.addingEdge = false
-                            })
-                        }
-                        const topAnchor = new Anchor(0)
-                        const rightAnchor = new Anchor(1)
-                        const bottomAnchor = new Anchor(2)
-                        const leftAnchor = new Anchor(3)
+                        _this.createAnthor(cfg,group)
                     },
                     getAnchorPoints() {
                         return [
@@ -312,74 +111,11 @@
                 G6.registerNode('ellipse', {
                     //设置鼠标移入结点时锚点显示
                     setState(name, value, item) {
-                        const group = item.getContainer();
-                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
-                        if (name === 'hover') {
-                            if (value) {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '1');
-                                }
-                            } else {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '0');
-                                }
-                            }
-                        } else if (name === 'selected') {
-                            if (value) {
-                                group.get('children')[0].attr('lineWidth', '3');
-                            } else {
-                                group.get('children')[0].attr('lineWidth', '1');
-                            }
-                        }
+                        _this.setNodeState(name, value, item)
                     },
+                    //创建锚点
                     afterDraw(cfg, group) {
-                        //锚点相对结点位置
-                        let anchorPosition = [
-                            [0, -30], [0, 30], [45, 0], [-45, 0]
-                        ]
-                        //创建锚点构造函数
-                        const Anchor = (index) => {
-                            const anchor = group.addShape('circle', {
-                                attrs: {
-                                    x: anchorPosition[index][0],
-                                    y: anchorPosition[index][1],
-                                    r: 4,
-                                    opacity: 0,
-                                    fill: '#d6fffe',
-                                    stroke: '#55aecc',
-                                    curcor: 'default'
-                                }
-                            });
-                            //鼠标移入锚点
-                            anchor.on('mouseenter', ev => {
-                                //鼠标变为十字形
-                                ev.target.attr('cursor', 'crosshair');
-                                //设置模式为连线
-                                graph.setMode('addEdge');
-                                //记录鼠标移入时的锚点索引
-                                if (graph.addingEdge == false || graph == false) {
-                                    graph.currSourceAnchorIndex = index
-                                } else {
-                                    graph.currTargetAnchorIndex = index
-                                }
-                            });
-                            //鼠标松开
-                            anchor.on('mouseup', ev => {
-                                let model = ev.target.getParent()._cfg.item.getModel()
-                                // console.log('0333333', graph, ev)
-                                // debugger
-                                graph.updateItem(graph.edge, {
-                                    target: model.id,
-                                    targetAnchor: graph.currTargetAnchorIndex
-                                });
-                                graph.addingEdge = false
-                            })
-                        }
-                        const topAnchor = new Anchor(0)
-                        const rightAnchor = new Anchor(1)
-                        const bottomAnchor = new Anchor(2)
-                        const leftAnchor = new Anchor(3)
-
+                        _this.createAnthor(cfg,group)
                     },
                     //设置锚点
                     getAnchorPoints() {
@@ -403,77 +139,31 @@
                                 size: [60, 60],
                                 img: imgUrl
                             }
-                        })
+                        });
+                        if (cfg.label) { // 如果有文本
+                            // 如果需要复杂的文本配置项，可以通过 labeCfg 传入
+                            // const style = (cfg.labelCfg && cfg.labelCfg.style) || {};
+                            // style.text = cfg.label;
+                            group.addShape('text', {
+                                // attrs: style
+                                attrs: {
+                                    id: new Date().getTime(),
+                                    x: 0, // 居中
+                                    y: 0,
+                                    textAlign: 'center',
+                                    textBaseline: 'middle',
+                                    text: cfg.label,
+                                    fill: '#666',
+                                }
+                            });
+                        }
                         return image;
                     },
                     setState(name, value, item) {
-                        const group = item.getContainer();
-                        const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
-                        if (name === 'hover') {
-                            if (value) {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '1');
-                                }
-                            } else {
-                                for (let i = 0; i < shape.length; i++) {
-                                    shape[i].attr('opacity', '0');
-                                }
-                            }
-                        } else if (name === 'selected') {
-                            if (value) {
-                                group.get('children')[0].attr('lineWidth', '3');
-                            } else {
-                                group.get('children')[0].attr('lineWidth', '1');
-                            }
-                        }
+                        _this.setNodeState(name, value, item)
                     },
                     afterDraw(cfg, group) {
-                        //锚点相对结点位置
-                        let anchorPosition = [
-                            [0, -30], [0, 30], [30, 0], [-30, 0]
-                        ]
-                        //创建锚点构造函数
-                        const Anchor = (index) => {
-                            const anchor = group.addShape('circle', {
-                                attrs: {
-                                    x: anchorPosition[index][0],
-                                    y: anchorPosition[index][1],
-                                    r: 4,
-                                    opacity: 0,
-                                    fill: '#d6fffe',
-                                    stroke: '#55aecc',
-                                    curcor: 'default',
-                                }
-                            });
-                            //鼠标移入锚点
-                            anchor.on('mouseenter', ev => {
-                                //鼠标变为十字形
-                                ev.target.attr('cursor', 'crosshair');
-                                //设置模式为连线
-                                graph.setMode('addEdge');
-                                //记录鼠标移入时的锚点索引
-                                if (graph.addingEdge == false || graph == false) {
-                                    graph.currSourceAnchorIndex = index
-                                } else {
-                                    graph.currTargetAnchorIndex = index
-                                }
-                            });
-                            //鼠标松开
-                            anchor.on('mouseup', ev => {
-                                let model = ev.target.getParent()._cfg.item.getModel()
-                                // console.log('0333333', graph, ev)
-                                // debugger
-                                graph.updateItem(graph.edge, {
-                                    target: model.id,
-                                    targetAnchor: graph.currTargetAnchorIndex
-                                });
-                                graph.addingEdge = false
-                            })
-                        }
-                        const topAnchor = new Anchor(0)
-                        const rightAnchor = new Anchor(1)
-                        const bottomAnchor = new Anchor(2)
-                        const leftAnchor = new Anchor(3)
+                        _this.createAnthor(cfg,group)
                     },
                     getAnchorPoints() {
                         return [
@@ -485,6 +175,82 @@
                     }
                 }, 'image');
             },
+            //创建锚点
+            createAnthor(cfg,group){
+                //锚点相对结点位置
+                // debugger
+                // this.currentAnthorCfg = cfg
+                // this.currentAnthorGroup = group
+                let anchorPosition = [
+                    [0, -cfg.size[1]/2], [0, cfg.size[1]/2], [cfg.size[0]/2, 0], [-cfg.size[0]/2, 0]
+                ]
+                // debugger
+                //创建锚点构造函数
+                const Anchor = (index) => {
+                    const anchor = group.addShape('circle', {
+                        attrs: {
+                            x: anchorPosition[index][0],
+                            y: anchorPosition[index][1],
+                            r: 4,
+                            opacity: 0,
+                            fill: '#d6fffe',
+                            stroke: '#55aecc',
+                            curcor: 'default'
+                        }
+                    });
+                    //鼠标移入锚点
+                    anchor.on('mouseenter', ev => {
+                        //鼠标变为十字形
+                        ev.target.attr('cursor', 'crosshair');
+                        //设置模式为连线
+                        this.graph.setMode('addEdge');
+                        // debugger
+                        //记录鼠标移入时的锚点索引
+                        if (this.graph.addingEdge == false || this.graph == false) {
+                            this.graph.currSourceAnchorIndex = index
+                        } else {
+                            this.graph.currTargetAnchorIndex = index
+                        }
+                    });
+                    //鼠标松开
+                    anchor.on('mouseup', ev => {
+                        let model = ev.target.getParent()._cfg.item.getModel()
+                        // console.log('0333333', graph, ev)
+                        // debugger
+                        this.graph.updateItem(this.graph.edge, {
+                            target: model.id,
+                            targetAnchor: this.graph.currTargetAnchorIndex
+                        });
+                        this.graph.addingEdge = false
+                    })
+                }
+                const topAnchor = new Anchor(0)
+                const rightAnchor = new Anchor(1)
+                const bottomAnchor = new Anchor(2)
+                const leftAnchor = new Anchor(3)
+            },
+            //设置状态
+            setNodeState(name, value, item){
+                const group = item.getContainer();
+                const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
+                if (name === 'hover') {
+                    if (value) {
+                        for (let i = 0; i < shape.length; i++) {
+                            shape[i].attr('opacity', '1');
+                        }
+                    } else {
+                        for (let i = 0; i < shape.length; i++) {
+                            shape[i].attr('opacity', '0');
+                        }
+                    }
+                } else if (name === 'selected') {
+                    if (value) {
+                        group.get('children')[0].attr('lineWidth', '2');
+                    } else {
+                        group.get('children')[0].attr('lineWidth', '1');
+                    }
+                }
+            }
         }
     }
 </script>
