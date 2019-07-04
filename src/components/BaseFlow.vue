@@ -10,11 +10,11 @@
         </div>
         <div class="content" id="content">
             <div id="itemPannel" class="itemPannel">
-                <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" @click="addNode"></i>
-                <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" @click="addNode"></i>
-                <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" @click="addNode"></i>
-                <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" @click="addNode"></i>
-                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" @click="addNode">
+                <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" @mousedown="addNode"></i>
+                <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" @mousedown="addNode"></i>
+                <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" @mousedown="addNode"></i>
+                <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" @mousedown="addNode"></i>
+<!--                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" @mousedown="addNode">-->
 <!--                <i class="item iconfont icon-people people" data-shape="image" title="图形结点" @click="addNode"></i>-->
             </div>
             <div class="center-pannel">
@@ -274,6 +274,7 @@
                         }, 'click-select',],
                         edit: ['drag-node', 'click-select'],
                         addEdge: ['click-add-edge', 'click-select'],
+                        dragNode:['init-drag-node']
                     },
                     defaultEdge: {
                         shape: 'polyline',
@@ -345,8 +346,36 @@
              * size为大小，数组
              * **/
             addNode(e) {
+                //点击添加图片的开关
                 this.addbegin = true
                 this.nodeClick = e.target
+                //设置模式为拖拽
+                this.graph.setMode('dragNode');
+                const graph = this.graph
+                 console.log('getCurrentMode:',  this.graph.getCurrentMode())
+                //画出阴影
+                graph.node =  graph.addItem('node', {
+                    x: 0,
+                    y: 0,
+                    // keyShape:'rect',
+                    label: '1212121',
+                    labelCfg: {
+                        position: 'center',
+                        style: {
+                            fill: '#666',
+                            opacity: 0.3,
+                            zIndex: 10
+                        }
+                    },
+                    id: this.Util.uniqueId(),
+                    size: [60, 60],
+                    shape: 'myCircle',
+                    style: {
+                        fill: '#FA8C16',
+                        stroke: '#FA8C16',
+                        fillOpacity: 0.3
+                    },
+                });
             },
             //鼠标右键删除
             Delete(ev){
