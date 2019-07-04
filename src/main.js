@@ -10,6 +10,7 @@ import '@/assets/fonts/iconfont.css';
 // import Grid from "@antv/g6/build/grid"
 // import Net from "@antv/g6/build/net"
 
+
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 // Vue.prototype.G6 = G6

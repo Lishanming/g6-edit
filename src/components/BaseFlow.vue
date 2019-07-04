@@ -345,37 +345,16 @@
              * shape为类型，String
              * size为大小，数组
              * **/
-            addNode(e) {
+            addNode(ev) {
                 //点击添加图片的开关
                 this.addbegin = true
-                this.nodeClick = e.target
+                this.nodeClick = ev.target
+
                 //设置模式为拖拽
                 this.graph.setMode('dragNode');
                 const graph = this.graph
                  console.log('getCurrentMode:',  this.graph.getCurrentMode())
-                //画出阴影
-                graph.node =  graph.addItem('node', {
-                    x: 0,
-                    y: 0,
-                    // keyShape:'rect',
-                    label: '1212121',
-                    labelCfg: {
-                        position: 'center',
-                        style: {
-                            fill: '#666',
-                            opacity: 0.3,
-                            zIndex: 10
-                        }
-                    },
-                    id: this.Util.uniqueId(),
-                    size: [60, 60],
-                    shape: 'myCircle',
-                    style: {
-                        fill: '#FA8C16',
-                        stroke: '#FA8C16',
-                        fillOpacity: 0.3
-                    },
-                });
+                this.initDragNode(ev)
             },
             //鼠标右键删除
             Delete(ev){

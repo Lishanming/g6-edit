@@ -4,6 +4,7 @@
 
 <script>
     import * as Tool from  '@/util/point'
+    import { _throttle,_debounce } from "@/util/throttle";
     export default {
         name: "addLine",
         methods:{
@@ -89,9 +90,9 @@
                         let graph = this.graph
                         //是否正在画线，并且线是否存在
                         if (graph.addingEdge && graph.edge) {
-                            graph.updateItem(graph.edge, {
-                                target: point
-                            });
+                                graph.updateItem(graph.edge, {
+                                    target: point
+                                })
                         }
 
                     },
