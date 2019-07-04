@@ -10,56 +10,56 @@
             //事件相关
             Event(){
                 //点击事件，判断目标类型
-                this.graph.on('click', (ev) => {
-                    let _this = this
-                    //设置为default
-                    this.graph.setMode('default');
-                    console.log('getCurrentMode:',  this.graph.getCurrentMode())
-                    //鼠标左键时去掉右键菜单
-                    _this.currentMenu = ''
-                    // console.log("click",ev)
-                    if (ev.item == null) {
-                        _this.currentType = 'graph'
+                // this.graph.on('click', (ev) => {
+                //     let _this = this
+                //     //设置为default
+                //     this.graph.setMode('default');
+                //     console.log('getCurrentMode:',  this.graph.getCurrentMode())
+                //     //鼠标左键时去掉右键菜单
+                //     _this.currentMenu = ''
+                //     // console.log("click",ev)
+                //     if (ev.item == null) {
+                //         _this.currentType = 'graph'
 
-                    } else {
-                        let type = ev.item.getType()
-                        switch (type) {
-                            case 'node':
-                                // 鼠标点击时设置当前节点类型
-                                _this.currentType = 'node'
-                                // 鼠标点击时获取当前节点id
-                                _this.currentItemId = ev.item._cfg.id
-                                //将当前值关联到右侧属性区域
-                                this.nodeName = ev.item._cfg.model.label;
-                                [this.nodeWidth, this.nodeHeight] = ev.item._cfg.model.size
-                                this.nodeColor = ev.item._cfg.model.style.fill
-                                // this.fontSize = ev.item.model.fontSize
-                                this.shapeValue = ev.item._cfg.model.shape
-                                break
-                            case 'edge':
-                                // 鼠标点击时设置当前item类型为edge
-                                _this.currentType = 'edge'
-                                // 鼠标点击时获取当前节点id
-                                _this.currentItemId = ev.item._cfg.id
-                                //将当前值关联到右侧属性区域
-                                this.edgeId = ev.item._cfg.model.id
-                                this.edgeName = ev.item._cfg.model.label
-                                    ? ev.item._cfg.model.label.text
-                                    : null
-                                this.lineValue = ev.item._cfg.model.shape
-                                break
-                            case 'group':
-                                // 鼠标点击时设置当前item类型为group
-                                _this.currentType = 'group'
-                                // 鼠标点击时获取当前节点id
-                                _this.currentItemId = ev.item._cfg.id
-                                break
-                            default:
+                //     } else {
+                //         let type = ev.item.getType()
+                //         switch (type) {
+                //             case 'node':
+                //                 // 鼠标点击时设置当前节点类型
+                //                 _this.currentType = 'node'
+                //                 // 鼠标点击时获取当前节点id
+                //                 _this.currentItemId = ev.item._cfg.id
+                //                 //将当前值关联到右侧属性区域
+                //                 this.nodeName = ev.item._cfg.model.label;
+                //                 [this.nodeWidth, this.nodeHeight] = ev.item._cfg.model.size
+                //                 this.nodeColor = ev.item._cfg.model.style.fill
+                //                 // this.fontSize = ev.item.model.fontSize
+                //                 this.shapeValue = ev.item._cfg.model.shape
+                //                 break
+                //             case 'edge':
+                //                 // 鼠标点击时设置当前item类型为edge
+                //                 _this.currentType = 'edge'
+                //                 // 鼠标点击时获取当前节点id
+                //                 _this.currentItemId = ev.item._cfg.id
+                //                 //将当前值关联到右侧属性区域
+                //                 this.edgeId = ev.item._cfg.model.id
+                //                 this.edgeName = ev.item._cfg.model.label
+                //                     ? ev.item._cfg.model.label.text
+                //                     : null
+                //                 this.lineValue = ev.item._cfg.model.shape
+                //                 break
+                //             case 'group':
+                //                 // 鼠标点击时设置当前item类型为group
+                //                 _this.currentType = 'group'
+                //                 // 鼠标点击时获取当前节点id
+                //                 _this.currentItemId = ev.item._cfg.id
+                //                 break
+                //             default:
 
-                                break
-                        }
-                    }
-                });
+                //                 break
+                //         }
+                //     }
+                // });
 
                 //鼠标右键目标监听，显示右键菜单
                 this.graph.on('contextmenu', (ev) => {
@@ -141,6 +141,11 @@
                     if(this.graph.addingEdge == true){
                         this.graph.updateItem(this.graph.edge, {
                             target: point
+                        });
+                    }
+                    if(this.addbegin== true){
+                        this.graph.updateItem(this.graph.node, {
+                            ... point
                         });
                     }
                 });
