@@ -231,9 +231,10 @@
             },
             //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){
+                // debugger
+                node._cfg.group._cfg.children[4]._attrs.y = cfg.size[1]/2       //上右下左 [60,80]
+                node._cfg.group._cfg.children[3]._attrs.x = cfg.size[0]/2
                 node._cfg.group._cfg.children[2]._attrs.y = -cfg.size[1]/2
-                node._cfg.group._cfg.children[3]._attrs.x = cfg.size[1]/2
-                node._cfg.group._cfg.children[4]._attrs.y = cfg.size[0]/2
                 node._cfg.group._cfg.children[5]._attrs.x = -cfg.size[0]/2
             },
         }
