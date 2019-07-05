@@ -165,11 +165,13 @@
                             curcor: 'default'
                         }
                     });
+                    anchor.on('mouseenter',ev=>{
+                        //鼠标变为十字形
+                        ev.target.attr('cursor', 'crosshair');
+                    })
                     //鼠标移入锚点
                     anchor.on('mousedown', ev => {
                         console.log('anchor:mousedown')
-                        //鼠标变为十字形
-                        ev.target.attr('cursor', 'crosshair');
                         //设置模式为连线
                         this.graph.setMode('addEdge');
                         // debugger
