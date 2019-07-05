@@ -9,11 +9,12 @@
             </div>
         </div>
         <div class="content" id="content">
-            <div id="itemPannel" class="itemPannel" draggable="false">
-                <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" draggable="false" @mousedown="addNode"></i>
+            <div id="itemPannel" class="itemPannel">
+                <!-- <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" draggable="false" @mousedown="addNode"></i>
                 <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" draggable="false" @mousedown="addNode"></i>
                 <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" draggable="false" @mousedown="addNode"></i>
-                <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" draggable="false" @mousedown="addNode"></i>
+                <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" draggable="false" @mousedown="addNode"></i> -->
+                <left-bar @mousedown="addNode"></left-bar>
 <!--                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" draggable="false" @mousedown="addNode" >-->
 <!--                <i class="item iconfont icon-people people" data-shape="image" title="图形结点" @click="addNode"></i>-->
             </div>
@@ -196,6 +197,7 @@
     import Event from '@/components/Event'
     import addLine from '@/components/addLine'
     import addNodeByDrag from '@/components/addNodeByDrag'
+    import LeftBar from '@/components/leftBar'
     import ToolPannel from '@/components/component/tool-pannel'
 
     const G6 = require('@antv/g6')
@@ -207,6 +209,7 @@
         mixins: [attributes,createNode,Event,addLine,addNodeByDrag],
         components: {
             ToolPannel,
+            LeftBar
             // ContextMenu
         },
         props: {
