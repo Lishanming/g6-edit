@@ -166,7 +166,8 @@
                         }
                     });
                     //鼠标移入锚点
-                    anchor.on('mouseenter', ev => {
+                    anchor.on('mousedown', ev => {
+                        console.log('anchor:mousedown')
                         //鼠标变为十字形
                         ev.target.attr('cursor', 'crosshair');
                         //设置模式为连线
@@ -179,13 +180,14 @@
                             this.graph.currTargetAnchorIndex = index
                         }
                     });
-                    // anchor.on('mouseleave', ev => {
-                    //     // debugger
-                    //     //记录鼠标移入时的锚点索引
-                    //     if (this.graph.addingEdge == false ) {
-                    //         this.graph.setMode('default');
-                    //     }
-                    // });
+                    anchor.on('mouseout', ev => {
+                        // debugger
+                        console.log('anchor:mouseout')
+                        //记录鼠标移入时的锚点索引
+                        // if (this.graph.addingEdge == false ) {
+                        //     this.graph.setMode('default');
+                        // }
+                    });
                     //鼠标松开，
                     anchor.on('mouseup', ev => {
                         //      需要判断目标锚点是否属于当前节点

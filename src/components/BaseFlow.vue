@@ -9,12 +9,12 @@
             </div>
         </div>
         <div class="content" id="content">
-            <div id="itemPannel" class="itemPannel">
-                <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" @mousedown="addNode"></i>
-                <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" @mousedown="addNode"></i>
-                <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" @mousedown="addNode"></i>
-                <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" @mousedown="addNode"></i>
-<!--                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" @mousedown="addNode">-->
+            <div id="itemPannel" class="itemPannel" draggable="false">
+                <i class="item iconfont icon-circle circle" data-shape="yuan" title="起始结点" draggable="false" @mousedown="addNode"></i>
+                <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" draggable="false" @mousedown="addNode"></i>
+                <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" draggable="false" @mousedown="addNode"></i>
+                <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" draggable="false" @mousedown="addNode"></i>
+<!--                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" draggable="false" @mousedown="addNode" >-->
 <!--                <i class="item iconfont icon-people people" data-shape="image" title="图形结点" @click="addNode"></i>-->
             </div>
             <div class="center-pannel">
@@ -271,7 +271,7 @@
                         default: ['drag-canvas', {
                             type: 'zoom-canvas',
                             sensitivity: 5
-                        }, 'click-select',],
+                        }, 'click-select','drag-node'],
                         edit: ['drag-node', 'click-select'],
                         addEdge: ['click-add-edge', 'click-select'],
                         dragNode:['init-drag-node']
@@ -510,7 +510,9 @@
                 flex-wrap: wrap;
                 flex-direction: row;
                 align-content: start;
-
+                img{
+                    cursor: pointer;
+                }
                 .item {
                     width: 80px;
                     height: 80px;

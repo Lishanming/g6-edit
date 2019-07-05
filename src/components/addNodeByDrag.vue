@@ -41,6 +41,8 @@
                         _this.realCreateNode(ev)
                         //点击添加图片的开关
                         _this.addbegin = false
+                        //转换为默认模式
+                        this.graph.setMode('default');
                     }
                 });
             },

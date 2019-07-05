@@ -158,6 +158,8 @@
                     }
 
                 });
+
+
                 this.graph.on('node:mouseup', ev => {
                     //拖出节点
                     const graph = this.graph
@@ -176,6 +178,7 @@
                 });
                 // 鼠标移动到上面，移出结束
                 this.graph.on('node:mouseenter', ev => {
+                    console.log('node:mouseenter')
                     const node = ev.item;
                     if (this.graph.addingEdge == true) {
                         this.graph.setItemState(node, 'hover', false);
