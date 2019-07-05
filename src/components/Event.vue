@@ -62,7 +62,17 @@
                         }
                     }
                 });
-
+                this.graph.on('mousemove',(ev) =>{
+                    const graph = this.graph
+                    const point = {x: ev.x, y: ev.y};
+                    // //使节点跟随
+                    if (this.addbegin == true) {
+                        if(!graph.node){return;}
+                        this.graph.updateItem(this.graph.node, {
+                            ...point
+                        })
+                    }
+                })
                 //鼠标右键目标监听，显示右键菜单
                 this.graph.on('contextmenu', (ev) => {
                     let _this = this
@@ -146,14 +156,7 @@
                             target: point
                         })
                     }
-                    // //使节点跟随
-                    if (this.addbegin == true) {
-                        if(!graph.node){return;}
-                        graph.node.setCapture();
-                        this.graph.updateItem(this.graph.node, {
-                            ...point
-                        })
-                    }
+
                 });
                 this.graph.on('node:mouseup', ev => {
                     //拖出节点

@@ -16,12 +16,12 @@
                     getEvents() {
                         return {
                             'mousemove': 'onMousemove',       // 注册一个阴影节点跟随
-                            'mouseup': 'onMouseup'        // 点击画布，addItem
+                            'dragend': 'onMouseup'        // 点击画布，addItem
                         };
                     },
                     //鼠标移动，画线跟随
                     onMousemove(ev) {
-                        console.log('drag:onMousemove', ev)
+                        // console.log('drag:onMousemove', ev)
                         // debugger
                         const point = {x: ev.x, y: ev.y};
 
@@ -48,159 +48,166 @@
                 let _this = this;
                 // debugger
                 const graph = this.graph
-                switch (_this.nodeClick.getAttribute('data-shape')) {
-                    case 'yuan':
-                        // debugger
-                        graph.node = this.graph.addItem('node', {
-                            x: -60,
-                            y: -60,
-                            // keyShape:'rect',
-                            label: '起始节点',
-                            labelCfg: {
-                                position: 'center',
-                                style: {
-                                    fill: '#666',
-                                    opacity: 0.3,
-                                    zIndex: 10
-                                }
-                            },
-                            // id: this.Util.uniqueId(),
-                            size: [60, 60],
-                            shape: 'myCircle',
-                            style: {
-                                fill: '#FA8C16',
-                                stroke: '#FA8C16',
-                                fillOpacity: 0.1,
-                                borderStyle: 'dashed'
-                            },
-                        })
-                        break
-                    case 'juxing':
-                        // 矩形
-                        graph.node = this.graph.addItem('node', {
-                            x: -60,
-                            y: -60,
-                            keyShape: 'rect',
-                            label: '常规节点',
-                            labelCfg: {
-                                position: 'center',
-                                style: {
-                                    fill: '#666',
-                                    opacity: 0.3,
-                                }
-                            },
-                            // id: this.Util.uniqueId(),
-                            size: [60, 60],
-                            shape: 'juxing',
-                            style: {
-                                fill: '#1890FF',
-                                stroke: '#1890FF',
-                                fillOpacity: 0.1,
-                                borderStyle: 'dashed'
-                            },
-                        })
-                        break
-                    case 'diamond':
-                        // 菱形
-                        graph.node = this.graph.addItem('node', {
-                            x: -60,
-                            y: -60,
-                            label: '分叉节点',
-                            keyShape: 'rect',
-                            labelCfg: {
-                                position: 'center',
-                                style: {
-                                    fill: '#666',
-                                    opacity: 0.3,
-                                }
-                            },
-                            // id: this.Util.uniqueId(),
-                            size: [60, 60],
-                            shape: 'diamond',
-                            color: 'black',
-                            style: {
-                                fill: '#13C2C2',
-                                stroke: '#13C2C2',
-                                fillOpacity: 0.1,
-                                borderStyle: 'dashed'
-                            },
-                        })
-                        break
-                    case 'ellipse':
-                        // 椭圆
-                        graph.node = this.graph.addItem('node', {
-                            x: -60,
-                            y: -60,
-                            label: '模型节点',
-                            keyShape: 'rect',
-                            labelCfg: {
-                                position: 'center',
-                                style: {
-                                    fill: '#666',
-                                    opacity: 0.3,
-                                }
-                            },
-                            // id: this.Util.uniqueId(),
-                            size: [90, 60],
-                            shape: 'ellipse',
-                            style: {
-                                fill: '#722ED1',
-                                stroke: '#722ED1',
-                                fillOpacity: 0.1,
-                                borderStyle: 'dashed'
-                            },
-                        })
-                        break
-                    case 'image':
-                        graph.node = this.graph.addItem('node', {
-                            x: -60,
-                            y: -60,
-                            img: imgUrl,
-                            keyShape: 'rect',
-                            labelCfg: {
-                                position: 'top',
-                                style: {
-                                    fill: '#666',
-                                    opacity: 0.3,
-                                }
-                            },
-                            label: '图片',
-                            // id: this.Util.uniqueId(),
-                            size: [60, 60],
-                            shape: 'image',
-                            style: {
-                                fill: '#722ED1',
-                                stroke: '#722ED1',
-                                fillOpacity: 0.1,
-                                borderStyle: 'dashed'
-                            },
-                        })
-                        break
-                    default:
-                        graph.node = this.graph.addItem('node', {
-                            x: -60,
-                            y: -60,
-                            keyShape: 'rect',
-                            labelCfg: {
-                                position: 'center',
-                                style: {
-                                    fill: '#666',
-                                    opacity: 0.3,
-                                }
-                            },
-                            label: '',
-                            // id: this.Util.uniqueId(),
-                            size: [60, 60],
-                            shape: 'image',
-                            style: {
-                                fill: '#722ED1',
-                                stroke: '#722ED1',
-                                fillOpacity: 0.1,
-                                borderStyle: 'dashed'
-                            },
-                        })
-                        break
-                }
+                graph.node = this.graph.addItem('node', {
+                                    x: -60,
+                                    y: -60,
+                                    size: [60, 60],
+                                    shape: 'rect',
+
+                                })
+                // switch (_this.nodeClick.getAttribute('data-shape')) {
+                //     case 'yuan':
+                //         // debugger
+                //         graph.node = this.graph.addItem('node', {
+                //             x: -60,
+                //             y: -60,
+                //             // keyShape:'rect',
+                //             label: '起始节点',
+                //             labelCfg: {
+                //                 position: 'center',
+                //                 style: {
+                //                     fill: '#666',
+                //                     opacity: 0.3,
+                //                     zIndex: 10
+                //                 }
+                //             },
+                //             // id: this.Util.uniqueId(),
+                //             size: [60, 60],
+                //             shape: 'myCircle',
+                //             style: {
+                //                 fill: '#FA8C16',
+                //                 stroke: '#FA8C16',
+                //                 fillOpacity: 0.1,
+                //                 borderStyle: 'dashed'
+                //             },
+                //         })
+                //         break
+                //     case 'juxing':
+                //         // 矩形
+                //         graph.node = this.graph.addItem('node', {
+                //             x: -60,
+                //             y: -60,
+                //             keyShape: 'rect',
+                //             label: '常规节点',
+                //             labelCfg: {
+                //                 position: 'center',
+                //                 style: {
+                //                     fill: '#666',
+                //                     opacity: 0.3,
+                //                 }
+                //             },
+                //             // id: this.Util.uniqueId(),
+                //             size: [60, 60],
+                //             shape: 'juxing',
+                //             style: {
+                //                 fill: '#1890FF',
+                //                 stroke: '#1890FF',
+                //                 fillOpacity: 0.1,
+                //                 borderStyle: 'dashed'
+                //             },
+                //         })
+                //         break
+                //     case 'diamond':
+                //         // 菱形
+                //         graph.node = this.graph.addItem('node', {
+                //             x: -60,
+                //             y: -60,
+                //             label: '分叉节点',
+                //             keyShape: 'rect',
+                //             labelCfg: {
+                //                 position: 'center',
+                //                 style: {
+                //                     fill: '#666',
+                //                     opacity: 0.3,
+                //                 }
+                //             },
+                //             // id: this.Util.uniqueId(),
+                //             size: [60, 60],
+                //             shape: 'diamond',
+                //             color: 'black',
+                //             style: {
+                //                 fill: '#13C2C2',
+                //                 stroke: '#13C2C2',
+                //                 fillOpacity: 0.1,
+                //                 borderStyle: 'dashed'
+                //             },
+                //         })
+                //         break
+                //     case 'ellipse':
+                //         // 椭圆
+                //         graph.node = this.graph.addItem('node', {
+                //             x: -60,
+                //             y: -60,
+                //             label: '模型节点',
+                //             keyShape: 'rect',
+                //             labelCfg: {
+                //                 position: 'center',
+                //                 style: {
+                //                     fill: '#666',
+                //                     opacity: 0.3,
+                //                 }
+                //             },
+                //             // id: this.Util.uniqueId(),
+                //             size: [90, 60],
+                //             shape: 'ellipse',
+                //             style: {
+                //                 fill: '#722ED1',
+                //                 stroke: '#722ED1',
+                //                 fillOpacity: 0.1,
+                //                 borderStyle: 'dashed'
+                //             },
+                //         })
+                //         break
+                //     case 'image':
+                //         graph.node = this.graph.addItem('node', {
+                //             x: -60,
+                //             y: -60,
+                //             img: imgUrl,
+                //             keyShape: 'rect',
+                //             labelCfg: {
+                //                 position: 'top',
+                //                 style: {
+                //                     fill: '#666',
+                //                     opacity: 0.3,
+                //                 }
+                //             },
+                //             label: '图片',
+                //             // id: this.Util.uniqueId(),
+                //             size: [60, 60],
+                //             shape: 'image',
+                //             style: {
+                //                 fill: '#722ED1',
+                //                 stroke: '#722ED1',
+                //                 fillOpacity: 0.1,
+                //                 borderStyle: 'dashed'
+                //             },
+                //         })
+                //         break
+                //     default:
+                //         graph.node = this.graph.addItem('node', {
+                //             x: -60,
+                //             y: -60,
+                //             keyShape: 'rect',
+                //             labelCfg: {
+                //                 position: 'center',
+                //                 style: {
+                //                     fill: '#666',
+                //                     opacity: 0.3,
+                //                 }
+                //             },
+                //             label: '',
+                //             // id: this.Util.uniqueId(),
+                //             size: [60, 60],
+                //             shape: 'image',
+                //             style: {
+                //                 fill: '#722ED1',
+                //                 stroke: '#722ED1',
+                //                 fillOpacity: 0.1,
+                //                 borderStyle: 'dashed'
+                //             },
+                //         })
+                //         break
+                // }
             },
             realCreateNode(ev) {
                 let _this = this;
