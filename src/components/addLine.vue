@@ -12,24 +12,41 @@
                 G6.registerEdge('flow-line', {
                     getControlPoints(cfg) {
                         // console.log(cfg.sourceAnchor)
-                        // console.log(cfg.targetAnchor)
-                        // console.log(cfg)
-                        // debugger;
+                        // console.log(cfg.targetAnchor)getBBox
+                        console.log(cfg)
+                        console.log('画了一条flow-line');
+                        
                         if (cfg.shape == 'flow-line' && cfg.sourceAnchor!=undefined&& cfg.targetAnchor!=undefined) {
-                            // console.log('pppppppppppppppppppppppppppppp');
-
-                            let {startPoint,endPoint,sourceAnchor,targetAnchor} = cfg
-                            // console.log(startPoint);
-                            // console.log(endPoint);
-                            //先得到两个辅助点
+                            
+                            //2种折线：1折线，2折线
+                            //先分析起始节点，目标节点的位置关系
+                            let {sourceNode,targetNode,startPoint,endPoint,sourceAnchor,targetAnchor} = cfg
+                            let sourceBBox = sourceNode.getBBox()
+                            let targetBBox = targetNode.getBBox()
+                            // debugger;
+                            //两个辅助点
                             let sourceAssistPoint = Tool.getAssistPoint(startPoint,sourceAnchor)
                             let targetAssistPoint = Tool.getAssistPoint(endPoint,targetAnchor)
-                            //再得到两个折点
-                            // debugger;
-                            let brokenPoint = Tool.getBrokenPoint(sourceAssistPoint,targetAssistPoint)
-                            // console.log([sourceAssistPoint,...brokenPoint,targetAssistPoint]);
 
-                            return [sourceAssistPoint,...brokenPoint,targetAssistPoint]
+                            if (Tool.isCover(sourceBBox,targetBBox)) {
+                                return []
+                            }else {
+                                //现在两个节点在x,y轴上不重叠，接着需要判断是画1折线 or 2折线
+                                //这里有个算法，以起点辅助点，终点辅助点做对角线，形成的区域记作A,起始节点和终点如果被A淹没，记作X淹没，Y淹没，如果两个节点都淹没，并且淹没类型相同，则为2折线
+                                //淹没：把图形沿着X，Y轴延展，最后形成一个十字架
+                                // debugger;
+                                let flood1 = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox)
+                                let flood2 = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)
+                                if (Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox) == Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)) {
+                                    //2折线
+                                    let brokenPoint = Tool.getTwoBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
+                                    return [sourceAssistPoint,...brokenPoint,targetAssistPoint]
+                                }else {
+                                    //1折线
+                                    let brokenPoint = Tool.getOneBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
+                                    return [sourceAssistPoint,brokenPoint,targetAssistPoint]
+                                }
+                            }
                         }else {
                             return []
                         }
@@ -64,7 +81,7 @@
                         } else {
                             graph.edge = graph.addItem('edge', {
                                 id: new Date().getTime(),
-                                shape: 'line',
+                                shape: 'flow-line',
                                 label:'',
                                 source: model.id,
                                 sourceAnchor: graph.currSourceAnchorIndex,
