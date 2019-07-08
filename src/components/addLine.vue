@@ -29,7 +29,19 @@
                             let targetAssistPoint = Tool.getAssistPoint(endPoint,targetAnchor)
 
                             if (Tool.isCover(sourceBBox,targetBBox)) {
-                                return []
+
+                                let sourceFloodType = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox)
+                                let targetFloodType = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)
+                                if (sourceFloodType == targetFloodType && sourceFloodType!='O') {
+                                    //2折线
+                                    let brokenPoint = Tool.getTwoBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
+                                    return [sourceAssistPoint,...brokenPoint,targetAssistPoint]
+                                }else {
+                                    //1折线
+                                    let brokenPoint = Tool.getOneBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
+                                    return [sourceAssistPoint,brokenPoint,targetAssistPoint]
+                                }
+                                // return []
                             }else {
                                 //现在两个节点在x,y轴上不重叠，接着需要判断是画1折线 or 2折线
                                 //这里有个算法，以起点辅助点，终点辅助点做对角线，形成的区域记作A,起始节点和终点如果被A淹没，记作X淹没，Y淹没，如果两个节点都淹没，并且淹没类型相同，则为2折线

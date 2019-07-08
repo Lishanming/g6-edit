@@ -100,8 +100,8 @@ export function isCover(sourceBBox,targetBBox) {
 }
 
 //这个算法有点问题，存在 3，6，6的情况，也就是min，max判断不准确
-export function getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox) {
-    let {x,y,width,height} = sourceBBox
+export function getFloodType(sourceAssistPoint,targetAssistPoint,bBox,isOverFlow) {
+    let {x,y,width,height} = bBox
     let startX = Math.min(sourceAssistPoint.x,targetAssistPoint.x)
     let ednX = Math.max(sourceAssistPoint.x,targetAssistPoint.x)
     let startY = Math.min(sourceAssistPoint.y,targetAssistPoint.y)
