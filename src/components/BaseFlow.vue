@@ -356,7 +356,7 @@
                 //设置模式为拖拽
                 this.graph.setMode('dragNode');
                 const graph = this.graph
-                 console.log('getCurrentMode:',  this.graph.getCurrentMode())
+                //  console.log('getCurrentMode:',  this.graph.getCurrentMode())
                 this.initDragNode(ev)
             },
             //鼠标右键删除
@@ -370,7 +370,7 @@
             },
             //鼠标右键复制
             Copy(ev){
-                console.log('copy',ev)
+                // console.log('copy',ev)
                 //没有选中任何节点，则不显示粘贴选项
                 if(ev != undefined){
                     //点击复制之后才显示粘贴
@@ -381,7 +381,7 @@
             },
             //鼠标右键粘贴
             Parse(ev){
-                console.log('parse',ev)
+                // console.log('parse',ev)
                 // debugger
                 if(ev != undefined){
                     //将复制到鼠标点击的位置
@@ -398,7 +398,7 @@
             },
             //鼠标右键撤销
             Undo(){
-                console.log('cexiao')
+                // console.log('cexiao')
                 // debugger
                 if (this.step >= 0) {
                     this.step--;

@@ -47,7 +47,7 @@ export default {
     },
     methods:{
         selectNode(ev){
-            console.log(ev);
+            // console.log(ev);
             if (ev.target.tagName == 'IMG') {
                 this.$emit('mousedown',ev)
             }else {

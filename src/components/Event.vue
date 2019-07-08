@@ -16,7 +16,7 @@
                     //设置为default
                     // debugger
                     this.graph.setMode('default');
-                    console.log('getCurrentMode:', this.graph.getCurrentMode())
+                    // console.log('getCurrentMode:', this.graph.getCurrentMode())
                     //鼠标左键时去掉右键菜单
                     _this.currentMenu = ''
                     // console.log("click",ev)
@@ -76,7 +76,7 @@
                 //鼠标右键目标监听，显示右键菜单
                 this.graph.on('contextmenu', (ev) => {
                     let _this = this
-                    console.log("contextmenu", ev)
+                    // console.log("contextmenu", ev)
                     //保存当前的model，以供复制使用
                     if (ev.item != null) {
                         this.copyModel = ev.item._cfg.model
@@ -142,7 +142,7 @@
 
                 //结点点击
                 this.graph.on('node:click', ev => {
-                    console.log('node:click', ev)
+                    // console.log('node:click', ev)
                     //鼠标手型
                     ev.target.attr('cursor', 'pointer');
                 });
@@ -178,7 +178,7 @@
                 });
                 // 鼠标移动到上面，移出结束
                 this.graph.on('node:mouseenter', ev => {
-                    console.log('node:mouseenter')
+                    // console.log('node:mouseenter')
                     const node = ev.item;
                     if (this.graph.addingEdge == true) {
                         this.graph.setItemState(node, 'hover', false);
@@ -198,7 +198,7 @@
 
                 //线点击
                 this.graph.on('edge:click', ev => {
-                    console.log('edge:click', ev);
+                    // console.log('edge:click', ev);
                     let edge = ev.item
                     this.graph.setItemState(edge, 'selected', true);
                 });

@@ -14,7 +14,7 @@
                         // console.log(cfg.sourceAnchor)
                         // console.log(cfg.targetAnchor)getBBox
                         console.log(cfg)
-                        console.log('画了一条flow-line');
+                        // console.log('画了一条flow-line');
                         
                         if (cfg.shape == 'flow-line' && cfg.sourceAnchor!=undefined&& cfg.targetAnchor!=undefined) {
                             

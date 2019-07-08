@@ -15,116 +15,116 @@
         data() {
             return {
                 data: {
-    "nodes": [
-        {
-            "x": 226,
-            "y": 220,
-            "keyShape": "rect",
-            "label": "哈哈",
-            "labelCfg": {
-                "position": "center",
-                "style": {
-                    "fill": "#666",
-                    "opacity": 1
-                }
-            },
-            "id": "g1",
-            "size": [
-                60,
-                60
-            ],
-            "shape": "juxing",
-            "style": {
-                "fill": "#1890FF",
-                "stroke": "#1890FF",
-                "fillOpacity": 0.3
-            }
-        },
-        {
-            "x": 350,
-            "y": 119,
-            "keyShape": "rect",
-            "label": "呵呵",
-            "labelCfg": {
-                "position": "center",
-                "style": {
-                    "fill": "#666",
-                    "opacity": 1
-                }
-            },
-            "id": "g2",
-            "size": [
-                60,
-                60
-            ],
-            "shape": "juxing",
-            "style": {
-                "fill": "#1890FF",
-                "stroke": "#1890FF",
-                "fillOpacity": 0.3
-            }
-        }
-    ],
-    "edges": [
-        {
-            "id": 1562477183065,
-            "shape": "flow-line",
-            "label": "",
-            "source": "g1",
-            "sourceAnchor": 1,
-            "target": "g2",
-            "targetAnchor": 0,
-            "labelCfg": {
-                "position": "center",
-                "autoRotate": true
-            },
-            "size": 1
-        },
-        {
-            "id": 1562477183065,
-            "shape": "flow-line",
-            "label": "",
-            "source": "g1",
-            "sourceAnchor": 1,
-            "target": "g2",
-            "targetAnchor": 1,
-            "labelCfg": {
-                "position": "center",
-                "autoRotate": true
-            },
-            "size": 1
-        },
-        {
-            "id": 1562477183065,
-            "shape": "flow-line",
-            "label": "",
-            "source": "g1",
-            "sourceAnchor": 1,
-            "target": "g2",
-            "targetAnchor": 2,
-            "labelCfg": {
-                "position": "center",
-                "autoRotate": true
-            },
-            "size": 1
-        },
-        {
-            "id": 1562477183065,
-            "shape": "flow-line",
-            "label": "",
-            "source": "g1",
-            "sourceAnchor": 1,
-            "target": "g2",
-            "targetAnchor": 3,
-            "labelCfg": {
-                "position": "center",
-                "autoRotate": true
-            },
-            "size": 1
-        }
+    // "nodes": [
+    //     {
+    //         "x": 226,
+    //         "y": 220,
+    //         "keyShape": "rect",
+    //         "label": "哈哈",
+    //         "labelCfg": {
+    //             "position": "center",
+    //             "style": {
+    //                 "fill": "#666",
+    //                 "opacity": 1
+    //             }
+    //         },
+    //         "id": "g1",
+    //         "size": [
+    //             60,
+    //             60
+    //         ],
+    //         "shape": "juxing",
+    //         "style": {
+    //             "fill": "#1890FF",
+    //             "stroke": "#1890FF",
+    //             "fillOpacity": 0.3
+    //         }
+    //     },
+    //     {
+    //         "x": 350,
+    //         "y": 119,
+    //         "keyShape": "rect",
+    //         "label": "呵呵",
+    //         "labelCfg": {
+    //             "position": "center",
+    //             "style": {
+    //                 "fill": "#666",
+    //                 "opacity": 1
+    //             }
+    //         },
+    //         "id": "g2",
+    //         "size": [
+    //             60,
+    //             60
+    //         ],
+    //         "shape": "juxing",
+    //         "style": {
+    //             "fill": "#1890FF",
+    //             "stroke": "#1890FF",
+    //             "fillOpacity": 0.3
+    //         }
+    //     }
+    // ],
+    // "edges": [
+    //     {
+    //         "id": 1562477183065,
+    //         "shape": "flow-line",
+    //         "label": "",
+    //         "source": "g1",
+    //         "sourceAnchor": 1,
+    //         "target": "g2",
+    //         "targetAnchor": 0,
+    //         "labelCfg": {
+    //             "position": "center",
+    //             "autoRotate": true
+    //         },
+    //         "size": 1
+    //     },
+    //     {
+    //         "id": 1562477183065,
+    //         "shape": "flow-line",
+    //         "label": "",
+    //         "source": "g1",
+    //         "sourceAnchor": 1,
+    //         "target": "g2",
+    //         "targetAnchor": 1,
+    //         "labelCfg": {
+    //             "position": "center",
+    //             "autoRotate": true
+    //         },
+    //         "size": 1
+    //     },
+    //     {
+    //         "id": 1562477183065,
+    //         "shape": "flow-line",
+    //         "label": "",
+    //         "source": "g1",
+    //         "sourceAnchor": 1,
+    //         "target": "g2",
+    //         "targetAnchor": 2,
+    //         "labelCfg": {
+    //             "position": "center",
+    //             "autoRotate": true
+    //         },
+    //         "size": 1
+    //     },
+    //     {
+    //         "id": 1562477183065,
+    //         "shape": "flow-line",
+    //         "label": "",
+    //         "source": "g1",
+    //         "sourceAnchor": 1,
+    //         "target": "g2",
+    //         "targetAnchor": 3,
+    //         "labelCfg": {
+    //             "position": "center",
+    //             "autoRotate": true
+    //         },
+    //         "size": 1
+    //     }
 
         
-    ]
+    // ]
 },
                 dataKey: 1
             }
