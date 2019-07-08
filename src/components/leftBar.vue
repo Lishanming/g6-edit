@@ -36,6 +36,15 @@
                     data-color="#722ED1"
                     data-label="模型节点"
                     class="getItem" >
+                <img
+                    draggable="false"
+                    src="@/assets/images/222.png"
+                    data-type="node"
+                    data-shape="image"
+                    data-size="60*36"
+                    data-color="#722ED1"
+                    data-label="图片结点"
+                    class="getItem" >
             </div>
 </template>
 <script>

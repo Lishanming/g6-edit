@@ -130,7 +130,7 @@
                 this.graph.refreshItem(item)
             },
             zoomRatio(newValue) {
-
+                this.graph.zoom(newValue / 100)
             },
         },
         methods: {

@@ -93,13 +93,14 @@
                                 }
                             },
                             // id: this.Util.uniqueId(),
-                            size: [60, 60],
+                            size: [80, 50],
                             shape: 'juxing',
                             style: {
                                 fill: '#1890FF',
                                 stroke: '#1890FF',
                                 fillOpacity: 0.1,
-                                borderStyle: 'dashed'
+                                borderStyle: 'dashed',
+                                borderRadius:2,
                             },
                         })
                         break
@@ -247,12 +248,12 @@
                                 }
                             },
                             id: this.Util.uniqueId(),
-                            size: [60, 60],
+                            size: [80, 50],
                             shape: 'juxing',
                             style: {
                                 fill: '#1890FF',
                                 stroke: '#1890FF',
-                                fillOpacity: 0.3
+                                fillOpacity: 0.3,
                             },
                         })
                         break
