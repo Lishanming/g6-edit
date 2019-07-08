@@ -173,17 +173,10 @@
 
                 });
 
-                // 鼠标可以在节点内拖线动
-                this.graph.on('node:mousemove', ev => {
-                    // const graph = this.graph
-                    // const point = {x: ev.x, y: ev.y};
-                    // //线跟随
-                    // if (this.graph.addingEdge == true) {
-                    //     this.graph.updateItem(this.graph.edge, {
-                    //         target: point
-                    //     })
-                    // }
-
+                // 鼠标在节点上按下时改变状态为可拖拽
+                this.graph.on('node:mousedown', ev => {
+                    //进入编辑状态，可拖拽
+                    this.graph.setMode('edit');
                 });
 
 
@@ -205,15 +198,15 @@
                 });
                 // 鼠标移动到上面，移出结束
                 this.graph.on('node:mouseenter', ev => {
-                    // console.log('node:mouseenter')
+                    //此处当拖动一个节点到另一个结点上时，丢失掉当前ev事件
+                    console.log('node:mouseenter触发了')
                     const node = ev.item;
                     if (this.graph.addingEdge == true) {
                         this.graph.setItemState(node, 'hover', false);
                     } else {
                         this.graph.setItemState(node, 'hover', true);
                     }
-                    //进入编辑状态，可拖拽
-                    this.graph.setMode('edit');
+
                     //鼠标手型
                     ev.target.attr('cursor', 'move');
                 });
