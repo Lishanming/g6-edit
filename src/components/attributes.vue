@@ -8,9 +8,9 @@
         data() {
             return {
                 currentType: 'graph',
-                currentMenu: '',
+                currentMenu: '',  //右键菜单
                 infoTitle: '画布',//属性标题
-                lineValue: '',
+                lineValue: '',    //线类型
                 Line: [{
                     value: 'line',
                     label: '直线'
@@ -24,7 +24,7 @@
                     value: 'flow-line',
                     label: '箭头折线'
                 }],
-                shapeValue: '',
+                shapeValue: '',    //结点类型
                 Shape: [{
                     value: 'myCircle',
                     label: '起始节点'
@@ -46,9 +46,11 @@
                 nodeWidth: null,
                 nodeHeight: null,
                 nodeColor: null,
-                edgeId: null,
-                edgeName: null,
-                gridCheck: true,
+                edgeId: null,        //线id
+                edgeName: null,      //线名称
+                gridCheck: true,    //是否显示网格
+                pressCtrl:false,     //是否按下ctrl
+                multi:[]     //按住节点保存点击了的节点的item
             }
         },
         watch: {

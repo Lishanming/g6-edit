@@ -10,9 +10,10 @@
         methods: {
             //事件相关
             Event() {
+                let _this = this
                 //点击事件，判断目标类型
                 this.graph.on('click', (ev) => {
-                    let _this = this
+                    // let _this = this
                     //设置为default
                     // debugger
                     this.graph.setMode('default');
@@ -21,8 +22,8 @@
                     _this.currentMenu = ''
                     // console.log("click",ev)
                     if (ev.item == null) {
-                        _this.currentType = 'graph'
-
+                        _this.currentType = 'graph'    //判断当前类型
+                        _this.multi = []      //多选时点击到画布，则清空所选内容
                     } else {
                         let type = ev.item.getType()
                         switch (type) {
@@ -70,6 +71,13 @@
                         if(!graph.node){return;}
                         this.graph.updateItem(this.graph.node, {
                             ...point
+                        })
+                    }
+
+                    //线跟随
+                    if (this.graph.addingEdge == true) {
+                        this.graph.updateItem(this.graph.edge, {
+                            target: point
                         })
                     }
                 })
@@ -137,25 +145,44 @@
                         //同时按下Ctrl + Y，重做
                         this.Redo()
                     }
+
+                    //多选操作时判断ctrl是否按下
+                    if(ev.ctrlKey){
+                        _this.pressCtrl = true
+                    }else{
+                        _this.pressCtrl = false
+                    }
                 });
 
-
+                // var count = 0
                 //结点点击
                 this.graph.on('node:click', ev => {
-                    // console.log('node:click', ev)
                     //鼠标手型
                     ev.target.attr('cursor', 'pointer');
+                    //ctrl +鼠标点击获取多个
+                    if(this.pressCtrl == true){
+                        // count++
+                        //选中样式修改
+                        // _this.multi[count]=ev.item
+                        // for( let i = 0;i<count ;i++){
+                            // var shape =  _this.graph.findById(_this.multi[count])
+                            //     _this.graph.setItemState( ev.item, 'multiSelected', true);
+                        // }
+                        console.log('node:click', _this.multi)
+                    }
+
                 });
+
                 // 鼠标可以在节点内拖线动
                 this.graph.on('node:mousemove', ev => {
-                    const graph = this.graph
-                    const point = {x: ev.x, y: ev.y};
-                    //线跟随
-                    if (this.graph.addingEdge == true) {
-                        this.graph.updateItem(this.graph.edge, {
-                            target: point
-                        })
-                    }
+                    // const graph = this.graph
+                    // const point = {x: ev.x, y: ev.y};
+                    // //线跟随
+                    // if (this.graph.addingEdge == true) {
+                    //     this.graph.updateItem(this.graph.edge, {
+                    //         target: point
+                    //     })
+                    // }
 
                 });
 

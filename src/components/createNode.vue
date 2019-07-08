@@ -244,6 +244,12 @@
                     } else {
                         group.get('children')[0].attr('fillOpacity', '0.3');
                     }
+                }else if (name === 'multiSelected') {
+                    if (value) {
+                        group.get('children')[0].attr('fillOpacity', '0.5');
+                    } else {
+                        group.get('children')[0].attr('fillOpacity', '0.3');
+                    }
                 }
             },
             //当高宽改变的时候，锚点跟随改变
