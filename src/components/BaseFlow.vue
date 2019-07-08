@@ -274,8 +274,7 @@
                         default: ['drag-canvas', {
                             type: 'zoom-canvas',
                             sensitivity: 5
-                        }, 'click-select'],
-                        edit: ['drag-node'],
+                        }, 'click-select','drag-node'],
                         addEdge: ['click-add-edge'],
                         dragNode:['init-drag-node']
                     },

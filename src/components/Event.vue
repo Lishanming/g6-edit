@@ -173,13 +173,6 @@
 
                 });
 
-                // 鼠标在节点上按下时改变状态为可拖拽
-                this.graph.on('node:mousedown', ev => {
-                    //进入编辑状态，可拖拽
-                    this.graph.setMode('edit');
-                });
-
-
                 this.graph.on('node:mouseup', ev => {
                     //拖出节点
                     const graph = this.graph

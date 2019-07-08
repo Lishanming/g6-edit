@@ -180,10 +180,10 @@
                     //鼠标按下事件
                     anchor.on('mousedown', ev => {
                         // console.log('anchor:mousedown')
-                        
+
                         //鼠标变为十字形
                         ev.target.attr('cursor', 'crosshair');
-
+                            // debugger
                         //设置模式为连线
                         this.graph.setMode('addEdge');
 
@@ -191,7 +191,8 @@
                         if (this.graph.addingEdge == false || this.graph == false) {
                             this.graph.currSourceAnchorIndex = index
                             console.log('设置了起始锚点索引: '+this.graph.currSourceAnchorIndex);
-                        } 
+                        }
+
                     });
                     anchor.on('mouseout', ev => {
                         // debugger
