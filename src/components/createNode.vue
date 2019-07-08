@@ -165,24 +165,37 @@
                             curcor: 'default'
                         }
                     });
-                    //鼠标移入锚点
+                    //鼠标移入事件
+                    anchor.on('mouseenter', ev => {
+                        // console.log('anchor:mousedown')
+                        //鼠标变为十字形
+                        ev.target.attr('cursor', 'crosshair')
+
+                        //记录鼠标移入时的锚点索引
+                        if (this.graph.addingEdge == true) {
+                            this.graph.currTargetAnchorIndex = index
+                            console.log('设置了起始锚点索引: '+this.graph.currTargetAnchorIndex);
+                        } 
+                    });
+                    //鼠标按下事件
                     anchor.on('mousedown', ev => {
-                        console.log('anchor:mousedown')
+                        // console.log('anchor:mousedown')
+                        
                         //鼠标变为十字形
                         ev.target.attr('cursor', 'crosshair');
+
                         //设置模式为连线
                         this.graph.setMode('addEdge');
-                        // debugger
+
                         //记录鼠标移入时的锚点索引
                         if (this.graph.addingEdge == false || this.graph == false) {
                             this.graph.currSourceAnchorIndex = index
-                        } else {
-                            this.graph.currTargetAnchorIndex = index
-                        }
+                            console.log('设置了起始锚点索引: '+this.graph.currSourceAnchorIndex);
+                        } 
                     });
                     anchor.on('mouseout', ev => {
                         // debugger
-                        console.log('anchor:mouseout')
+                        // console.log('anchor:mouseout')
                         //记录鼠标移入时的锚点索引
                         // if (this.graph.addingEdge == false ) {
                         //     this.graph.setMode('default');
@@ -197,6 +210,8 @@
                         // console.log('0333333', graph, ev)
                         // debugger
                         this.graph.setMode('default');
+                        console.log('结束了画线操作，目标锚点索引: '+this.graph.currTargetAnchorIndex);
+                        
                         this.graph.updateItem(this.graph.edge, {
                             target: model.id,
                             targetAnchor: this.graph.currTargetAnchorIndex
