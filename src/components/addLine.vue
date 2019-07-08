@@ -34,10 +34,9 @@
                                 //现在两个节点在x,y轴上不重叠，接着需要判断是画1折线 or 2折线
                                 //这里有个算法，以起点辅助点，终点辅助点做对角线，形成的区域记作A,起始节点和终点如果被A淹没，记作X淹没，Y淹没，如果两个节点都淹没，并且淹没类型相同，则为2折线
                                 //淹没：把图形沿着X，Y轴延展，最后形成一个十字架
-                                // debugger;
-                                let flood1 = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox)
-                                let flood2 = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)
-                                if (Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox) == Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)) {
+                                let sourceFloodType = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox)
+                                let targetFloodType = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)
+                                if (sourceFloodType == targetFloodType && sourceFloodType!='O') {
                                     //2折线
                                     let brokenPoint = Tool.getTwoBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
                                     return [sourceAssistPoint,...brokenPoint,targetAssistPoint]
