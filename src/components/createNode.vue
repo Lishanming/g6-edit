@@ -172,7 +172,7 @@
                         if (this.graph.addingEdge == true) {
                             this.graph.currTargetAnchorIndex = index
                             console.log('设置了起始锚点索引: '+this.graph.currTargetAnchorIndex);
-                        } 
+                        }
                     });
                     //鼠标按下事件
                     anchor.on('mousedown', ev => {
@@ -205,12 +205,17 @@
                         let model = ev.target.getParent()._cfg.item.getModel()
                         // console.log('0333333', graph, ev)
                         console.log('结束了画线操作，目标锚点索引: '+this.graph.currTargetAnchorIndex);
-
-                        this.graph.updateItem(this.graph.edge, {
-                            target: model.id,
-                            targetAnchor: this.graph.currTargetAnchorIndex
-                        });
-                        this.graph.addingEdge = false
+                        if(this.graph.currTargetAnchorIndex != undefined){
+                            this.graph.updateItem(this.graph.edge, {
+                                target: model.id,
+                                targetAnchor: this.graph.currTargetAnchorIndex
+                            });
+                            this.graph.addingEdge = false
+                        }else{
+                            this.graph.removeItem(this.graph.edge);
+                            this.graph.edge = null;
+                            this.graph.addingEdge = false;
+                        }
                         this.graph.setMode('default');
                     })
                 }

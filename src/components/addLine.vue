@@ -13,7 +13,7 @@
                     getControlPoints(cfg) {
                         // console.log(cfg.sourceAnchor)
                         // console.log(cfg.targetAnchor)getBBox
-                        console.log(cfg)
+                        // console.log(cfg)
                         // console.log('画了一条flow-line');
                         
                         if (cfg.shape == 'flow-line' && cfg.sourceAnchor!=undefined&& cfg.targetAnchor!=undefined) {
@@ -105,14 +105,6 @@
                             graph.addingEdge = true;
                         }
                         graph.setItemState(ev.item, 'showOtherAnchor', true)
-
-                            //拖出线，其他结点的锚点显示
-                        // for (let i = 0; i < _this.graph._cfg.nodes.length; i++) {
-                        //     let otherAnchor = _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6)
-                        //     for (let j = 0; j < otherAnchor.length; j++) {
-                        //         otherAnchor[j].attr('opacity', '1');
-                        //     }
-                        // }
                     },
                     //鼠标移动，画线跟随
                     onMousemove(ev) {
@@ -128,21 +120,15 @@
                     },
                     //在画布上松开鼠标，则不画线
                     onMouseup(ev) {
-                        alert(9999)
+                        // alert(9999)
                         let graph = this.graph
                         if (graph.addingEdge) {
                             graph.removeItem(graph.edge);
                             graph.edge = null;
                             graph.addingEdge = false;
                         }
-                        this.graph.setItemState(ev.item, 'showOtherAnchor', false)
-                        //连线完成，其他结点的锚点消失
-                        // for (let i = 0; i < _this.graph._cfg.nodes.length; i++) {
-                        //     let otherAnchor = _this.graph._cfg.nodes[i]._cfg.group._cfg.children.slice(2, 6)
-                        //     for (let j = 0; j < otherAnchor.length; j++) {
-                        //         otherAnchor[j].attr('opacity', '0');
-                        //     }
-                        // }
+                        // this.graph.setItemState(ev.item, 'showOtherAnchor', false)
+
                     }
                 });
             },
