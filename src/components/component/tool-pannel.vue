@@ -29,13 +29,15 @@
         methods:{
             //底部
             toback(){
-                console.log(this)
+                debugger
+                //只有先点击某个节点获取到currentId才能启用置顶和置底
+                this.graph.findById(this.currentItemId).toback()
                 // item.toback()
             },
             //置顶
             tofront(){
-                console.log(this)
-                // item.toFront()
+                // console.log(this)
+                this.graph.findById(this.currentItemId).toFront()
             },
 
             //缩小
