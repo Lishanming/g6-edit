@@ -151,7 +151,7 @@
                 const Anchor = (index) => {
                     const anchor = group.addShape('circle', {
                         attrs: {
-                            // id: this.Util.uniqueId(),
+                            // id: this.count++,
                             x: anchorPosition[index][0],
                             y: anchorPosition[index][1],
                             r: 4,
@@ -165,8 +165,9 @@
                     anchor.on('mouseenter', ev => {
                         // console.log('anchor:mousedown')
                         //鼠标变为十字形
+                        // debugger
                         ev.target.attr('cursor', 'crosshair')
-
+                        // ev.currentTarget.attr('fill', '#2dccbe');
                         //记录鼠标移入时的锚点索引
                         if (this.graph.addingEdge == true) {
                             this.graph.currTargetAnchorIndex = index
@@ -176,10 +177,9 @@
                     //鼠标按下事件
                     anchor.on('mousedown', ev => {
                         // console.log('anchor:mousedown')
-
+                        //     debugger
                         //鼠标变为十字形
                         ev.target.attr('cursor', 'crosshair');
-                            // debugger
                         //设置模式为连线
                         this.graph.setMode('addEdge');
 
@@ -192,6 +192,7 @@
                     });
                     anchor.on('mouseout', ev => {
                         // debugger
+                        // ev.currentTarget.attr('fill', '#d6fffe');
                         // console.log('anchor:mouseout')
                         //记录鼠标移入时的锚点索引
                         // if (this.graph.addingEdge == false ) {
@@ -203,15 +204,14 @@
                         //      需要判断目标锚点是否属于当前节点
                         let model = ev.target.getParent()._cfg.item.getModel()
                         // console.log('0333333', graph, ev)
-                        // debugger
-                        this.graph.setMode('default');
                         console.log('结束了画线操作，目标锚点索引: '+this.graph.currTargetAnchorIndex);
-                        
+
                         this.graph.updateItem(this.graph.edge, {
                             target: model.id,
                             targetAnchor: this.graph.currTargetAnchorIndex
                         });
                         this.graph.addingEdge = false
+                        this.graph.setMode('default');
                     })
                 }
                 const topAnchor = new Anchor(0)
@@ -221,8 +221,10 @@
             },
             //设置状态
             setNodeState(name, value, item){
+                let _this = this
                 const group = item.getContainer();
                 const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
+                _this.others = _this.graph._cfg.nodeGroup    //获取其他节点集
                 if (name === 'hover') {
                     if (value) {
                         for (let i = 0; i < shape.length; i++) {
@@ -241,11 +243,32 @@
                     }
                 }else if (name === 'multiSelected') {
                     if (value) {
-                        group.get('children')[0].attr('fillOpacity', '0.5');
+                        group.get('children')[0].attr('fill', 'red');
                     } else {
-                        group.get('children')[0].attr('fillOpacity', '0.3');
+                        group.get('children')[0].attr('fill', 'green');
                     }
                 }
+                else if (name === 'showOtherAnchor') {
+                    if (value)
+                        for(let i = 0;i< _this.others._cfg.children.length;i++){
+                            var ll = _this.others._cfg.children[i]._cfg.children.slice(2, 6)
+                            for(let j = 0;j<ll.length;j++){
+                                ll[j].attr('opacity', '1');
+                                ll[j].animate({
+                                    r: 6,
+                                    repeat: true
+                                },1200);
+                            }
+                        }
+                    } else {
+                        for(let i = 0;i< _this.others._cfg.children.length;i++){
+                            for(let j = 0;j<ll.length;j++){
+                                ll[j].attr('opacity', '0');
+                                ll[j].stopAnimate();
+                                ll[j].attr('r', 4);
+                            }
+                        }
+                    }
             },
             //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){

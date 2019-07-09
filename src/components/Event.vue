@@ -11,6 +11,7 @@
             //事件相关
             Event() {
                 let _this = this
+                var count = 0
                 //点击事件，判断目标类型
                 this.graph.on('click', (ev) => {
                     // let _this = this
@@ -63,12 +64,14 @@
                         }
                     }
                 });
-                this.graph.on('mousemove',(ev) =>{
+                this.graph.on('mousemove', (ev) => {
                     const graph = this.graph
                     const point = {x: ev.x, y: ev.y};
                     // //使节点跟随
                     if (this.addbegin == true) {
-                        if(!graph.node){return;}
+                        if (!graph.node) {
+                            return;
+                        }
                         this.graph.updateItem(this.graph.node, {
                             ...point
                         })
@@ -147,27 +150,27 @@
                     }
 
                     //多选操作时判断ctrl是否按下
-                    if(ev.ctrlKey){
+                    if (ev.ctrlKey) {
                         _this.pressCtrl = true
-                    }else{
+                    } else {
                         _this.pressCtrl = false
                     }
                 });
 
-                // var count = 0
+
                 //结点点击
                 this.graph.on('node:click', ev => {
                     //鼠标手型
                     ev.target.attr('cursor', 'pointer');
                     //ctrl +鼠标点击获取多个
-                    if(this.pressCtrl == true){
-                        // count++
-                        //选中样式修改
-                        // _this.multi[count]=ev.item
-                        // for( let i = 0;i<count ;i++){
-                            // var shape =  _this.graph.findById(_this.multi[count])
-                            //     _this.graph.setItemState( ev.item, 'multiSelected', true);
-                        // }
+                    if (this.pressCtrl == true) {
+                        count++
+                        // 选中样式修改
+                        // debugger
+                        _this.multi[count] = ev.item._cfg.id
+                        for (let i = 0; i < count; i++) {
+                            // _this.graph.setItemState(_this.multi[count], 'multiSelected', true);
+                        }
                         console.log('node:click', _this.multi)
                     }
 
@@ -177,7 +180,6 @@
                     //拖出节点
                     const graph = this.graph
                     let _this = this;
-
                     //。。。。。不应该在这里调用
                     if (graph.node) {
                         graph.removeItem(graph.node)
@@ -206,6 +208,7 @@
                 this.graph.on('node:mouseleave', ev => {
                     const node = ev.item;
                     this.graph.setItemState(node, 'hover', false);
+
                 });
 
 

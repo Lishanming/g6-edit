@@ -209,6 +209,7 @@
                     //将复制到鼠标点击的位置
                     this.copyModel.x = this.copyModel.x +20
                     this.copyModel.y = this.copyModel.y +20
+                    this.copyModel.id =this.Util.uniqueId()         //粘贴一个节点，id要改变
                     this.graph.addItem('node', this.copyModel)
                     //粘贴一次之后不能再粘贴
                     this.hasClickCopy =false

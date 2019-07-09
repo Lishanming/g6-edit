@@ -231,7 +231,10 @@
                 canvasHistory:[],
                 nodeWidth: null,
                 nodeHeight: 60,
-                showShapeValue:false
+                showShapeValue:false,
+                others:null,
+                count:0,
+                lalala:null,
             }
         },
 
