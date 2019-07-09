@@ -6,7 +6,7 @@
     const G6 = require('@antv/g6')
     export default {
         name: "createNode",
-        methods: {
+        methods:{
             //构造多种结点
             createNode() {
                 const anchor = [
@@ -29,7 +29,7 @@
                     },
                     //绘制后的附加操作
                     afterDraw(cfg, group) {
-                        _this.createAnchor(cfg, group)
+                      _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
                         return anchor
@@ -60,7 +60,7 @@
                                 // stroke: cfg.color, // 颜色应用到边上，如果应用到填充，则使用 fill: cfg.color,
                                 fill: '#13C2C2',
                                 stroke: '#13C2C2',
-                                fillOpacity: 0.3,
+                                fillOpacity:0.3,
                             }
                         });
                         if (cfg.label) { // 如果有文本
@@ -84,7 +84,7 @@
                         return shape;
                     },
                     afterDraw(cfg, group) {
-                        _this.createAnchor(cfg, group)
+                        _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
                         return anchor
@@ -100,7 +100,7 @@
                         _this.setNodeState(name, value, item)
                     },
                     afterDraw(cfg, group) {
-                        _this.createAnchor(cfg, group)
+                        _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
                         return anchor
@@ -114,7 +114,7 @@
                     },
                     //创建锚点
                     afterDraw(cfg, group) {
-                        _this.createAnchor(cfg, group)
+                        _this.createAnchor(cfg,group)
                     },
                     afterUpdate(cfg, node) {
                         _this.changeAnthorPosition(cfg, node)
@@ -133,7 +133,7 @@
                         _this.setNodeState(name, value, item)
                     },
                     afterDraw(cfg, group) {
-                        _this.createAnchor(cfg, group)
+                        _this.createAnchor(cfg,group)
                     },
                     getAnchorPoints() {
                         return anchor
@@ -142,9 +142,9 @@
             },
 
             //创建锚点
-            createAnchor(cfg, group) {
+            createAnchor(cfg,group){
                 let anchorPosition = [
-                    [0, -cfg.size[1] / 2], [cfg.size[0] / 2, 0], [0, cfg.size[1] / 2], [-cfg.size[0] / 2, 0]
+                    [0, -cfg.size[1]/2], [cfg.size[0]/2, 0],[0, cfg.size[1]/2], [-cfg.size[0]/2, 0]
                 ]
                 // debugger
                 //创建锚点构造函数
@@ -171,8 +171,8 @@
                         //记录鼠标移入时的锚点索引
                         if (this.graph.addingEdge == true) {
                             this.graph.currTargetAnchorIndex = index
-                            console.log('设置了起始锚点索引: ' + this.graph.currTargetAnchorIndex);
-                        }
+                            console.log('设置了起始锚点索引: '+this.graph.currTargetAnchorIndex);
+                        } 
                     });
                     //鼠标按下事件
                     anchor.on('mousedown', ev => {
@@ -186,7 +186,7 @@
                         //记录鼠标移入时的锚点索引
                         if (this.graph.addingEdge == false || this.graph == false) {
                             this.graph.currSourceAnchorIndex = index
-                            console.log('设置了起始锚点索引: ' + this.graph.currSourceAnchorIndex);
+                            console.log('设置了起始锚点索引: '+this.graph.currSourceAnchorIndex);
                         }
 
                     });
@@ -204,7 +204,7 @@
                         //      需要判断目标锚点是否属于当前节点
                         let model = ev.target.getParent()._cfg.item.getModel()
                         // console.log('0333333', graph, ev)
-                        console.log('结束了画线操作，目标锚点索引: ' + this.graph.currTargetAnchorIndex);
+                        console.log('结束了画线操作，目标锚点索引: '+this.graph.currTargetAnchorIndex);
 
                         this.graph.updateItem(this.graph.edge, {
                             target: model.id,
@@ -220,13 +220,13 @@
                 const leftAnchor = new Anchor(3)
             },
             //设置状态
-            setNodeState(name, value, item) {
+            setNodeState(name, value, item){
                 let _this = this
                 const group = item.getContainer();
-                const shape = group.get('children').slice(2, 6); // 顺序根据 draw 时确定
-                var otherAnchor = this.graph.findAll('node', node => {
-                    return node
-                })
+                const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
+                 var nodes = this.graph.findAll('node',node => {
+                                 return node.get('model').x;
+                            })
                 if (name === 'hover') {
                     if (value) {
                         for (let i = 0; i < shape.length; i++) {
@@ -243,42 +243,34 @@
                     } else {
                         group.get('children')[0].attr('fillOpacity', '0.3');
                     }
-                } else if (name === 'multiSelected') {
+                }else if (name === 'multiSelected') {
                     if (value) {
                         group.get('children')[0].attr('fill', 'red');
                     } else {
                         group.get('children')[0].attr('fill', 'green');
                     }
-                } else if (name === 'showOtherAnchor') {
-                    debugger
-                    if (value){
-                        for(let i =0 ;i<otherAnchor.length;i++){
-                            for(let j = 0;j<4;j++){
-                            otherAnchor[i]._cfg.group._cfg.children.slice(2,6)[j].attr('opacity', '1');
-                            otherAnchor[i]._cfg.group._cfg.children.slice(2,6)[j].animate({
-                                r: 6,
-                                repeat: true
-                            }, 1200);
-                        }
-                        }
-                } else {
-                        for(let i =0 ;i<otherAnchor.length;i++) {
-                            for (let j = 0; j < 4; j++) {
-                                otherAnchor[i]._cfg.group._cfg.children.slice(2, 6)[j].attr('opacity', '0');
-                                otherAnchor[i]._cfg.group._cfg.children.slice(2, 6)[j].stopAnimate();
-                                otherAnchor[i]._cfg.group._cfg.children.slice(2, 6)[j].attr('r', 4);
-                            }
-                        }
-                    }
                 }
+                else if (name === 'showOtherAnchor') {
+                    if (value)
+                    debugger
+                        nodes.attr('opacity', '1');
+                        nodes.animate({
+                            r: 6,
+                            repeat: true
+                        },1200);
+                    } else {
+                          nodes.attr('opacity', '0');
+                          nodes.stopAnimate();
+                          nodes.attr('r', 10);
+                        }
             },
             //当高宽改变的时候，锚点跟随改变
-            changeAnthorPosition(cfg, node) {
+            changeAnthorPosition(cfg, node){
                 // debugger
-                node._cfg.group._cfg.children[4]._attrs.y = cfg.size[1] / 2       //上右下左 [60,80]
-                node._cfg.group._cfg.children[3]._attrs.x = cfg.size[0] / 2
-                node._cfg.group._cfg.children[2]._attrs.y = -cfg.size[1] / 2
-                node._cfg.group._cfg.children[5]._attrs.x = -cfg.size[0] / 2
+                node._cfg.group._cfg.children[4]._attrs.y = cfg.size[1]/2       //上右下左 [60,80]
+                node._cfg.group._cfg.children[3]._attrs.x = cfg.size[0]/2
+                node._cfg.group._cfg.children[2]._attrs.y = -cfg.size[1]/2
+                node._cfg.group._cfg.children[5]._attrs.x = -cfg.size[0]/2
             },
         }
     }
