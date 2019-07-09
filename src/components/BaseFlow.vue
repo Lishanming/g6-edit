@@ -1,7 +1,24 @@
 <template>
     <div class="container" >
         <div class="topContainer">
-            <tool-pannel :graph=this.graph />
+            <div id="toolPannel" class="toolPannel">
+                <i class="command iconfont icon-undo" title="撤销" @click="Undo"></i>
+                <i class="command iconfont icon-redo" title="重做" @click="Redo"></i>
+                <span class="separator"></span>
+                <i class="command iconfont icon-toback" title="底层" @click="toback"></i>
+                <i class="command iconfont icon-tofront" title="顶层" @click="tofront"></i>
+                <span class="separator"></span>
+                <i class="command iconfont icon-zoom-out" title="缩小" @click="zoomOut"></i>
+                <i class="command iconfont icon-zoom-in" title="放大" @click="zoomIn"></i>
+                <span class="separator"></span>
+                <i class="command iconfont icon-adaption" title="适应画布" @click="autoZoom"></i>
+                <i class="command iconfont icon-realsize" title="实际尺寸" @click="realZoom"></i>
+                <!--        <span class="separator"></span>-->
+                <!--        <i class="command iconfont icon-multiSelect" title="多选" @click="MulitSelect"></i>-->
+                <!--        <i class="command iconfont icon-group disable" title="组合" @click="group"></i>-->
+                <!--        <i class="command iconfont icon-ungroup disable" title="解组" @click="ungroup" ></i>-->
+            </div>
+
             <div class="data-opt">
                 <a href="javascript:;" class="file">选择文件<input type="file" id="readFile" @click="readFile"></input></a>
                 <el-button size="mini" type="primary" @click="saveFlow">保存</el-button>
@@ -206,9 +223,8 @@
 
     export default {
         name: 'BaseFlow',
-        mixins: [attributes,createNode,Event,addLine,addNodeByDrag],
+        mixins: [attributes,createNode,Event,addLine,addNodeByDrag,ToolPannel],
         components: {
-            ToolPannel,
             LeftBar
             // ContextMenu
         },
@@ -223,7 +239,6 @@
                 addbegin: false,
                 nodeClick: {},
                 addingEdge: false,
-                graph: null,
                 currentItemId:'',   //删除时用到，当前item的id
                 copyModel:'',     //复制当前节点model
                 hasClickCopy:false,   //粘贴的使用和禁用
@@ -234,7 +249,6 @@
                 showShapeValue:false,
                 others:null,
                 count:0,
-                lalala:null,
             }
         },
 
@@ -386,7 +400,31 @@
             background: #ffffff;
             -webkit-box-shadow: 0px 8px 12px 0px rgba(0, 52, 107, 0.04);
             box-shadow: 0px 8px 12px 0px rgba(0, 52, 107, 0.04);
+            .toolPannel {
+                height: 100%;
+                width: 80%;
 
+                .command {
+                    width: 27px;
+                    line-height: 27px;
+                    height: 27px;
+                    margin: 0px 6px;
+                    border-radius: 2px;
+                    padding-left: 4px;
+                    display: inline-block;
+                    border: 1px solid rgba(2, 2, 2, 0.02);
+                    cursor: pointer;
+                }
+
+                .disable {
+                    color: rgba(0, 0, 0, 0.25);
+                }
+
+                .separator {
+                    margin: 4px;
+                    border-left: 1px solid #E9E9E9;
+                }
+            }
             .data-opt {
                 width: 20%;
                 height: 100%;
