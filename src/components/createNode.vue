@@ -224,7 +224,9 @@
                 let _this = this
                 const group = item.getContainer();
                 const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
-                _this.others = _this.graph._cfg.nodeGroup    //获取其他节点集
+                 var nodes = this.graph.findAll('node',node => {
+                               
+                            })
                 if (name === 'hover') {
                     if (value) {
                         for (let i = 0; i < shape.length; i++) {
@@ -250,25 +252,17 @@
                 }
                 else if (name === 'showOtherAnchor') {
                     if (value)
-                        for(let i = 0;i< _this.others._cfg.children.length;i++){
-                            var ll = _this.others._cfg.children[i]._cfg.children.slice(2, 6)
-                            for(let j = 0;j<ll.length;j++){
-                                ll[j].attr('opacity', '1');
-                                ll[j].animate({
-                                    r: 6,
-                                    repeat: true
-                                },1200);
-                            }
-                        }
+                    debugger
+                        nodes.attr('opacity', '1');
+                        nodes.animate({
+                            r: 6,
+                            repeat: true
+                        },1200);
                     } else {
-                        for(let i = 0;i< _this.others._cfg.children.length;i++){
-                            for(let j = 0;j<ll.length;j++){
-                                ll[j].attr('opacity', '0');
-                                ll[j].stopAnimate();
-                                ll[j].attr('r', 4);
-                            }
+                          nodes.attr('opacity', '0');
+                          nodes.stopAnimate();
+                          nodes.attr('r', 10);
                         }
-                    }
             },
             //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){

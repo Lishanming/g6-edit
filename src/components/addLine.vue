@@ -128,6 +128,7 @@
                     },
                     //在画布上松开鼠标，则不画线
                     onMouseup(ev) {
+                        alert(9999)
                         let graph = this.graph
                         if (graph.addingEdge) {
                             graph.removeItem(graph.edge);
