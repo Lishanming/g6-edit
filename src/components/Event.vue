@@ -194,7 +194,7 @@
                 // 鼠标移动到上面，移出结束
                 this.graph.on('node:mouseenter', ev => {
                     //此处当拖动一个节点到另一个结点上时，丢失掉当前ev事件
-                    console.log('node:mouseenter触发了')
+                    // console.log('node:mouseenter触发了')
                     const node = ev.item;
                     if (this.graph.addingEdge == true) {
                         this.graph.setItemState(node, 'hover', false);

@@ -13,7 +13,7 @@
                     getControlPoints(cfg) {
                         // console.log(cfg.sourceAnchor)
                         // console.log(cfg.targetAnchor)getBBox
-                        console.log(cfg)
+                        // console.log(cfg)
                         // console.log('画了一条flow-line');
                         
                         if (cfg.shape == 'flow-line' && cfg.sourceAnchor!=undefined&& cfg.targetAnchor!=undefined) {
@@ -72,7 +72,7 @@
                         return {
                             'node:mousedown': 'onMousedown',
                             'mousemove': 'onMousemove',
-                            'mouseup': 'onMouseup' // 点击空白处，取消边
+                            'node:mouseup': 'onMouseup' // 点击空白处，取消边
                         };
                     },
                     //鼠标按住开始画线
@@ -128,6 +128,7 @@
                     },
                     //在画布上松开鼠标，则不画线
                     onMouseup(ev) {
+                        console.log('addline  mouseup')
                         let graph = this.graph
                         if (graph.addingEdge) {
                             graph.removeItem(graph.edge);
