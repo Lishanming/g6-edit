@@ -201,9 +201,19 @@
                     });
                     //鼠标松开，
                     anchor.on('mouseup', ev => {
-                        //      需要判断目标锚点是否属于当前节点
+
+                        //起始节点id
+                        let sourceId = this.graph.edge._cfg.sourceNode._cfg.id 
+                        //目标节点model
                         let model = ev.target.getParent()._cfg.item.getModel()
-                        // console.log('0333333', graph, ev)
+
+                        //需要判断目标锚点是否属于当前节点
+                        if (sourceId==model.id) {
+                            this.graph.removeItem(this.graph.edge)
+                            this.graph.addingEdge = false
+                            return
+                        }
+
                         console.log('结束了画线操作，目标锚点索引: '+this.graph.currTargetAnchorIndex);
                         if(this.graph.currTargetAnchorIndex != undefined){
                             this.graph.updateItem(this.graph.edge, {
