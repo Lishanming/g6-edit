@@ -225,7 +225,7 @@
                 const group = item.getContainer();
                 const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
                  var nodes = this.graph.findAll('node',node => {
-                               
+                                 return node.get('model').x;
                             })
                 if (name === 'hover') {
                     if (value) {
