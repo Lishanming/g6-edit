@@ -5,14 +5,16 @@
         <span class="separator"></span>
         <i class="command iconfont icon-toback" title="底层" @click="toback"></i>
         <i class="command iconfont icon-tofront" title="顶层" @click="tofront"></i>
+        <span class="separator"></span>
         <i class="command iconfont icon-zoom-out" title="缩小" @click="zoomOut"></i>
         <i class="command iconfont icon-zoom-in" title="放大" @click="zoomIn"></i>
+        <span class="separator"></span>
         <i class="command iconfont icon-adaption" title="适应画布" @click="autoZoom"></i>
         <i class="command iconfont icon-realsize" title="实际尺寸" @click="realZoom"></i>
-        <span class="separator"></span>
-        <i class="command iconfont icon-multiSelect" title="多选" @click="MulitSelect"></i>
-        <i class="command iconfont icon-group disable" title="组合" @click="group"></i>
-        <i class="command iconfont icon-ungroup disable" title="解组" @click="ungroup" ></i>
+<!--        <span class="separator"></span>-->
+<!--        <i class="command iconfont icon-multiSelect" title="多选" @click="MulitSelect"></i>-->
+<!--        <i class="command iconfont icon-group disable" title="组合" @click="group"></i>-->
+<!--        <i class="command iconfont icon-ungroup disable" title="解组" @click="ungroup" ></i>-->
     </div>
 </template>
 

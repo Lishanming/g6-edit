@@ -143,10 +143,6 @@
 
             //创建锚点
             createAnchor(cfg,group){
-                //锚点相对结点位置
-                // debugger
-                // this.currentAnthorCfg = cfg
-                // this.currentAnthorGroup = group
                 let anchorPosition = [
                     [0, -cfg.size[1]/2], [cfg.size[0]/2, 0],[0, cfg.size[1]/2], [-cfg.size[0]/2, 0]
                 ]
@@ -205,8 +201,6 @@
                     //鼠标松开，
                     anchor.on('mouseup', ev => {
                         //      需要判断目标锚点是否属于当前节点
-                        //....伪代码
-
                         let model = ev.target.getParent()._cfg.item.getModel()
                         // console.log('0333333', graph, ev)
                         // debugger

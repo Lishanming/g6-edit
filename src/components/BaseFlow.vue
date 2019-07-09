@@ -197,7 +197,7 @@
     import Event from '@/components/Event'
     import addLine from '@/components/addLine'
     import addNodeByDrag from '@/components/addNodeByDrag'
-    import LeftBar from '@/components/leftBar'
+    import LeftBar from '@/components/component/leftBar'
     import ToolPannel from '@/components/component/tool-pannel'
 
     const G6 = require('@antv/g6')
@@ -232,10 +232,6 @@
                 nodeWidth: null,
                 nodeHeight: 60,
                 showShapeValue:false
-                //锚点相对结点位置
-                // anchorPosition: [
-                //     [0, -30], [0, 30], [30, 0], [-30, 0]
-                // ]
             }
         },
 
@@ -357,77 +353,6 @@
                 const graph = this.graph
                 //  console.log('getCurrentMode:',  this.graph.getCurrentMode())
                 this.initDragNode(ev)
-            },
-            //鼠标右键删除
-            Delete(ev){
-                // console.log('delete',ev)
-                //找到节点id，进行删除
-                const item = this.graph.findById(this.currentItemId)
-                this.graph.removeItem(item)
-                //点击菜单项之后隐藏鼠标右键选项
-                this.currentMenu = ''
-            },
-            //鼠标右键复制
-            Copy(ev){
-                // console.log('copy',ev)
-                //没有选中任何节点，则不显示粘贴选项
-                if(ev != undefined){
-                    //点击复制之后才显示粘贴
-                    this.hasClickCopy =true
-                }
-                //点击菜单项之后隐藏鼠标右键选项
-                this.currentMenu = ''
-            },
-            //鼠标右键粘贴
-            Parse(ev){
-                // console.log('parse',ev)
-                // debugger
-                if(ev != undefined){
-                    //将复制到鼠标点击的位置
-                    this.copyModel.x = this.copyModel.x +20
-                    this.copyModel.y = this.copyModel.y +20
-                    this.graph.addItem('node', this.copyModel)
-                    //粘贴一次之后不能再粘贴
-                    this.hasClickCopy =false
-                }else{
-                    return
-                }
-                //点击菜单项之后隐藏鼠标右键选项
-                this.currentMenu = ''
-            },
-            //鼠标右键撤销
-            Undo(){
-                // console.log('cexiao')
-                // debugger
-                if (this.step >= 0) {
-                    this.step--;
-                    this.globaldata = this.canvasHistory[this.step];
-                    // this.$props.data = this.globaldata
-                    // this.graph.data(this.$props.data);
-                    this.graph.render();
-                }
-                //点击菜单项之后隐藏鼠标右键选项
-                this.currentMenu = ''
-            },
-            //鼠标右键重做
-            Redo(){
-                if (this.step <this.canvasHistory.length - 1) {
-                    this.step++;
-                    this.globaldata = this.canvasHistory[this.step];
-                    // this.$props.data = this.globaldata
-                    // this.graph.data(this.$props.data);
-                    this.graph.render();
-                }
-                //点击菜单项之后隐藏鼠标右键选项
-                this.currentMenu = ''
-            },
-            //鼠标右键组合
-            group(){
-
-            },
-            //鼠标右键取消组合
-            ungroup(){
-
             },
         },
 
