@@ -225,7 +225,7 @@
                 const group = item.getContainer();
                 const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
                  var nodes = this.graph.findAll('node',node => {
-                                 return node.get('model').x;
+                                 return node
                             })
                 if (name === 'hover') {
                     if (value) {
@@ -252,17 +252,25 @@
                 }
                 else if (name === 'showOtherAnchor') {
                     if (value)
-                    debugger
-                        nodes.attr('opacity', '1');
-                        nodes.animate({
-                            r: 6,
-                            repeat: true
-                        },1200);
-                    } else {
-                          nodes.attr('opacity', '0');
-                          nodes.stopAnimate();
-                          nodes.attr('r', 10);
+                    // debugger
+                    for(let i =0 ;i<nodes.length;i++){
+                        for(let j = 0;j<4;j++){
+                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].attr('opacity', '1');
+                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].animate({
+                                r: 6,
+                                repeat: true
+                            }, 1200);
                         }
+                    }
+                    } else {
+                    for(let i =0 ;i<nodes.length;i++){
+                        for(let j = 0;j<4;j++){
+                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].attr('opacity', '0');
+                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].stopAnimate();
+                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].attr('r', 4);
+                        }
+                    }
+                }
             },
             //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){
