@@ -204,7 +204,7 @@
                     anchor.on('mouseup', ev => {
 
                         //起始节点id
-                        let sourceId = this.graph.edge._cfg.sourceNode._cfg.id 
+                        let sourceId = this.graph.edge._cfg.sourceNode._cfg.id
                         //目标节点model
                         let model = ev.target.getParent()._cfg.item.getModel()
 
@@ -275,31 +275,33 @@
                         })
                         console.log('触发了anthorActive');
                         console.log(anchors);
-                        
+
                         if (value) {
                             anchors.forEach(anchor => {
                                 anchor.attr('opacity',"1")
                                 anchor.attr('r',3)
                                 anchor.attr('fill','#ffffff')
                                 anchor.attr('fillOpacity','1')
-                                anchor.attr('stroke','#69B7FE')
+                                anchor.attr('stroke','#66c0fe')
                                 anchor.attr('strokeOpacity','0.4')
                                 anchor.attr('lineWidth',15)
-                            });                           
+                            });
                         }else {
                             console.log('恢复');
-                            
+
                             anchors.forEach(anchor => {
-                                anchor.attr('opacity',"0")
                                 anchor.attr('r',4)
-                                anchor.attr('fill','green')
+                                anchor.attr('lineWidth',1)
+                                anchor.attr('fill','#d6fffe')
+                                anchor.attr('stroke','#55aecc')
+                                anchor.attr('opacity',"0")
                             });
                         }
                         break;
                     default:
                         break;
                 }
-            
+
             },
             //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){
