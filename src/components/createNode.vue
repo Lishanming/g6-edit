@@ -4,6 +4,7 @@
 
 <script>
     const G6 = require('@antv/g6')
+    import * as Anthor from  '@/util/anthor'
     export default {
         name: "createNode",
         methods:{
@@ -176,8 +177,7 @@
                     });
                     //鼠标按下事件
                     anchor.on('mousedown', ev => {
-                        // console.log('anchor:mousedown')
-                        //     debugger
+
                         //鼠标变为十字形
                         ev.target.attr('cursor', 'crosshair');
                         //设置模式为连线
@@ -186,7 +186,8 @@
                         //记录鼠标移入时的锚点索引
                         if (this.graph.addingEdge == false || this.graph == false) {
                             this.graph.currSourceAnchorIndex = index
-                            console.log('设置了起始锚点索引: '+this.graph.currSourceAnchorIndex);
+                            this.graph.sourceNode = ev.target._cfg.parent._cfg
+                            // console.log('设置了起始锚点索引: '+this.graph.currSourceAnchorIndex);
                         }
 
                     });
@@ -226,6 +227,8 @@
                             this.graph.edge = null;
                             this.graph.addingEdge = false;
                         }
+                        //关闭可连接锚点的激活状态
+                        Anthor.setAnchorActive(this.graph,false)
                         this.graph.setMode('default');
                     })
                 }
@@ -239,53 +242,64 @@
                 let _this = this
                 const group = item.getContainer();
                 const shape = group.get('children').slice(2,6); // 顺序根据 draw 时确定
-                 var nodes = this.graph.findAll('node',node => {
-                                 return node
-                            })
-                if (name === 'hover') {
-                    if (value) {
-                        for (let i = 0; i < shape.length; i++) {
-                            shape[i].attr('opacity', '1');
+                switch (name) {
+                    case 'hover':
+                        if(value) {
+                            for (let i = 0; i < shape.length; i++) {
+                                shape[i].attr('opacity', '1')
+                            }
+                        }else {
+                            for (let i = 0; i < shape.length; i++) {
+                                shape[i].attr('opacity', '0')
+                            }
                         }
-                    } else {
-                        for (let i = 0; i < shape.length; i++) {
-                            shape[i].attr('opacity', '0');
+                        break;
+                    case 'selected':
+                        if (value) {
+                            group.get('children')[0].attr('fillOpacity', '0.5')
+                        } else {
+                            group.get('children')[0].attr('fillOpacity', '0.3')
                         }
-                    }
-                } else if (name === 'selected') {
-                    if (value) {
-                        group.get('children')[0].attr('fillOpacity', '0.5');
-                    } else {
-                        group.get('children')[0].attr('fillOpacity', '0.3');
-                    }
-                }else if (name === 'multiSelected') {
-                    if (value) {
-                        group.get('children')[0].attr('fill', 'red');
-                    } else {
-                        group.get('children')[0].attr('fill', 'green');
-                    }
+                        break;
+                    case 'multiSelected':
+                        if (value) {
+                            group.get('children')[0].attr('fill', 'red')
+                        } else {
+                            group.get('children')[0].attr('fill', 'green')
+                        }
+                        break;
+                    case 'anthorActive':
+                        let shapes = item._cfg.group._cfg.children
+                        let anchors = shapes.filter(shape=>{
+                            return shape.isKeyShape !=true && shape._cfg.type=='circle'
+                        })
+                        console.log('触发了anthorActive');
+                        console.log(anchors);
+                        
+                        if (value) {
+                            anchors.forEach(anchor => {
+                                anchor.attr('opacity',"1")
+                                anchor.attr('r',3)
+                                anchor.attr('fill','#ffffff')
+                                anchor.attr('fillOpacity','1')
+                                anchor.attr('stroke','#69B7FE')
+                                anchor.attr('strokeOpacity','0.4')
+                                anchor.attr('lineWidth',15)
+                            });                           
+                        }else {
+                            console.log('恢复');
+                            
+                            anchors.forEach(anchor => {
+                                anchor.attr('opacity',"0")
+                                anchor.attr('r',4)
+                                anchor.attr('fill','green')
+                            });
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                else if (name === 'showOtherAnchor') {
-                    if (value)
-                    // debugger
-                    for(let i =0 ;i<nodes.length;i++){
-                        for(let j = 0;j<4;j++){
-                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].attr('opacity', '1');
-                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].animate({
-                                r: 6,
-                                repeat: true
-                            }, 1200);
-                        }
-                    }
-                    } else {
-                    for(let i =0 ;i<nodes.length;i++){
-                        for(let j = 0;j<4;j++){
-                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].attr('opacity', '0');
-                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].stopAnimate();
-                            nodes[i]._cfg.group._cfg.children.slice(2,6)[j].attr('r', 4);
-                        }
-                    }
-                }
+            
             },
             //当高宽改变的时候，锚点跟随改变
             changeAnthorPosition(cfg, node){

@@ -4,7 +4,7 @@
 
 <script>
     import {_throttle, _debounce} from "@/util/throttle";
-
+    import * as Anthor from  '@/util/anthor'
     export default {
         name: "Event",
         methods: {

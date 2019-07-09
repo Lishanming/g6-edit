@@ -4,6 +4,7 @@
 
 <script>
     import * as Tool from  '@/util/point'
+    import * as Anthor from  '@/util/anthor'
     import { _throttle,_debounce } from "@/util/throttle";
     export default {
         name: "addLine",
@@ -78,6 +79,8 @@
                     //鼠标按住开始画线
                     onMousedown(ev) {
                         // debugger
+                        console.log(this);
+                        
                         const node = ev.item;
                         const graph = this.graph;
                         const point = {x: ev.x, y: ev.y};
@@ -104,7 +107,13 @@
                             });
                             graph.addingEdge = true;
                         }
-                        graph.setItemState(ev.item, 'showOtherAnchor', true)
+                        //找到所有可以连接的节点
+                        if (graph.sourceNode && graph.sourceNode.id) {
+                            //开启可连接锚点的激活状态
+                            Anthor.setAnchorActive(this.graph,true)
+                        }
+                        
+                        
                     },
                     //鼠标移动，画线跟随
                     onMousemove(ev) {
@@ -123,9 +132,11 @@
                         // alert(9999)
                         let graph = this.graph
                         if (graph.addingEdge) {
+                            //关闭可连接锚点的激活状态
+                            Anthor.setAnchorActive(this.graph,false)
                             graph.removeItem(graph.edge);
                             graph.edge = null;
-                            graph.addingEdge = false;
+                            graph.addingEdge = false;                          
                         }
                         // this.graph.setItemState(ev.item, 'showOtherAnchor', false)
 
