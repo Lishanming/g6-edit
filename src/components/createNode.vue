@@ -247,10 +247,14 @@
                         if(value) {
                             for (let i = 0; i < shape.length; i++) {
                                 shape[i].attr('opacity', '1')
+                                shape[i].attr('strokeOpacity', '1')
+                                shape[i].attr('fillOpacity', '1')
                             }
                         }else {
                             for (let i = 0; i < shape.length; i++) {
                                 shape[i].attr('opacity', '0')
+                                shape[i].attr('strokeOpacity', '0')
+                                shape[i].attr('fillOpacity', '0')
                             }
                         }
                         break;
@@ -295,6 +299,8 @@
                                 anchor.attr('fill','#d6fffe')
                                 anchor.attr('stroke','#55aecc')
                                 anchor.attr('opacity',"0")
+                                anchor.attr('strokeOpacity','0')
+                                anchor.attr('fillOpacity','0')
                             });
                         }
                         break;
