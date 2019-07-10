@@ -7,17 +7,13 @@ Mock.mock('/api/Config', 'post', () => {
         code:1,
         node1:[
             {"nodeId":"123"},
-            {"display":[
-                    {"label":"名称","type":"input"},
-                    {"label":"边宽","type":"input"}
-                ]}
+            {"label":"名称","type":"input"},
+            {"label":"边宽","type":"input"}
         ],
         node2:[
             {"nodeId":"234"},
-            {"display":[
-                    {"label":"名称","type":"input"},
-                    {"label":"边宽","type":"input"}
-                ]}
+            {"label":"名称","type":"input"},
+            {"label":"边宽","type":"input"}
         ]
     }
 });

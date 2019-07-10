@@ -144,9 +144,18 @@
             //获取配置属性，使左侧显示对应属性
             getConfig() {
                 // debugger
+                var html = ''
                 this.$axios.postJson('/Config',{})
                     .then((response) => {
                         console.log('json', response)
+                        for(let i = 0 ;i< response.node1.length;i++){
+                            html += `  <div class="p name">
+                                ${ response.node1[i].label}：
+                                <el-input size="mini" v-model="nodeName"></el-input>
+                            </div>`
+                        }
+                        var nodeAttribute = this.$('#nodeAttribute')
+                        nodeAttribute.append(html)
                     })
                     .catch((error) => {
                         console.log(error)

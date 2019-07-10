@@ -116,15 +116,11 @@
                             v-show="currentType == 'node'"
                     >
                         <div class="pannel-title">节点</div>
-                        <div class="block-container">
+                        <div class="block-container" id="nodeAttribute">
                             <div class="p name">
                                 名称：
                                 <el-input size="mini" v-model="nodeName"></el-input>
                             </div>
-                            <!-- <div class="p name">-->
-                            <!--     字体大小：-->
-                            <!--     <el-input size="mini" v-model="fontSize"></el-input>-->
-                            <!-- </div>-->
                             <div class="p name">
                                 <span style="margin-right: 18px;">类型：</span>
                                 <el-select v-model="shapeValue" placeholder="请选择" size="mini" :disabled="showShapeValue">
