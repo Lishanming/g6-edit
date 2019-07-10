@@ -5,8 +5,8 @@
                 <i class="command iconfont icon-undo" title="撤销" @click="Undo"></i>
                 <i class="command iconfont icon-redo" title="重做" @click="Redo"></i>
                 <span class="separator"></span>
-                <i class="command iconfont icon-toback" title="底层" @click="toback"></i>
-                <i class="command iconfont icon-tofront" title="顶层" @click="tofront"></i>
+                <i class="command iconfont icon-toback" title="底层" @click="toback" :disabled="startSetIndex"></i>
+                <i class="command iconfont icon-tofront" title="顶层" @click="tofront"  :disabled="startSetIndex"></i>
                 <span class="separator"></span>
                 <i class="command iconfont icon-zoom-out" title="缩小" @click="zoomOut"></i>
                 <i class="command iconfont icon-zoom-in" title="放大" @click="zoomIn"></i>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="data-opt">
-                <a href="javascript:;" class="file">选择文件<input type="file" id="readFile" @click="readFile"></input></a>
+                <a href="javascript:;" class="file">选择文件<input type="file" id="readFile" @click="readFile" /></a>
                 <el-button size="mini" type="primary" @click="saveFlow">保存</el-button>
                 <el-button size="mini" type="primary" @click="saveFlowToJson">导出json</el-button>
             </div>
@@ -247,8 +247,7 @@
                 nodeWidth: null,
                 nodeHeight: 60,
                 showShapeValue:false,
-                others:null,
-                count:0,
+                startSetIndex:false
             }
         },
 
