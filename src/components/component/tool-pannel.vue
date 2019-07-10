@@ -30,6 +30,8 @@
             //底部
             toback(){
                 console.log(this)
+                //需要先点击节点，获取到currentItemId才能置顶
+                this.graph.findById(this.currentItemId).toback()
                 // item.toback()
             },
             //置顶
