@@ -32,11 +32,10 @@
 
                 //需要先点击节点，获取到currentItemId才能置顶
                 // debugger
+                console.log(this.graph.findById(this.currentItemId))
                 if(this.currentItemId != null){
                     this.graph.findById(this.currentItemId).toBack()
                 }
-
-                // item.toback()
             },
             //置顶
             tofront(){
