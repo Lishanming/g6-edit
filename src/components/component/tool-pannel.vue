@@ -29,16 +29,20 @@
         methods:{
             //底部
             toback(){
-                console.log(this)
+
                 //需要先点击节点，获取到currentItemId才能置顶
-                debugger
-                this.graph.findById(this.currentItemId).toback()
+                // debugger
+                if(this.currentItemId != null){
+                    this.graph.findById(this.currentItemId).toBack()
+                }
+
                 // item.toback()
             },
             //置顶
             tofront(){
-                console.log(this)
-                // item.toFront()
+                if(this.currentItemId != null){
+                this.graph.findById(this.currentItemId).toFront()
+                }
             },
 
             //缩小
