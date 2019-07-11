@@ -28,7 +28,7 @@
                     } else {
                         let type = ev.item.getType()
                         //在此处生成右侧属性
-                        this.getConfig(type)
+                        this.getConfig()
                         switch (type) {
                             case 'node':
                                 // 鼠标点击时设置当前节点类型
@@ -41,6 +41,14 @@
                                 this.nodeColor = ev.item._cfg.model.style.fill
                                 // this.fontSize = ev.item.model.fontSize
                                 this.shapeValue = ev.item._cfg.model.shape
+                                //保存当前节点类型
+                                _this.currentNodeType = ev.item._cfg.model.shape
+                                // 当点击到基础节点时显示默认的属性，点击到image节点时显示自定义属性
+                                if( ev.item._cfg.model.shape != 'image'){
+                                    _this.baseNode =true
+                                }else{
+                                    _this.baseNode =false
+                                }
                                 break
                             case 'edge':
                                 // 鼠标点击时设置当前item类型为edge

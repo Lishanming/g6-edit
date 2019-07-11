@@ -5,7 +5,7 @@ import Mock from 'mockjs';
 Mock.mock('/api/Config', 'post', () => {
     return {
         code: 1,
-        node: {
+        nodesInfo: {
             rect: [
                 {"nodeId": "123"},
                 {"label": "名称", "type": "select"},

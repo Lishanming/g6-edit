@@ -116,7 +116,7 @@
                             v-show="currentType == 'node'"
                     >
                         <div class="pannel-title">节点</div>
-                        <div class="block-container" id="nodeAttribute" >
+                        <div class="block-container" v-if="baseNode" >
                             <div class="p name">
                                 名称：
                                 <el-input size="mini" v-model="nodeName"></el-input>
@@ -144,7 +144,12 @@
                                         size="mini"
                                 ></el-color-picker>
                             </div>
-
+                        </div>
+                        <div class="block-container" v-else  >
+                            <div class="p name" v-for="item in configData" :key="item.nodeId">
+                                名称22：
+                                <el-input size="mini" v-model="nodeName"></el-input>
+                            </div>
                         </div>
                     </div>
                     <!-- 选中边-->
@@ -245,12 +250,14 @@
                 showShapeValue:false,
                 startSetIndex:false,
                 currentSrc:'', //脱出图片时保存其url
+                currentNodeType:'',  //点击节点时，保存当前节点type
+                baseNode:'',    //是否是基础节点
+                configData:{},   //请求到的配置数据
                 attributeData:{
 
                 }
             }
         },
-
         mounted() {
             this.initG6();
         },

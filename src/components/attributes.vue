@@ -142,13 +142,13 @@
         },
         methods: {
             //获取配置属性，使左侧显示对应属性
-            getConfig(type) {
+            getConfig() {
                 // debugger
                 var html = ''
                 this.$axios.postJson('/Config',{})
                     .then((res) => {
                         console.log('json', res)
-
+                        this.configData = res.nodesInfo
                     })
                     .catch((error) => {
                         console.log(error)
