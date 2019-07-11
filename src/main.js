@@ -2,22 +2,27 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import G6 from '@antv/g6'
 import ElementUI from 'element-ui';
+import Promise from 'es6-promise';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/fonts/iconfont.css';
-// import Minimap from '@antv/g6/build/minimap'
-// import Grid from "@antv/g6/build/grid"
-// import Net from "@antv/g6/build/net"
+import $http from './util/http';
+import {baseUrl, baseImgUrl} from './config/config'
+import $ from 'jquery';
 
-
+// 使用axios兼容ie9+
+Promise.polyfill();
 Vue.config.productionTip = false
 Vue.use(ElementUI);
-// Vue.prototype.G6 = G6
-// Vue.prototype.Minimap = Minimap
-// Vue.prototype.Grid = Grid
-// Vue.prototype.Net = Net
 
+//使用mock模拟数据
+require('./mock.js');
+
+Vue.prototype.$baseUrl = baseUrl;
+Vue.prototype.$baseImgUrl = baseImgUrl;
+
+Vue.prototype.$axios = $http;
+Vue.prototype.$ = $;
 new Vue({
   router,
   store,
