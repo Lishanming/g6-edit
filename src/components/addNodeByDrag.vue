@@ -5,7 +5,7 @@
 <script>
     import {_throttle, _debounce} from "@/util/throttle";
 
-    const imgUrl = require('@/assets/images/222.png')
+    // const imgUrl = this.initNodesData.nodes[i].url
     export default {
         name: "addNodeBydrag",
         methods: {
@@ -50,7 +50,7 @@
                 let _this = this;
                 // debugger
                 const graph = this.graph
-
+                _this.currentSrc = ev.target.currentSrc
                 switch (_this.nodeClick.getAttribute('data-shape')) {
                     case 'yuan':
                         // debugger
@@ -100,7 +100,7 @@
                                 stroke: '#1890FF',
                                 fillOpacity: 0.1,
                                 borderStyle: 'dashed',
-                                borderRadius:2,
+                                borderRadius: 2,
                             },
                         })
                         break
@@ -156,10 +156,11 @@
                         })
                         break
                     case 'image':
+                        // debugger
                         graph.node = this.graph.addItem('node', {
                             x: -60,
                             y: -60,
-                            img: imgUrl,
+                            img: ev.target.currentSrc,
                             keyShape: 'rect',
                             labelCfg: {
                                 position: 'top',
@@ -307,10 +308,11 @@
                         })
                         break
                     case 'image':
+                        // debugger
                         this.graph.addItem('node', {
                             x: ev.x,
                             y: ev.y,
-                            img: imgUrl,
+                            img: _this.currentSrc,
                             keyShape: 'rect',
                             labelCfg: {
                                 position: 'top',

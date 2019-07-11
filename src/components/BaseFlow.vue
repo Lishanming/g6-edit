@@ -31,7 +31,7 @@
                 <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" draggable="false" @mousedown="addNode"></i>
                 <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" draggable="false" @mousedown="addNode"></i>
                 <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" draggable="false" @mousedown="addNode"></i> -->
-                <left-bar @mousedown="addNode"></left-bar>
+                <left-bar @mousedown="addNode" :nodesData="initNodesData"></left-bar>
 <!--                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" draggable="false" @mousedown="addNode" >-->
 <!--                <i class="item iconfont icon-people people" data-shape="image" title="图形结点" @click="addNode"></i>-->
             </div>
@@ -116,7 +116,7 @@
                             v-show="currentType == 'node'"
                     >
                         <div class="pannel-title">节点</div>
-                        <div class="block-container" id="nodeAttribute">
+                        <div class="block-container" id="nodeAttribute" >
                             <div class="p name">
                                 名称：
                                 <el-input size="mini" v-model="nodeName"></el-input>
@@ -244,6 +244,7 @@
                 nodeHeight: 60,
                 showShapeValue:false,
                 startSetIndex:false,
+                currentSrc:'', //脱出图片时保存其url
                 attributeData:{
 
                 }

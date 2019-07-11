@@ -1,5 +1,5 @@
 <template>
-    <div class="left-bar" @mousedown="selectNode">
+    <div class="left-bar" @mousedown="selectNode" id="leftbar">
                 <img
                     draggable="false"
                     src="https://gw.alipayobjects.com/zos/rmsportal/ZnPxbVjKYADMYxkTQXRi.svg"
@@ -37,13 +37,15 @@
                     data-label="模型节点"
                     class="getItem" >
                 <img
+                    v-for ='item in nodesData.nodes'
+                    :key="item.id"
                     draggable="false"
-                    src="@/assets/images/222.png"
-                    data-type="node"
-                    data-shape="image"
+                    :src="item.url"
+                    :data-type="item.type"
+                    :data-shape="item.shape"
                     data-size="60*36"
-                    data-color="#722ED1"
-                    data-label="图片结点"
+                    :data-color="item.color"
+                    :data-label="item.label"
                     class="getItem" >
             </div>
 </template>
@@ -53,6 +55,9 @@ export default {
         return {
 
         }
+    },
+    props:{
+        nodesData:Object
     },
     methods:{
         selectNode(ev){

@@ -27,6 +27,8 @@
                         _this.multi = []      //多选时点击到画布，则清空所选内容
                     } else {
                         let type = ev.item.getType()
+                        //在此处生成右侧属性
+                        this.getConfig(type)
                         switch (type) {
                             case 'node':
                                 // 鼠标点击时设置当前节点类型
@@ -183,7 +185,7 @@
                     //。。。。。不应该在这里调用
                     if (graph.node) {
                         graph.removeItem(graph.node)
-                        this.realCreateNode(ev);
+                        this.realCreateNode(ev,graph.node);
                         graph.node = null;
                         //点击添加图片的开关
                         this.addbegin = false

@@ -50,7 +50,8 @@
                 edgeName: null,      //线名称
                 gridCheck: true,    //是否显示网格
                 pressCtrl: false,     //是否按下ctrl
-                multi: []     //按住节点保存点击了的节点的item
+                multi: [],     //按住节点保存点击了的节点的item
+                initNodesData:{}
             }
         },
         watch: {
@@ -137,25 +138,17 @@
             },
         },
         mounted() {
-            this.getConfig()
             this.getInitNodes()
         },
         methods: {
             //获取配置属性，使左侧显示对应属性
-            getConfig() {
+            getConfig(type) {
                 // debugger
                 var html = ''
                 this.$axios.postJson('/Config',{})
                     .then((res) => {
                         console.log('json', res)
-                        for(let i = 0 ;i< res.rect.length -1;i++){
-                            html += `  <div class="p name">
-                                ${ res.rect[i+1].label}：
-                                <el-input size="mini" v-model="nodeName"></el-input>
-                            </div>`
-                        }
-                        var nodeAttribute = this.$('#nodeAttribute')
-                        nodeAttribute.append(html)
+
                     })
                     .catch((error) => {
                         console.log(error)
@@ -163,7 +156,11 @@
             },
             //获取系统初始节点
             getInitNodes() {
-
+                this.$axios.postJson('/initNodes',{})
+                    .then((res) =>{
+                        console.log("init",res)
+                        this.initNodesData = res
+                })
             },
             /**
              * @description: 读取文件
