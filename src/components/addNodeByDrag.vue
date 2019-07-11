@@ -38,6 +38,7 @@
                         console.log('drag:onMouseup', ev)
                         graph.removeItem(graph.node);
                         graph.node = null;
+                        //没有在这执行
                         _this.realCreateNode(ev)
                         //点击添加图片的开关
                         _this.addbegin = false
@@ -51,6 +52,7 @@
                 // debugger
                 const graph = this.graph
                 _this.currentSrc = ev.target.currentSrc
+                _this.currentNodeType = ev.target.dataset.kind
                 switch (_this.nodeClick.getAttribute('data-shape')) {
                     case 'yuan':
                         // debugger
@@ -169,6 +171,7 @@
                                     opacity: 0.3,
                                 }
                             },
+                            kind: ev.target.dataset.kind,
                             label: '图片',
                             // id: this.Util.uniqueId(),
                             size: [60, 60],
@@ -209,6 +212,7 @@
             },
             realCreateNode(ev) {
                 let _this = this;
+                const graph = this.graph
                 switch (_this.nodeClick.getAttribute('data-shape')) {
                     case 'yuan':
                         this.graph.addItem('node', {
@@ -309,7 +313,7 @@
                         break
                     case 'image':
                         // debugger
-                        this.graph.addItem('node', {
+                        graph.realnode= this.graph.addItem('node', {
                             x: ev.x,
                             y: ev.y,
                             img: _this.currentSrc,
@@ -322,6 +326,7 @@
                                 }
                             },
                             label: ' ',
+                            kind:_this.currentNodeType,
                             id: this.Util.uniqueId(),
                             size: [60, 60],
                             shape: 'image',
@@ -331,6 +336,7 @@
                                 fillOpacity: 0.3
                             },
                         })
+                        this.nodesInfo.nodeId = graph.realnode._cfg.id
                         break
                     default:
                         this.graph.addItem('node', {

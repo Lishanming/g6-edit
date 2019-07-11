@@ -146,9 +146,21 @@
                             </div>
                         </div>
                         <div class="block-container" v-else  >
-                            <div class="p name" v-for="item in configData" :key="item.nodeId">
-                                名称22：
-                                <el-input size="mini" v-model="nodeName"></el-input>
+                            <div class="p name" v-for="(item,index) in config[this.currentNodeType]" :key="index">
+                                {{item.label}}：
+                                <template v-if="item.type== 'input'">
+                                    <el-input size="mini" v-model="nodesInfo.nodeId[item.vmodel]"></el-input>
+                                </template>
+                                <template v-else>
+                                    <el-select v-model="nodesInfo.nodeId[item.vmodel]" placeholder="请选择" size="mini">
+                                        <el-option
+                                                v-for="item in item.select"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -250,12 +262,10 @@
                 showShapeValue:false,
                 startSetIndex:false,
                 currentSrc:'', //脱出图片时保存其url
-                currentNodeType:'',  //点击节点时，保存当前节点type
+                currentNodeType:'',  //点击节点时，保存当前节点type，teacher。student
                 baseNode:'',    //是否是基础节点
-                configData:{},   //请求到的配置数据
-                attributeData:{
-
-                }
+                config:{},   //请求到的配置数据
+                nodesInfo:{}  //保存所有自定义属性
             }
         },
         mounted() {

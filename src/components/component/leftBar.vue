@@ -42,8 +42,9 @@
                     draggable="false"
                     :src="item.url"
                     :data-type="item.type"
+                    :data-kind ="item.kind"
                     :data-shape="item.shape"
-                    data-size="60*36"
+                     data-size="60*36"
                     :data-color="item.color"
                     :data-label="item.label"
                     class="getItem" >

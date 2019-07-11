@@ -51,7 +51,7 @@
                 gridCheck: true,    //是否显示网格
                 pressCtrl: false,     //是否按下ctrl
                 multi: [],     //按住节点保存点击了的节点的item
-                initNodesData:{}
+                initNodesData:{}    //保存初始化数据
             }
         },
         watch: {
@@ -144,11 +144,11 @@
             //获取配置属性，使左侧显示对应属性
             getConfig() {
                 // debugger
-                var html = ''
                 this.$axios.postJson('/Config',{})
                     .then((res) => {
                         console.log('json', res)
-                        this.configData = res.nodesInfo
+                        // debugger
+                        this.config = res.config
                     })
                     .catch((error) => {
                         console.log(error)

@@ -5,15 +5,28 @@ import Mock from 'mockjs';
 Mock.mock('/api/Config', 'post', () => {
     return {
         code: 1,
-        nodesInfo: {
-            rect: [
-                {"nodeId": "123"},
-                {"label": "名称", "type": "select"},
+        config: {
+            son: [
+                {
+                    "label": "大头",
+                    "type": "select",
+                    "vmodel": "name",
+                    "select": [{
+                        value: 'shouji',
+                        label: '手机'
+                    }, {
+                        value: 'diannao',
+                        label: '电脑'
+                    }]
+                },
                 {"label": "边宽", "type": "input"}
             ],
-            myCircle: [
-                {"nodeId": "234"},
-                {"label": "名称", "type": "input"},
+            cat: [
+                {"label": "叮当", "type": "input"},
+                {"label": "边宽", "type": "input"}
+            ],
+            yellowMan: [
+                {"label": "小黄人", "type": "input"},
                 {"label": "边宽", "type": "input"}
             ]
         },
@@ -31,7 +44,8 @@ Mock.mock('/api/initNodes', 'post', () => {
                 type: 'node',
                 shape: 'image',
                 color: '#fffff',
-                label: '123'
+                label: '123',
+                kind: 'son'
             },
             {
                 id: 1233,
@@ -39,15 +53,17 @@ Mock.mock('/api/initNodes', 'post', () => {
                 type: 'node',
                 shape: 'image',
                 color: '#fffff',
-                label: '234'
-            }  ,
+                label: '234',
+                kind: 'cat'
+            },
             {
                 id: 56456,
                 url: 'http://n1.itc.cn/img8/wb/recom/2016/11/27/148026039490846603.PNG',
                 type: 'node',
                 shape: 'image',
                 color: '#fffff',
-                label: '234'
+                label: '234',
+                kind: 'yellowMan'
             }
         ]
     }

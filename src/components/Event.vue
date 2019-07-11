@@ -41,8 +41,7 @@
                                 this.nodeColor = ev.item._cfg.model.style.fill
                                 // this.fontSize = ev.item.model.fontSize
                                 this.shapeValue = ev.item._cfg.model.shape
-                                //保存当前节点类型
-                                _this.currentNodeType = ev.item._cfg.model.shape
+                                this.currentNodeType = ev.item._cfg.model.kind
                                 // 当点击到基础节点时显示默认的属性，点击到image节点时显示自定义属性
                                 if( ev.item._cfg.model.shape != 'image'){
                                     _this.baseNode =true
@@ -187,13 +186,14 @@
                 });
 
                 this.graph.on('node:mouseup', ev => {
+                    console.log("拖出节点")
                     //拖出节点
                     const graph = this.graph
                     let _this = this;
                     //。。。。。不应该在这里调用
                     if (graph.node) {
                         graph.removeItem(graph.node)
-                        this.realCreateNode(ev,graph.node);
+                        this.realCreateNode(ev);
                         graph.node = null;
                         //点击添加图片的开关
                         this.addbegin = false
