@@ -55,6 +55,13 @@
             }
         },
         watch: {
+            name(newValue){
+                if (newValue === null) return
+                var item = this.graph.findById(this.currentItemId)
+                this.graph.update(item, {
+                    label: newValue
+                })
+            },
             gridCheck(newValue) {
                 if (newValue) {
                     document.getElementById('content').style.background = ''

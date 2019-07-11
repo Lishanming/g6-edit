@@ -336,7 +336,7 @@
                                 fillOpacity: 0.3
                             },
                         })
-                        this.nodesInfo.nodeId = graph.realnode._cfg.id
+                        this.$set(this.nodesInfo,'nodeId',graph.realnode._cfg.id)
                         break
                     default:
                         this.graph.addItem('node', {

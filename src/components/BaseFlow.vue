@@ -154,10 +154,10 @@
                                 <template v-else>
                                     <el-select v-model="nodesInfo.nodeId[item.vmodel]" placeholder="请选择" size="mini">
                                         <el-option
-                                                v-for="item in item.select"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
+                                                v-for="item1 in item.select"
+                                                :key="item1.value"
+                                                :label="item1.label"
+                                                :value="item1.value">
                                         </el-option>
                                     </el-select>
                                 </template>

@@ -19,15 +19,15 @@ Mock.mock('/api/Config', 'post', () => {
                         label: '电脑'
                     }]
                 },
-                {"label": "边宽", "type": "input"}
+                {"label": "边宽", "type": "input","vmodel": "age",}
             ],
             cat: [
-                {"label": "叮当", "type": "input"},
-                {"label": "边宽", "type": "input"}
+                {"label": "叮当", "type": "input","vmodel": "name",},
+                {"label": "边宽", "type": "input","vmodel": "age",}
             ],
             yellowMan: [
-                {"label": "小黄人", "type": "input"},
-                {"label": "边宽", "type": "input"}
+                {"label": "小黄人", "type": "input","vmodel": "name"},
+                {"label": "边宽", "type": "input", "vmodel": "age",}
             ]
         },
 
