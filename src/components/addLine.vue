@@ -10,6 +10,7 @@
         name: "addLine",
         methods:{
             registerEdge(G6){
+                let _this = this
                 G6.registerEdge('flow-line', {
                     getControlPoints(cfg) {
                         // console.log(cfg.sourceAnchor)
@@ -24,25 +25,34 @@
                             let {sourceNode,targetNode,startPoint,endPoint,sourceAnchor,targetAnchor} = cfg
                             let sourceBBox = sourceNode.getBBox()
                             let targetBBox = targetNode.getBBox()
-                            // debugger;
+
                             //两个辅助点
                             let sourceAssistPoint = Tool.getAssistPoint(startPoint,sourceAnchor)
                             let targetAssistPoint = Tool.getAssistPoint(endPoint,targetAnchor)
 
                             if (Tool.isCover(sourceBBox,targetBBox)) {
+                                let points = []      
+                                //添加起始点，终点                         
+                                points.push(...[sourceAssistPoint,targetAssistPoint])
 
-                                let sourceFloodType = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,sourceBBox)
-                                let targetFloodType = Tool.getFloodType(sourceAssistPoint,targetAssistPoint,targetBBox)
-                                if (sourceFloodType == targetFloodType && sourceFloodType!='O') {
-                                    //2折线
-                                    let brokenPoint = Tool.getTwoBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
-                                    return [sourceAssistPoint,...brokenPoint,targetAssistPoint]
-                                }else {
-                                    //1折线
-                                    let brokenPoint = Tool.getOneBrokenPoint(sourceAssistPoint,targetAssistPoint,sourceBBox,targetBBox)
-                                    return [sourceAssistPoint,brokenPoint,targetAssistPoint]
-                                }
-                                // return []
+                                //再添加辅助线延长线的交点
+                                let meetPoints =  Tool.getMeetPoints(sourceBBox,targetBBox)
+                                points.push(...meetPoints)
+
+                                //再添加锚点延长线的与辅助线的交点
+                                points.push(...Tool.getAnchorWrapPoints(sourceAssistPoint,sourceBBox,targetBBox))
+                                points.push(...Tool.getAnchorWrapPoints(targetAssistPoint,targetBBox,sourceBBox))                              
+                                
+                                points.forEach(item=>{
+                                    _this.graph.addItem('node',{
+                                        shape:'circle',
+                                        size:4,
+                                        x:item.x,
+                                        y:item.y
+                                    })
+                                })
+                                
+                                return []
                             }else {
                                 //现在两个节点在x,y轴上不重叠，接着需要判断是画1折线 or 2折线
                                 //这里有个算法，以起点辅助点，终点辅助点做对角线，形成的区域记作A,起始节点和终点如果被A淹没，记作X淹没，Y淹没，如果两个节点都淹没，并且淹没类型相同，则为2折线
