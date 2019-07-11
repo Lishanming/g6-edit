@@ -243,7 +243,10 @@
                 nodeWidth: null,
                 nodeHeight: 60,
                 showShapeValue:false,
-                startSetIndex:false
+                startSetIndex:false,
+                attributeData:{
+
+                }
             }
         },
 

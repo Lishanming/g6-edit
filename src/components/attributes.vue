@@ -146,11 +146,11 @@
                 // debugger
                 var html = ''
                 this.$axios.postJson('/Config',{})
-                    .then((response) => {
-                        console.log('json', response)
-                        for(let i = 0 ;i< response.node1.length;i++){
+                    .then((res) => {
+                        console.log('json', res)
+                        for(let i = 0 ;i< res.rect.length -1;i++){
                             html += `  <div class="p name">
-                                ${ response.node1[i].label}：
+                                ${ res.rect[i+1].label}：
                                 <el-input size="mini" v-model="nodeName"></el-input>
                             </div>`
                         }
@@ -285,6 +285,6 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
 </style>
