@@ -100,7 +100,7 @@ export function isCover(sourceBBox,targetBBox) {
 }
 
 //这个算法有点问题，存在 3，6，6的情况，也就是min，max判断不准确
-export function getFloodType(sourceAssistPoint,targetAssistPoint,bBox,isOverFlow) {
+export function getFloodType(sourceAssistPoint,targetAssistPoint,bBox) {
     let {x,y,width,height} = bBox
     let startX = Math.min(sourceAssistPoint.x,targetAssistPoint.x)
     let ednX = Math.max(sourceAssistPoint.x,targetAssistPoint.x)
@@ -115,4 +115,131 @@ export function getFloodType(sourceAssistPoint,targetAssistPoint,bBox,isOverFlow
     }
     // return {} // {}=={} false
     return 'O'
+}
+
+//判断两个点形成的线是否与盒子相交
+function notMeet(firstNode,secondNode,bBox) {
+    let {x,y,width,height} = bBox
+    //首先两个点形成的，要么是横线，要么是竖线
+    if (firstNode.x == secondNode.x) {
+        //竖线
+        if (isBetween(x,x+width,firstNode.x)) {
+            if (Math.max(firstNode.y,secondNode.y) < y || Math.min(firstNode.y,secondNode.y)>y+height) {
+                return true
+            }else {
+                return false
+            }
+        }else {
+            return true
+        }
+    }
+
+    if (firstNode.y == secondNode.y) {
+        //横线
+        if (isBetween(y,y+height,firstNode.y)) {
+            if (Math.max(firstNode.x,secondNode.x) < x || Math.min(firstNode.x,secondNode.x) > x+width) {
+                return true
+            }else {
+                return false
+            }
+        }else {
+            return true
+        }
+    }
+
+}
+
+export function getMeetPoints(sourceBBox,targetBBox) {
+
+    let points = []
+
+    var {x,y,width,height} = sourceBBox
+    let s1 = {x:x-10,y:y-10}
+    let s2 = {x:x+width+10,y:y-10}
+    let s3 = {x:x+width+10,y:y+height+10}
+    let s4 = {x:x-10,y:y+height+10}
+
+    var {x,y,width,height} = targetBBox
+    let t1 = {x:x-10,y:y-10}
+    let t2 = {x:x+width+10,y:y-10}
+    let t3 = {x:x+width+10,y:y+height+10}
+    let t4 = {x:x-10,y:y+height+10}
+
+    //先添加辅助点
+    points.push(...[s1,s2,s3,s4,t1,t2,t3,t4])
+
+    //起始节点上方,交点：
+    let p1 = {x:t1.x,y:s1.y}
+    let p2 = {x:t2.x,y:s1.y}
+
+    //需要判断与交点的连线是否会与节点相交
+    if (notMeet(s1,p1,targetBBox)&&notMeet(s1,p1,sourceBBox)) {
+        points.push(p1)
+    }
+    if (notMeet(s1,p2,targetBBox)&&notMeet(s1,p2,sourceBBox)) {
+        points.push(p2)
+    }
+    //起始节点下方,交点：
+    p1 = {x:t1.x,y:s4.y}
+    p2 = {x:t2.x,y:s4.y}
+
+    //需要判断与交点的连线是否会与节点相交
+    if (notMeet(s4,p1,targetBBox)&&notMeet(s4,p1,sourceBBox)) {
+        points.push(p1)
+    }
+    if (notMeet(s4,p2,targetBBox)&&notMeet(s4,p2,sourceBBox)) {
+        points.push(p2)
+    }
+
+    //起始节点左边,交点：
+    p1 = {x:s1.x,y:t1.y}
+    p2 = {x:s1.x,y:t4.y}
+
+    //需要判断与交点的连线是否会与节点相交
+    if (notMeet(t1,p1,sourceBBox)&&notMeet(t1,p1,targetBBox)) {
+        points.push(p1)
+    }
+    if (notMeet(t4,p2,sourceBBox)&&notMeet(t4,p2,targetBBox)) {
+        points.push(p2)
+    }
+
+    //起始节点右边,交点：
+    p1 = {x:s2.x,y:t1.y}
+    p2 = {x:s2.x,y:t4.y}
+
+    //需要判断与交点的连线是否会与节点相交
+    if (notMeet(t1,p1,sourceBBox)&&notMeet(t1,p1,targetBBox)) {
+        points.push(p1)
+    }
+    if (notMeet(t4,p2,sourceBBox)&&notMeet(t4,p2,targetBBox)) {
+        points.push(p2)
+    }
+
+    return points
+}
+export function getAnchorWrapPoints(startPoint,sourceBBox,targetBBox) {
+    let points = []
+
+    if (startPoint.y == sourceBBox.centerY) {
+        //横向锚点
+        var p1 = {x:targetBBox.x-10,y:startPoint.y}
+        var p2 = {x:targetBBox.x+targetBBox.width+10,y:startPoint.y}
+        if (notMeet(startPoint,p1,targetBBox)&&notMeet(startPoint,p1,sourceBBox)) {
+            points.push(p1)
+        }
+        if (notMeet(startPoint,p2,targetBBox)&&notMeet(startPoint,p2,sourceBBox)) {
+            points.push(p2)
+        }
+    }else {
+        //竖向锚点
+        var p1 = {x:startPoint.x,y:targetBBox.y-10}
+        var p2 = {x:startPoint.x,y:targetBBox.y+targetBBox.height+10}
+        if (notMeet(startPoint,p1,targetBBox)&&notMeet(startPoint,p1,sourceBBox)) {
+            points.push(p1)
+        }
+        if (notMeet(startPoint,p2,targetBBox)&&notMeet(startPoint,p2,sourceBBox)) {
+            points.push(p2)
+        }
+    }
+    return points
 }
