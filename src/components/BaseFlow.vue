@@ -113,7 +113,7 @@
                     <div
                             data-status="node-selected"
                             class="pannel"
-                            v-show="currentType == 'node'"
+                            v-if="currentType == 'node'"
                     >
                         <div class="pannel-title">节点</div>
                         <div class="block-container" v-if="baseNode" >
@@ -271,7 +271,7 @@
                 currentNodeType:'',  //点击节点时，保存当前节点type，teacher。student
                 baseNode:'',    //是否是基础节点
                 config:{},   //请求到的配置数据
-                nodesInfo:{},  //保存所有自定义属性
+                nodesInfo:{},  //保存所有自定义属性，提交到后台
                 vmodel:[]     //用来存放自定义属性的vmodel
             }
         },

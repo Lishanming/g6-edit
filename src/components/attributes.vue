@@ -153,8 +153,6 @@
                     .then((res) => {
                         console.log('json', res)
                         _this.config = res.config
-                        // debugger
-
                     })
                     .catch((error) => {
                         console.log(error)

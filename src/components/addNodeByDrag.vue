@@ -35,7 +35,6 @@
                             })
                         }
                         // graph.removeItem(graph.node);
-
                         ev.target.attr('cursor', 'hand');
                         // console.log('getCurrentMode:', this.graph.getCurrentMode())
                     },
@@ -166,6 +165,7 @@
                         break
                     case 'image':
                         // debugger
+
                         graph.node = this.graph.addItem('node', {
                             x: -60,
                             y: -60,
@@ -190,7 +190,6 @@
                                 borderStyle: 'dashed'
                             },
                         })
-
                         break
                     default:
                         graph.node = this.graph.addItem('node', {
