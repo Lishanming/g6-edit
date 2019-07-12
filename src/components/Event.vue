@@ -28,7 +28,6 @@
                     } else {
                         let type = ev.item.getType()
                         //在此处生成右侧属性
-                        this.getConfig()
                         switch (type) {
                             case 'node':
                                 // 鼠标点击时设置当前节点类型
@@ -76,14 +75,16 @@
                 this.graph.on('mousemove', (ev) => {
                     const graph = this.graph
                     const point = {x: ev.x, y: ev.y};
+                    // console.log('画布上的mousemove')
+                    // debugger
                     // //使节点跟随
-                    if (this.addbegin == true) {
+                    if (  graph.beginaddNode == true) {
                         if (!graph.node) {
                             return;
                         }
-                        this.graph.updateItem(this.graph.node, {
-                            ...point
-                        })
+                        graph.updateItem(graph.node, {
+                                ...point
+                            })
                     }
 
                     //线跟随
@@ -189,14 +190,15 @@
                     console.log("拖出节点")
                     //拖出节点
                     const graph = this.graph
-                    let _this = this;
+                    // let _this = this;
                     //。。。。。不应该在这里调用
                     if (graph.node) {
                         graph.removeItem(graph.node)
+                        // debugger
                         this.realCreateNode(ev);
                         graph.node = null;
                         //点击添加图片的开关
-                        this.addbegin = false
+                        this.graph.beginaddNode = false
                     }
                     //转换为默认模式
                     this.graph.setMode('default');

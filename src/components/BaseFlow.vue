@@ -31,7 +31,7 @@
                 <i class="item iconfont icon-rect rect" data-shape="juxing" title="常规结点" draggable="false" @mousedown="addNode"></i>
                 <i class="item iconfont icon-rhombus diamond" data-shape="diamond" title="分叉结点" draggable="false" @mousedown="addNode"></i>
                 <i class="item iconfont icon-capsule square" data-shape="ellipse" title="模型结点" draggable="false" @mousedown="addNode"></i> -->
-                <left-bar @mousedown="addNode" :nodesData="initNodesData"></left-bar>
+                <left-bar @mousedown="addNode"  @mouseup="clearNode" :nodesData="initNodesData"></left-bar>
 <!--                <img src="@/assets/images/111.png" alt="图片" width="70" height="60" data-shape="image" title="图片" draggable="false" @mousedown="addNode" >-->
 <!--                <i class="item iconfont icon-people people" data-shape="image" title="图形结点" @click="addNode"></i>-->
             </div>
@@ -146,13 +146,14 @@
                             </div>
                         </div>
                         <div class="block-container" v-else  >
-                            <div class="p name" v-for="(item,index) in config[this.currentNodeType]" :key="index">
+<!--                            {{config[currentNodeType]}}-->
+                            <div class="p name" v-for="(item,index) in config[currentNodeType]" :key="index">
                                 {{item.label}}：
                                 <template v-if="item.type== 'input'">
-                                    <el-input size="mini" v-model="nodesInfo.nodeId[item.vmodel]"></el-input>
+                                    <el-input size="mini" v-model="nodesInfo[currentItemId][item.vmodel]"></el-input>
                                 </template>
                                 <template v-else>
-                                    <el-select v-model="nodesInfo.nodeId[item.vmodel]" placeholder="请选择" size="mini">
+                                    <el-select v-model="nodesInfo[currentItemId][item.vmodel]" placeholder="请选择" size="mini">
                                         <el-option
                                                 v-for="item1 in item.select"
                                                 :key="item1.value"
@@ -245,11 +246,16 @@
             data: Object, // 传入数据
             getData: Function // 获取数据
         },
+        created() {
+            //请求左侧节点数据
+            this.getInitNodes()
+            //获取右侧节点属性配置
+            this.getConfig()
+        },
         data() {
             return {
                 globaldata:'',//画布的数据
                 // defaultSize:[60,60],
-                addbegin: false,
                 nodeClick: {},
                 addingEdge: false,
                 currentItemId:'',   //删除时用到，当前item的id
@@ -265,7 +271,8 @@
                 currentNodeType:'',  //点击节点时，保存当前节点type，teacher。student
                 baseNode:'',    //是否是基础节点
                 config:{},   //请求到的配置数据
-                nodesInfo:{}  //保存所有自定义属性
+                nodesInfo:{},  //保存所有自定义属性
+                vmodel:[]     //用来存放自定义属性的vmodel
             }
         },
         mounted() {
@@ -352,6 +359,9 @@
                     },
 
                 });
+                this.graph.beginaddNode =false
+                this.graph.node = null
+                this.graph.nodeAttrbutes = null
                 //定义交互模式：拖拽节点
                 this.dragBehavior(G6)
                 //调用创建节点函数
@@ -378,15 +388,18 @@
              * **/
             addNode(ev) {
                 //点击添加图片的开关
-                this.addbegin = true
+                this.graph.beginaddNode = true
                 this.nodeClick = ev.target
-
+                this.graph.nodeAttrbutes = ev.target
                 //设置模式为拖拽
                 this.graph.setMode('dragNode');
                 const graph = this.graph
                 //  console.log('getCurrentMode:',  this.graph.getCurrentMode())
-                this.initDragNode(ev)
+
             },
+            clearNode(ev){
+                this.graph.beginaddNode = false
+            }
         },
 
     }

@@ -144,18 +144,17 @@
                 this.graph.zoomTo(newValue / 100)
             },
         },
-        mounted() {
-            this.getInitNodes()
-        },
         methods: {
             //获取配置属性，使左侧显示对应属性
             getConfig() {
                 // debugger
+                let _this = this
                 this.$axios.postJson('/Config',{})
                     .then((res) => {
                         console.log('json', res)
+                        _this.config = res.config
                         // debugger
-                        this.config = res.config
+
                     })
                     .catch((error) => {
                         console.log(error)

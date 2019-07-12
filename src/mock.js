@@ -11,6 +11,7 @@ Mock.mock('/api/Config', 'post', () => {
                     "label": "大头",
                     "type": "select",
                     "vmodel": "name",
+                    "datatype":"String",
                     "select": [{
                         value: 'shouji',
                         label: '手机'
@@ -19,7 +20,7 @@ Mock.mock('/api/Config', 'post', () => {
                         label: '电脑'
                     }]
                 },
-                {"label": "边宽", "type": "input","vmodel": "age",}
+                {"label": "边宽", "type": "input","vmodel": "age","datatype":"Number"}
             ],
             cat: [
                 {"label": "叮当", "type": "input","vmodel": "name",},

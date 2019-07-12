@@ -19,15 +19,21 @@
                             'dragend': 'onMouseup'        // 点击画布，addItem
                         };
                     },
-                    //鼠标移动，画线跟随
+                    //鼠标移动，節點跟隨
                     onMousemove(ev) {
                         // console.log('drag:onMousemove', ev)
                         // debugger
                         const point = {x: ev.x, y: ev.y};
-
-                        this.graph.updateItem(this.graph.node, {
-                            ...point
-                        })
+                        // debugger
+                        //拖拽出节点是初始化一个节点
+                        if(this.graph.node == null &&   this.graph.beginaddNode == true ){
+                            // debugger
+                            _this.initDragNode(ev)
+                        }else{
+                            this.graph.updateItem(this.graph.node, {
+                                ...point
+                            })
+                        }
                         // graph.removeItem(graph.node);
 
                         ev.target.attr('cursor', 'hand');
@@ -41,7 +47,7 @@
                         //没有在这执行
                         _this.realCreateNode(ev)
                         //点击添加图片的开关
-                        _this.addbegin = false
+                        _this.graph.beginaddNode= false
                         //转换为默认模式
                         this.graph.setMode('default');
                     }
@@ -51,8 +57,9 @@
                 let _this = this;
                 // debugger
                 const graph = this.graph
-                _this.currentSrc = ev.target.currentSrc
-                _this.currentNodeType = ev.target.dataset.kind
+                //mousedown的ev.target =  this.graph.nodeAttrbutes
+                _this.currentSrc = this.graph.nodeAttrbutes.currentSrc
+                _this.currentNodeType =this.graph.nodeAttrbutes.dataset.kind
                 switch (_this.nodeClick.getAttribute('data-shape')) {
                     case 'yuan':
                         // debugger
@@ -162,7 +169,7 @@
                         graph.node = this.graph.addItem('node', {
                             x: -60,
                             y: -60,
-                            img: ev.target.currentSrc,
+                            img:  _this.currentSrc,
                             keyShape: 'rect',
                             labelCfg: {
                                 position: 'top',
@@ -171,7 +178,7 @@
                                     opacity: 0.3,
                                 }
                             },
-                            kind: ev.target.dataset.kind,
+                            kind:  _this.currentNodeType,
                             label: '图片',
                             // id: this.Util.uniqueId(),
                             size: [60, 60],
@@ -183,6 +190,7 @@
                                 borderStyle: 'dashed'
                             },
                         })
+
                         break
                     default:
                         graph.node = this.graph.addItem('node', {
@@ -336,7 +344,14 @@
                                 fillOpacity: 0.3
                             },
                         })
-                        this.$set(this.nodesInfo,'nodeId',graph.realnode._cfg.id)
+                        //给nodesInfo对象加上自定义的属性名称
+                        this.$set(this.nodesInfo,graph.realnode._cfg.id,{})
+                        let nodeId = this.graph.realnode._cfg.id
+                        let kinds = _this.config[_this.graph.realnode._cfg.model.kind]
+                        kinds.forEach(kind=>{
+                            _this.$set(_this.nodesInfo[nodeId],kind.vmodel,'')
+                        })
+                        console.log('nodesInfo生成节点设置自定义属性之后',_this.nodesInfo[nodeId])
                         break
                     default:
                         this.graph.addItem('node', {
