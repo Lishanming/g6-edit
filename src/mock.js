@@ -39,24 +39,24 @@ Mock.mock('/api/initNodes', 'post', () => {
     return {
         code: 1,
         nodes: [
-            {
-                id: 12323,
-                url: 'http://img5.imgtn.bdimg.com/it/u=2218987731,82806086&fm=15&gp=0.jpg',
-                type: 'node',
-                shape: 'image',
-                color: '#fffff',
-                label: '123',
-                kind: 'son'
-            },
-            {
-                id: 1233,
-                url: 'http://img3.imgtn.bdimg.com/it/u=575311241,2568233008&fm=15&gp=0.jpg',
-                type: 'node',
-                shape: 'image',
-                color: '#fffff',
-                label: '234',
-                kind: 'cat'
-            },
+            // {
+            //     id: 12323,
+            //     url: 'http://img5.imgtn.bdimg.com/it/u=2218987731,82806086&fm=15&gp=0.jpg',
+            //     type: 'node',
+            //     shape: 'image',
+            //     color: '#fffff',
+            //     label: '123',
+            //     kind: 'son'
+            // },
+            // {
+            //     id: 1233,
+            //     url: 'http://img3.imgtn.bdimg.com/it/u=575311241,2568233008&fm=15&gp=0.jpg',
+            //     type: 'node',
+            //     shape: 'image',
+            //     color: '#fffff',
+            //     label: '234',
+            //     kind: 'cat'
+            // },
             {
                 id: 56456,
                 url: 'http://n1.itc.cn/img8/wb/recom/2016/11/27/148026039490846603.PNG',

@@ -51,6 +51,9 @@
                                         y:item.y
                                     })
                                 })
+                                console.log('points',points)
+                                console.log('sourceBBox',sourceBBox)
+                                console.log('targetBBox',targetBBox)
                                 //最短路径算法
                                 return []
                             }else {

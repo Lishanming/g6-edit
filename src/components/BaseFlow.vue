@@ -501,7 +501,7 @@
                 width: 5%;
                 /*min-width: 300px;*/
                 height: 100%;
-                padding: 20px;
+                padding: 8px;
                 display: inline-flex;
                 justify-content: center;
                 flex-wrap: wrap;

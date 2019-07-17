@@ -15,123 +15,194 @@
         data() {
             return {
                 data: {
-    // "nodes": [
-    //     {
-    //         "x": 226,
-    //         "y": 220,
-    //         "keyShape": "rect",
-    //         "label": "哈哈",
-    //         "labelCfg": {
-    //             "position": "center",
-    //             "style": {
-    //                 "fill": "#666",
-    //                 "opacity": 1
-    //             }
-    //         },
-    //         "id": "g1",
-    //         "size": [
-    //             60,
-    //             60
-    //         ],
-    //         "shape": "juxing",
-    //         "style": {
-    //             "fill": "#1890FF",
-    //             "stroke": "#1890FF",
-    //             "fillOpacity": 0.3
-    //         }
-    //     },
-    //     {
-    //         "x": 350,
-    //         "y": 119,
-    //         "keyShape": "rect",
-    //         "label": "呵呵",
-    //         "labelCfg": {
-    //             "position": "center",
-    //             "style": {
-    //                 "fill": "#666",
-    //                 "opacity": 1
-    //             }
-    //         },
-    //         "id": "g2",
-    //         "size": [
-    //             60,
-    //             60
-    //         ],
-    //         "shape": "juxing",
-    //         "style": {
-    //             "fill": "#1890FF",
-    //             "stroke": "#1890FF",
-    //             "fillOpacity": 0.3
-    //         }
-    //     }
-    // ],
-    // "edges": [
-    //     {
-    //         "id": 1562477183065,
-    //         "shape": "flow-line",
-    //         "label": "",
-    //         "source": "g1",
-    //         "sourceAnchor": 1,
-    //         "target": "g2",
-    //         "targetAnchor": 0,
-    //         "labelCfg": {
-    //             "position": "center",
-    //             "autoRotate": true
-    //         },
-    //         "size": 1
-    //     },
-    //     {
-    //         "id": 1562477183065,
-    //         "shape": "flow-line",
-    //         "label": "",
-    //         "source": "g1",
-    //         "sourceAnchor": 1,
-    //         "target": "g2",
-    //         "targetAnchor": 1,
-    //         "labelCfg": {
-    //             "position": "center",
-    //             "autoRotate": true
-    //         },
-    //         "size": 1
-    //     },
-    //     {
-    //         "id": 1562477183065,
-    //         "shape": "flow-line",
-    //         "label": "",
-    //         "source": "g1",
-    //         "sourceAnchor": 1,
-    //         "target": "g2",
-    //         "targetAnchor": 2,
-    //         "labelCfg": {
-    //             "position": "center",
-    //             "autoRotate": true
-    //         },
-    //         "size": 1
-    //     },
-    //     {
-    //         "id": 1562477183065,
-    //         "shape": "flow-line",
-    //         "label": "",
-    //         "source": "g1",
-    //         "sourceAnchor": 1,
-    //         "target": "g2",
-    //         "targetAnchor": 3,
-    //         "labelCfg": {
-    //             "position": "center",
-    //             "autoRotate": true
-    //         },
-    //         "size": 1
-    //     }
-
-        
-    // ]
-},
+                    "nodes": [
+                        {
+                            "x": 371.6875,
+                            "y": 155,
+                            "label": "模型节点",
+                            "keyShape": "rect",
+                            "labelCfg": {
+                                "position": "center",
+                                "style": {
+                                    "fill": "#666",
+                                    "opacity": 1
+                                }
+                            },
+                            "id": "g1",
+                            "size": [
+                                90,
+                                60
+                            ],
+                            "shape": "ellipse",
+                            "style": {
+                                "fill": "#722ED1",
+                                "stroke": "#722ED1",
+                                "fillOpacity": 0.3
+                            }
+                        },
+                        {
+                            "x": 644.6875,
+                            "y": 170,
+                            "keyShape": "rect",
+                            "label": "常规结点",
+                            "labelCfg": {
+                                "position": "center",
+                                "style": {
+                                    "fill": "#666",
+                                    "opacity": 1
+                                }
+                            },
+                            "id": "g2",
+                            "size": [
+                                80,
+                                50
+                            ],
+                            "shape": "juxing",
+                            "style": {
+                                "fill": "#1890FF",
+                                "stroke": "#1890FF",
+                                "fillOpacity": 0.3
+                            }
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 427.1875,
+                            "y": 155
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 594.1875,
+                            "y": 170
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 316.1875,
+                            "y": 114.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 427.1875,
+                            "y": 114.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 427.1875,
+                            "y": 195.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 316.1875,
+                            "y": 195.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 594.1875,
+                            "y": 134.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 695.1875,
+                            "y": 134.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 695.1875,
+                            "y": 205.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 594.1875,
+                            "y": 205.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 594.1875,
+                            "y": 114.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 695.1875,
+                            "y": 114.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 594.1875,
+                            "y": 195.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 695.1875,
+                            "y": 195.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 316.1875,
+                            "y": 205.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 427.1875,
+                            "y": 134.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 427.1875,
+                            "y": 205.5
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 594.1875,
+                            "y": 155
+                        },
+                        {
+                            "shape": "circle",
+                            "size": 4,
+                            "x": 427.1875,
+                            "y": 170
+                        }
+                    ],
+                    "edges": [
+                        {
+                            "id": 1563346664863,
+                            "shape": "flow-line",
+                            "label": "",
+                            "source": "g1",
+                            "sourceAnchor": 1,
+                            "target": "g2",
+                            "labelCfg": {
+                                "position": "center",
+                                "autoRotate": true
+                            },
+                            "size": 1,
+                            "targetAnchor": 3
+                        }
+                    ]
+                },
                 dataKey: 1
             }
         },
 
         methods: {
-            save() {},
+            save() {
+            },
             getJsonData(data) {
                 this.data = JSON.parse(data)
                 this.dataKey++
